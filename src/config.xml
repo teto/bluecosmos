@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="test" standalone="yes" ?>
+<config>
+    <player_0 device="1" fire="119" up="276" down="277" left="274" right="275" rotation="118" bomb="120" />
+    <player_1 device="1" fire="107" up="56" down="53" left="52" right="54" rotation="108" bomb="109" />
+    <window width="640" height="480" fullscreen="0" show_fps="1" />
+</config>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="bc0.2" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option extended_obj_names="1" />
+		<Option show_notes="0">
+			<notes>
+				<![CDATA[Free open source 3D shmup]]>
+			</notes>
+		</Option>
+		<Build>
+			<Target title="debug-win-0x">
+				<Option platforms="Windows;" />
+				<Option output="debug-win" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\DebugWin\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lluabind_perso-d" />
+					<Add option="-llua52-d" />
+				</Linker>
+			</Target>
+			<Target title="final-release">
+				<Option platforms="Windows;" />
+				<Option output="bluecosmos0" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\WarningWin\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wmain" />
+					<Add option="-pedantic-errors" />
+					<Add option="-pedantic" />
+					<Add option="-std=c++0x" />
+					<Add option="-std=c++98" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+				</Compiler>
+				<Linker>
+					<Add option="-lluabind_perso" />
+					<Add option="-llua52" />
+				</Linker>
+			</Target>
+			<Target title="release-win-0x">
+				<Option platforms="Windows;Unix;" />
+				<Option output="release-win" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\ReleaseWinAdv\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+				</Compiler>
+				<Linker>
+					<Add option="-lluabind_perso" />
+					<Add option="-llua52" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++0x" />
+			<Add option="-Wall" />
+			<Add option="-Wno-write-strings" />
+			<Add directory="libs" />
+		</Compiler>
+		<Linker>
+			<Add option="-lSPARK_IRR" />
+			<Add option="-lSPARK" />
+			<Add option="-lirrlicht" />
+			<Add directory="C:\Users\matt\Desktop\spark\lib\mingw\static" />
+		</Linker>
+		<Unit filename="bc_todo.txt" />
+		<Unit filename="config.lua" />
+		<Unit filename="config.xml" />
+		<Unit filename="doc\README.txt" />
+		<Unit filename="doc\credits.txt" />
+		<Unit filename="doc\gdd_references.txt" />
+		<Unit filename="doc\keys.txt" />
+		<Unit filename="levels\dialog.lua" />
+		<Unit filename="levels\level02.lua" />
+		<Unit filename="levels\tutorial.lua" />
+		<Unit filename="libs\fusion\config.hpp" />
+		<Unit filename="libs\fusion\core\CBitset.hpp" />
+		<Unit filename="libs\fusion\core\CRandomizer.hpp" />
+		<Unit filename="libs\fusion\core\CSingleton.hpp" />
+		<Unit filename="libs\fusion\core\CStringBuilder.hpp" />
+		<Unit filename="libs\fusion\core\CStringExtractor.hpp" />
+		<Unit filename="libs\fusion\core\exceptions.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="libs\fusion\core\exceptions.hpp" />
+		<Unit filename="libs\fusion\core\string.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="libs\fusion\core\string.hpp" />
+		<Unit filename="libs\fusion\debug\CMemoryManager.cpp" />
+		<Unit filename="libs\fusion\events\SEvent.hpp" />
+		<Unit filename="libs\fusion\fusion.hpp" />
+		<Unit filename="libs\fusion\logging\CConsoleLogger.cpp" />
+		<Unit filename="libs\fusion\logging\CConsoleLogger.hpp" />
+		<Unit filename="libs\fusion\logging\CFileLogger.cpp" />
+		<Unit filename="libs\fusion\logging\CFileLogger.hpp" />
+		<Unit filename="libs\fusion\logging\ILogger.cpp" />
+		<Unit filename="libs\fusion\logging\ILogger.hpp" />
+		<Unit filename="libs\fusion\logging\Logger.cpp" />
+		<Unit filename="libs\fusion\logging\Logger.hpp" />
+		<Unit filename="libs\fusion\logging\irrlicht_operators.hpp" />
+		<Unit filename="libs\fusion\macros.hpp" />
+		<Unit filename="libs\fusion\maths\macros.hpp" />
+		<Unit filename="libs\fusion\scripting\CLuaThread.cpp" />
+		<Unit filename="libs\fusion\scripting\CLuaThread.hpp" />
+		<Unit filename="libs\fusion\scripting\CLuaVM.cpp" />
+		<Unit filename="libs\fusion\scripting\CLuaVM.hpp" />
+		<Unit filename="libs\fusion\scripting\CSquirrelScript.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="libs\fusion\scripting\CSquirrelScript.hpp" />
+		<Unit filename="libs\fusion\scripting\IScriptInterpreter.hpp" />
+		<Unit filename="libs\fusion\scripting\Lua_utils.cpp" />
+		<Unit filename="libs\fusion\scripting\Lua_utils.hpp" />
+		<Unit filename="libs\fusion\scripting\wstring_bind.hpp" />
+		<Unit filename="libs\fusion\utilities\CBitset.hpp" />
+		<Unit filename="libs\fusion\utilities\SBimap.hpp" />
+		<Unit filename="libs\utf8\checked.h" />
+		<Unit filename="libs\utf8\core.h" />
+		<Unit filename="libs\utf8\unchecked.h" />
+		<Unit filename="libs\xeffects\CScreenQuad.h" />
+		<Unit filename="libs\xeffects\CShaderPre.cpp" />
+		<Unit filename="libs\xeffects\CShaderPre.h" />
+		<Unit filename="libs\xeffects\EffectCB.h" />
+		<Unit filename="libs\xeffects\EffectHandler.cpp" />
+		<Unit filename="libs\xeffects\EffectHandler.h" />
+		<Unit filename="libs\xeffects\EffectShaders.h" />
+		<Unit filename="libs\xeffects\XEffects.h" />
+		<Unit filename="log.txt" />
+		<Unit filename="objects\smallfighter.lua" />
+		<Unit filename="objects\spaceFighter.lua" />
+		<Unit filename="scores.xml" />
+		<Unit filename="scripts\activators.lua" />
+		<Unit filename="scripts\init_engine.lua" />
+		<Unit filename="scripts\manager.lua" />
+		<Unit filename="scripts\missile.lua" />
+		<Unit filename="scripts\move.lua" />
+		<Unit filename="scripts\player.lua" />
+		<Unit filename="scripts\sound_manager.lua" />
+		<Unit filename="scripts\spawn.lua" />
+		<Unit filename="scripts\strict.lua" />
+		<Unit filename="scripts\update.lua" />
+		<Unit filename="shaders\BloomP.glsl" />
+		<Unit filename="shaders\BlurHP.glsl" />
+		<Unit filename="shaders\BlurVP.glsl" />
+		<Unit filename="shaders\BrightPass.glsl" />
+		<Unit filename="src\CEngineXMLConfig.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\CFleet.cpp" />
+		<Unit filename="src\CFleet.hpp" />
+		<Unit filename="src\CGraphicalLevel.cpp" />
+		<Unit filename="src\CGraphicalLevel.hpp" />
+		<Unit filename="src\CIntrusiveList.cpp" />
+		<Unit filename="src\CIntrusiveList.hpp" />
+		<Unit filename="src\CLuaConfigEngine.cpp" />
+		<Unit filename="src\CSpeaker.cpp" />
+		<Unit filename="src\CSpeaker.hpp" />
+		<Unit filename="src\CSpeech.cpp" />
+		<Unit filename="src\CSpeech.hpp" />
+		<Unit filename="src\CustomEvent.hpp" />
+		<Unit filename="src\IEngineConfig.hpp" />
+		<Unit filename="src\IGameEngine.cpp" />
+		<Unit filename="src\IGameEngine.hpp" />
+		<Unit filename="src\audio\CFModExDriver.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\audio\CFModExDriver.hpp" />
+		<Unit filename="src\audio\CNullDriver.cpp" />
+		<Unit filename="src\audio\CNullDriver.hpp" />
+		<Unit filename="src\audio\COpenAlDriver.cpp" />
+		<Unit filename="src\audio\COpenAlDriver.hpp" />
+		<Unit filename="src\audio\CSound.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\audio\CSound.hpp" />
+		<Unit filename="src\audio\CSoundManager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\audio\CSoundManager.hpp" />
+		<Unit filename="src\audio\IAudioDriver.cpp" />
+		<Unit filename="src\audio\IAudioDriver.hpp" />
+		<Unit filename="src\audio\ISound.hpp" />
+		<Unit filename="src\audio\ISoundManager.cpp" />
+		<Unit filename="src\audio\ISoundManager.hpp" />
+		<Unit filename="src\audio\SAudioParameters.hpp" />
+		<Unit filename="src\binds\bind_all.cpp" />
+		<Unit filename="src\binds\bind_config.cpp" />
+		<Unit filename="src\binds\bind_engine.cpp" />
+		<Unit filename="src\binds\bind_entities.cpp" />
+		<Unit filename="src\binds\bind_fleets.cpp" />
+		<Unit filename="src\binds\bind_sound.cpp" />
+		<Unit filename="src\binds\binds.hpp" />
+		<Unit filename="src\binds\concat.hpp" />
+		<Unit filename="src\config.cpp" />
+		<Unit filename="src\config.hpp" />
+		<Unit filename="src\def.hpp" />
+		<Unit filename="src\entities\CBullet.cpp" />
+		<Unit filename="src\entities\CBullet.hpp" />
+		<Unit filename="src\entities\CMissile.cpp" />
+		<Unit filename="src\entities\CMissile.hpp" />
+		<Unit filename="src\entities\CModel.cpp" />
+		<Unit filename="src\entities\CModel.hpp" />
+		<Unit filename="src\entities\CStaticBattery.cpp" />
+		<Unit filename="src\entities\CStaticBattery.hpp" />
+		<Unit filename="src\entities\IMultiModeTransformer.cpp" />
+		<Unit filename="src\entities\IMultiModeTransformer.hpp" />
+		<Unit filename="src\entities\ITransformer.cpp" />
+		<Unit filename="src\entities\ITransformer.hpp" />
+		<Unit filename="src\entities\SModeDescription.cpp" />
+		<Unit filename="src\entities\SModeDescription.hpp" />
+		<Unit filename="src\entities\player.cpp" />
+		<Unit filename="src\entities\player.hpp" />
+		<Unit filename="src\events\CBind.cpp" />
+		<Unit filename="src\events\CBind.hpp" />
+		<Unit filename="src\events\CBindCollection.cpp" />
+		<Unit filename="src\events\CBindCollection.hpp" />
+		<Unit filename="src\events\CBindDescriptor.cpp" />
+		<Unit filename="src\events\CBindDescriptor.hpp" />
+		<Unit filename="src\events\CBindFromEventGenerator.cpp" />
+		<Unit filename="src\events\CBindFromEventGenerator.hpp" />
+		<Unit filename="src\events\CInputContext.cpp" />
+		<Unit filename="src\events\CInputManager.cpp" />
+		<Unit filename="src\events\CInputManager.hpp" />
+		<Unit filename="src\events\CPlayerInputCache.cpp" />
+		<Unit filename="src\events\CPlayerInputCache.hpp" />
+		<Unit filename="src\events\IInputCache.hpp" />
+		<Unit filename="src\events\IInputDevice.hpp" />
+		<Unit filename="src\events\SCachedState.cpp" />
+		<Unit filename="src\events\SCachedState.hpp" />
+		<Unit filename="src\events\defs.hpp" />
+		<Unit filename="src\events\joystickDevice.cpp" />
+		<Unit filename="src\events\joystickDevice.hpp" />
+		<Unit filename="src\events\keyboardDevice.cpp" />
+		<Unit filename="src\events\keyboardDevice.hpp" />
+		<Unit filename="src\events\mouseDevice.cpp" />
+		<Unit filename="src\events\mouseDevice.hpp" />
+		<Unit filename="src\fightingState\CSinglePlayerState.cpp" />
+		<Unit filename="src\fightingState\CSinglePlayerState.hpp" />
+		<Unit filename="src\fightingState\dialog.cpp" />
+		<Unit filename="src\fightingState\editor.cpp" />
+		<Unit filename="src\fightingState\level.cpp" />
+		<Unit filename="src\game_engine.cpp" />
+		<Unit filename="src\game_engine.hpp" />
+		<Unit filename="src\main.cpp" />
+		<Unit filename="src\observer\CMessage.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\observer\CMessage.hpp" />
+		<Unit filename="src\observer\CMessageDispatcher.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\observer\CMessageDispatcher.hpp" />
+		<Unit filename="src\observer\IMessageManager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\observer\IMessageManager.hpp" />
+		<Unit filename="src\observer\IObserver.hpp" />
+		<Unit filename="src\observer\cmessagetype.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\observer\cmessagetype.h" />
+		<Unit filename="src\startup_config.cpp" />
+		<Unit filename="src\startup_config.hpp" />
+		<Unit filename="src\states\CErrorState.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\states\CErrorState.hpp" />
+		<Unit filename="src\states\CMenuState.cpp" />
+		<Unit filename="src\states\CMenuState.hpp" />
+		<Unit filename="src\states\COptionsState.cpp" />
+		<Unit filename="src\states\COptionsState.hpp" />
+		<Unit filename="src\states\CScoreState.cpp" />
+		<Unit filename="src\states\CScoreState.hpp" />
+		<Unit filename="src\states\CTestState.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\states\CTestState.hpp" />
+		<Unit filename="src\states\CTransitionState.cpp" />
+		<Unit filename="src\states\CTransitionState.hpp" />
+		<Unit filename="src\states\IGameState.cpp" />
+		<Unit filename="src\states\IGameState.hpp" />
+		<Unit filename="src\states\IStateManager.cpp" />
+		<Unit filename="src\states\IStateManager.hpp" />
+		<Unit filename="src\states\IdList.hpp" />
+		<Unit filename="src\utils\C2DSprite.cpp" />
+		<Unit filename="src\utils\C2DSprite.hpp" />
+		<Unit filename="src\utils\C2DSpriteList.hpp" />
+		<Unit filename="src\utils\CAutomaticClock.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\utils\CAutomaticClock.hpp" />
+		<Unit filename="src\utils\CBillboardSprite.cpp" />
+		<Unit filename="src\utils\CBillboardSprite.hpp" />
+		<Unit filename="src\utils\CBitSet.cpp" />
+		<Unit filename="src\utils\CBitSet.hpp" />
+		<Unit filename="src\utils\CConsole.hpp" />
+		<Unit filename="src\utils\CFadingImage.cpp" />
+		<Unit filename="src\utils\CFadingImage.hpp" />
+		<Unit filename="src\utils\CGUIPolygonalButton.cpp" />
+		<Unit filename="src\utils\CGUIPolygonalButton.hpp" />
+		<Unit filename="src\utils\CGUISlidingConsole.hpp" />
+		<Unit filename="src\utils\CManualClock.cpp" />
+		<Unit filename="src\utils\CManualClock.hpp" />
+		<Unit filename="src\utils\CParticleManager.cpp" />
+		<Unit filename="src\utils\CParticleManager.hpp" />
+		<Unit filename="src\utils\CSpriteManager.cpp" />
+		<Unit filename="src\utils\CSpriteManager.hpp" />
+		<Unit filename="src\utils\IClock.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src\utils\IClock.hpp" />
+		<Unit filename="src\utils\IGUIConsole.cpp" />
+		<Unit filename="src\utils\IGUIConsole.hpp" />
+		<Unit filename="src\utils\ISprite.cpp" />
+		<Unit filename="src\utils\ISprite.hpp" />
+		<Unit filename="src\utils\TClock.hpp" />
+		<Unit filename="src\utils\graphic_cap.cpp">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

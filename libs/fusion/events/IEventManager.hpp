@@ -1,0 +1,11 @@
+#ifndef _FUSION_IEVENTMANAGER_HPP_INCLUDED
+#define _FUSION_IEVENTMANAGER_HPP_INCLUDED
+
+
+
+namespace fus {
+
+}
+
+
+#endif
