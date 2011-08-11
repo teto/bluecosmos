@@ -36,7 +36,7 @@ TDeviceCodeMap CBindDescriptor::deviceCodeMap;
 CBindDescriptor::CBindDescriptor() :
     Mode(ETapMode::JustPressed)
     , DeviceId(0)
-    , Device(EInputType::None)
+//    , Device(EInputType::None)
 {
 
 }
@@ -49,6 +49,7 @@ initializeKeycodes(){
     //SBimap<std::wstring,irr::EKEY_CODE> &keycodeBimap = keycodeBimap;
     TKeyCodeMap& keycodeBimap = CBindDescriptor::keycodeBimap;
 
+try {
     boost::assign::insert( keycodeBimap.Bimap.left )
         (KEY_LBUTTON,L"LBUTTON")
         (KEY_CANCEL,L"CANCEL")
@@ -98,155 +99,110 @@ initializeKeycodes(){
         (KEY_F7,L"F7")
         (KEY_F8,L"F8")
         (KEY_F9,L"F9")
+(KEY_F10,L"F10")
+(KEY_F11,L"F11")
+(KEY_F12,L"F12")
+(KEY_F13,L"F13")
+(KEY_F14,L"F14")
+(KEY_F15,L"F15")
+(KEY_F16,L"F16")
+(KEY_F17,L"F17")
+(KEY_F18,L"F18")
+(KEY_F19,L"F19")
+(KEY_F20,L"F20")
+(KEY_F21,L"F21")
+(KEY_F22,L"F22")
+(KEY_F23,L"F23")
+(KEY_F24,L"F24")
+(KEY_NUMPAD0,L"NUMPAD0")
+(KEY_NUMPAD1,L"NUMPAD1")
+(KEY_NUMPAD2,L"NUMPAD2")
+(KEY_NUMPAD3,L"NUMPAD3")
+(KEY_NUMPAD4,L"NUMPAD4")
+(KEY_NUMPAD5,L"NUMPAD5")
+(KEY_NUMPAD6,L"NUMPAD6")
+(KEY_NUMPAD7,L"NUMPAD7")
+(KEY_NUMPAD8,L"NUMPAD8")
+(KEY_NUMPAD9,L"NUMPAD9")
+(KEY_LWIN,L"LWIN")
+(KEY_RWIN,L"RWIN")
+(KEY_APPS,L"APPS")
+(KEY_SLEEP,L"SLEEP")
+(KEY_MBUTTON,L"MBUTTON")
+(KEY_XBUTTON1,L"XBUTTON1")
+(KEY_XBUTTON2,L"XBUTTON2")
+(KEY_BACK,L"BACK")
+(KEY_TAB,L"TAB")
+(KEY_CLEAR,L"CLEAR")
+(KEY_RETURN,L"RETURN")
+(KEY_SHIFT,L"SHIFT")
+(KEY_CONTROL,L"CONTROL")
+(KEY_MENU,L"MENU")
+(KEY_PAUSE,L"PAUSE")
+(KEY_CAPITAL,L"CAPITAL")
+(KEY_KANA,L"KANA")
+(KEY_HANGUEL,L"HANGUEL")
+(KEY_HANGUL,L"HANGUL")
+(KEY_JUNJA,L"JUNJA")
+(KEY_FINAL,L"FINAL")
+(KEY_KANJI,L"KANJI")
+(KEY_ESCAPE,L"ESCAPE")
+(KEY_CONVERT,L"CONVERT")
+(KEY_NONCONVERT,L"NONCONVERT")
+(KEY_ACCEPT,L"ACCEPT")
+(KEY_MODECHANGE,L"MODECHANGE")
+(KEY_SPACE,L"SPACE")
+(KEY_PRIOR,L"PRIOR")
+(KEY_NEXT,L"NEXT")
+(KEY_END,L"END")
+(KEY_HOME,L"HOME")
+(KEY_LEFT,L"Left")
+(KEY_UP,L"Up")
+(KEY_RIGHT,L"Right")
+(KEY_DOWN,L"Down")
+(KEY_SELECT,L"SELECT")
+(KEY_PRINT,L"PRINT")
+(KEY_PRINT,L"DOWN")
+(KEY_EXECUT,L"EXECUT")
+(KEY_SNAPSHOT,L"SNAPSHOT")
+(KEY_INSERT,L"INSERT")
+(KEY_DELETE,L"DELETE")
+(KEY_HELP,L"HELP")
+(KEY_INSERT,L"INSERT")
 
-
+(KEY_MULTIPLY,L"MULTIPLY")
+(KEY_ADD,L"ADD")
+(KEY_SEPARATOR,L"SEPARATOR")
+(KEY_SUBTRACT,L"SUBTRACT")
+(KEY_DECIMAL,L"DECIMAL")
+(KEY_DIVIDE,L"DIVIDE")
+(KEY_NUMLOCK,L"NUMLOCK")
+(KEY_SCROLL,L"SCROLL")
+(KEY_LSHIFT,L"LSHIFT")
+(KEY_RSHIFT,L"RSHIFT")
+(KEY_LCONTROL,L"LCONTROL")
+(KEY_RCONTROL,L"RCONTROL")
+(KEY_LMENU,L"LMENU")
+(KEY_RMENU,L"RMENU")
+(KEY_PLUS,L"PLUS")
+(KEY_COMMA,L"COMMA")
+(KEY_MINUS,L"MINUS")
+(KEY_PERIOD,L"PERIOD")
+(KEY_ATTN,L"ATTN")
+(KEY_CRSEL,L"CRSEL")
+(KEY_CRSEL,L"CRSEL")
+(KEY_EXSEL,L"EXSEL")
+(KEY_EREOF,L"EREOF")
+(KEY_PLAY,L"PLAY")
+(KEY_ZOOM,L"ZOOM")
+(KEY_PA1,L"PA1")
+(KEY_OEM_CLEAR,L"OEM_CLEAR")
         ;
+}
+catch(...){
+    _LOG_WARNING << "Error while initializing key bimap";
+}
 
-    //keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LBUTTON,L"LBUTTON") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RBUTTON,L"RBUTTON") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CANCEL,L"CANCEL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_MBUTTON,L"MBUTTON") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_XBUTTON1,L"XBUTTON1") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_XBUTTON2,L"XBUTTON2") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_BACK,L"BACK") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_TAB,L"TAB") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CLEAR,L"CLEAR") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RETURN,L"RETURN") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SHIFT,L"SHIFT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CONTROL,L"CONTROL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_MENU,L"MENU") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PAUSE,L"PAUSE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CAPITAL,L"CAPITAL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KANA,L"KANA") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_HANGUEL,L"HANGUEL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_HANGUL,L"HANGUL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_JUNJA,L"JUNJA") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_FINAL,L"FINAL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KANJI,L"KANJI") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_ESCAPE,L"ESCAPE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CONVERT,L"CONVERT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NONCONVERT,L"NONCONVERT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_ACCEPT,L"ACCEPT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_MODECHANGE,L"MODECHANGE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SPACE,L"SPACE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PRIOR,L"PRIOR") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NEXT,L"NEXT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_END,L"END") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_HOME,L"HOME") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LEFT,L"Left") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_UP,L"Up") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RIGHT,L"Right") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_DOWN,L"Down") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SELECT,L"SELECT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PRINT,L"PRINT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PRINT,L"DOWN") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_EXECUT,L"EXECUT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SNAPSHOT,L"SNAPSHOT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_INSERT,L"INSERT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_DELETE,L"DELETE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_HELP,L"HELP") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_INSERT,L"INSERT") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_0,L"0") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_1,L"1") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_2,L"2") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_3,L"3") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_4,L"4") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_5,L"5") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_6,L"6") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_7,L"7") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_8,L"8") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_9,L"9") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_A,L"A") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_B,L"B") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_C,L"C") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_D,L"D") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_E,L"E") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_F,L"F") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_G,L"G") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_H,L"H") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_I,L"I") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_J,L"J") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_K,L"K") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_L,L"L") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_M,L"M") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_N,L"N") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_O,L"O") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_P,L"P") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_Q,L"Q") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_R,L"R") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_S,L"S") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_T,L"T") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_U,L"U") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_V,L"V") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_W,L"W") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_X,L"X") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_Y,L"Y") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_KEY_Z,L"Z") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LWIN,L"LWIN") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RWIN,L"RWIN") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_APPS,L"APPS") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SLEEP,L"SLEEP") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD0,L"NUMPAD0") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD1,L"NUMPAD1") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD2,L"NUMPAD2") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD3,L"NUMPAD3") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD4,L"NUMPAD4") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD5,L"NUMPAD5") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD6,L"NUMPAD6") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD7,L"NUMPAD7") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD8,L"NUMPAD8") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMPAD9,L"NUMPAD9") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_MULTIPLY,L"MULTIPLY") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_ADD,L"ADD") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SEPARATOR,L"SEPARATOR") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SUBTRACT,L"SUBTRACT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_DECIMAL,L"DECIMAL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_DIVIDE,L"DIVIDE") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F1,L"F1") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F2,L"F2") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F3,L"F3") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F4,L"F4") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F5,L"F5") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F6,L"F6") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F7,L"F7") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F8,L"F8") );
-//    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F9,L"F9") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F10,L"F10") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F11,L"F11") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F12,L"F12") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F13,L"F13") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F14,L"F14") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F15,L"F15") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F16,L"F16") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F17,L"F17") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F18,L"F18") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F19,L"F19") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F20,L"F20") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F21,L"F21") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F22,L"F22") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F23,L"F23") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_F24,L"F24") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_NUMLOCK,L"NUMLOCK") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_SCROLL,L"SCROLL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LSHIFT,L"LSHIFT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RSHIFT,L"RSHIFT") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LCONTROL,L"LCONTROL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RCONTROL,L"RCONTROL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_LMENU,L"LMENU") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_RMENU,L"RMENU") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PLUS,L"PLUS") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_COMMA,L"COMMA") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_MINUS,L"MINUS") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PERIOD,L"PERIOD") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_ATTN,L"ATTN") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CRSEL,L"CRSEL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_CRSEL,L"CRSEL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_EXSEL,L"EXSEL") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_EREOF,L"EREOF") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PLAY,L"PLAY") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_ZOOM,L"ZOOM") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_PA1,L"PA1") );
-    keycodeBimap.Bimap.insert( TKeyCodeMap::TAssociation(KEY_OEM_CLEAR,L"OEM_CLEAR") );
 }
 
 
@@ -254,11 +210,20 @@ void
 initializeDeviceCodes()
 {
     TDeviceCodeMap& inputDevices = CBindDescriptor::deviceCodeMap;
-    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::None,L"Unknown"));
-    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::Mouse,L"Mou"));
-    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::Keyboard,L"Key"));
-    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickAxis,L"JoyAxis"));
-    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickButton,L"JoyButton"));
+
+    boost::assign::insert(inputDevices.Bimap.left )
+        (EInputType::None,L"Unknown")
+        (EInputType::Mouse,L"Mou")
+        (EInputType::Keyboard,L"Key")
+        (EInputType::JoystickAxis,L"JoyAxis")
+        (EInputType::JoystickButton,L"JoyButton")
+;
+
+//    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::None,L"Unknown"));
+//    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::Mouse,L"Mou"));
+//    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::Keyboard,L"Key"));
+//    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickAxis,L"JoyAxis"));
+//    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickButton,L"JoyButton"));
 
 }
 
@@ -282,11 +247,12 @@ bool
 CBindDescriptor::setup(int const& joyButton) {
 
     if( (joyButton < 0) || (joyButton >= irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS) ){
-        Device = EInputType::None;
+        //Device = EInputType::None;
+        reset();
         return false;
     }
 
-    Device = EInputType::None;
+    //Device = EInputType::None;
     SJoyButton temp = {joyButton};
     Value = temp;
     //JoyButton.Button = joyButton;
@@ -296,22 +262,44 @@ CBindDescriptor::setup(int const& joyButton) {
 
 void
 CBindDescriptor::setup(irr::EKEY_CODE const& keyCode) {
-    Device  = EInputType::Keyboard;
+    //Device  = EInputType::Keyboard;
     Value = keyCode;
 }
 
+bool
+CBindDescriptor::setRepeatDelay(irr::u32 const& t) {
+    RepeatTime = t;
+}
 
+void
+CBindDescriptor::disableAutoRepeat() {
+    RepeatTime = boost::none;
+}
+
+
+bool
+CBindDescriptor::isAutorepeatEnabled() const {
+    return RepeatTime;
+}
+
+void
+CBindDescriptor::reset() {
+    //Device= EInputType::None;
+    Value = SNullType();
+};
 
 bool
 CBindDescriptor::setup(int const& axisNo,EAxisDirection const& direction){
 
     if( (axisNo < 0) || (axisNo >= irr::SEvent::SJoystickEvent::NUMBER_OF_AXES) ){
-        EInputType::None;
+        //EInputType::None;
+
+        reset();
         return false;
     }
 
     //SStickMotion temp;
-    Device = EInputType::JoystickAxis;
+    //Device = EInputType::JoystickAxis;
     // Verifier si le stick existe ?
     SJoyAxis temp = { axisNo,direction };
 //    StickAxis.Axis = axisNo;
@@ -352,7 +340,7 @@ CBindDescriptor::setup(wchar_t* const& key) {
         fus::convertIntoNarrowString(key, temp);
         //throw std::runtime_error( "No key " );
         _LOG_ERROR << "Could not find key [" << temp << "] in bimap";
-        Device = EInputType::None;
+        reset();//Device = EInputType::None;
         return false;
     }
 
@@ -369,10 +357,15 @@ CBindDescriptor::setup(wchar_t* const& key) {
 //    setup(device,id);
 //}
 
+EInputType
+CBindDescriptor::getInputType() const {
+    return static_cast<EInputType>( Value.which() );
+}
+
 
 bool
 CBindDescriptor::undefined() const {
-    return ( (Device == EInputType::None) );
+    return ( (getInputType() == EInputType::None) );
     //return Value.empty() ;
 
 };
@@ -384,7 +377,7 @@ CBindDescriptor::operator==(const CBindDescriptor& d) const
 {
     // Le device peut etre enregistre dans le variant !!
     // Value.which();
-    if(Device != d.Device) return false;
+    //if(Device != d.Device) return false;
     if(Mode != d.Mode) return false;
     //switch(Device)(Id != map.Id) return false;
     return (Value == d.Value);
@@ -408,6 +401,7 @@ CBindDescriptor::generateDescription() const
     std::wstring desc;
     try {
         //
+        const EInputType Device = getInputType();
         desc = deviceCodeMap.convert( Device);
         desc.append(L" ");
 
@@ -419,6 +413,9 @@ CBindDescriptor::generateDescription() const
 
             desc.append( keycodeBimap.convert( boost::get<irr::EKEY_CODE>(Value) ) );break;
 
+        case EInputType::JoystickButton: break;
+        case EInputType::None:
+            return false;
             default:
                 break;
         }

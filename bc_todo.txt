@@ -1,0 +1,251 @@
+This game is just amazing. Not only for indies but also in general. There is a true atmosphere created by the graphics, music, wingmen, dialogs, RPG interaction.
+I mean it.
+I agree with adding more magnet by default.
+I also think life and shield should be together otherwise it is hard to watch both.
+
+
+How is it made ?
+
+(http://www-list.cea.fr/).
+
+TODO:
+
+
+First of all, luabind needs to setup some things in your lua_State.
+That's why you call luabind::open which will:
+-create an instance of class_registry, which will push a metatable
+
+When you register
+
+
+From
+
+luabind:
+BOOST_NO_CONCEPTS
+BOOST_NO_RVALUE_REFERENCES
+BOOST_NO_SCOPED_ENUMS
+
+renommer les parametres template type class F en class FnPointer
+si variadiac active alors luabind_max_arity => BOOST_MPL_LIMIT_METAFUNCTION_ARITY
+luaL_getmetafield/getsubtable
+-ajouter des helpers dans le registre
+-faire du typesafe sur les enums, pvr binder des enums C++0x
+-prevenir des duplicata enums (avec le mm nom)
+-Pour l'operateur __concat, utiliser luaL_tolstring
+-luaL_where
+-stage2 fonction a revoie, fair eun truc plus clair
+-rempalcer signature_from_function dans tag_function.hpp en utilisant boost::function ? boost::function_traits
+http://stackoverflow.com/questions/4771417/how-to-get-the-signature-of-a-c-bind-expression
+function_traits<>::arity dans tag_function
+http://www.boost.org/doc/libs/1_46_1/libs/type_traits/doc/html/boost_typetraits/reference/function_traits.html
+http://www.coderage.com/function_traits/libs/function_traits/doc/
+
+
+normalement les iterateurs d'une map sont garantis "valide" avec insertion
+
+const_cast(Key) = <
+
+Events:
+-TODO mettre a jour le playerInput
+-faire mecanisme qui met à jour CbindCollection tout seul
+-supporter les joystick
+
+
+bc0.3:
+-http://www.boost.org/doc/libs/1_47_0/libs/bimap/example/bimap_and_boost/assign.cpp
+-constexp
+-pouvoir naviguer dans le menu avec l'input configure p
+-pouvoir redémarrer la fenetre graphique
+-faire un truc entre les input device et les variant
+-utiliser cbegin  / cend là où c'est possible
+-utiliser un CNullDriver au début
+-pouvoir mettre les run en cascade
+-utiliser sqrtf plutot que sqrt ?
+-retirer Append de la liste des niveaux de log
+-pouvoir ajouter des boutons dans la console
+-bug dans le logger si pas de logger defini
+-luamanager pouvoir enregistrer dnas lesglobals des chunks RunFunctionFromChunk via un CLuaManager
+bug de CSinglePlayer c'est qu'il genre pas les flottes, mieux gerer les etats !
+-random generator (regarder celui d'o3 + tr1)
+-afficher des infos de debug en appuyant sur TAB: version d'irrlicht,de luabind,date/heure de compilation/version de lua
+-tester stack_content_by_name
+-deplacer Idlist dans src/
+-empecher la console d'enregistrer 2 fois le mm message d'affilé
+-bug: joueur continue a bouger quand on passe en camera FPS
+-pouvoir acceder aux options depuis l'ingame
+-laisser les missiles partir sur leur derniere lancée (=direction)
+-logger_helper _LOGIF
+-s'assurer que chaque fonction du gameengine est appele dans un etat correspondant
+-bug: si erreur de syntaxe lors de init_engine.lua (mode NonInitialized dans GameEngine ca)
+-bug fct wait temps non respectes dans lua
+-TODO Ne pas calculer le within screen a ttes les frames, le mettre en dehors de update => checker depuis le CLevelManager
+descr = Player:getMappingDescription(CPlayer.Forward);
+-améliorer le logger: std::boolalphad
+-double clic gauche augmente la cadence et chauffe plus vite donc
+
+
+
+Roadmap 0.4:
+-pouvoir selectionner plusieurs mappings pr plusieurs jouers
+-mettre en place d'un systeme d'objectif
+-utiliser emplace_front dans CFleet
+std::logic_error(
+-utiliser boost::throw_exception() car il ajoute __FILE et __LINE a l'exception
+-on peut aussi jouer avec l'operateur suffixe "deg" operator "deg"(),
+-passer à OpenAL
+-pouvoir ajouter du score au bon joueur (qd il y en aura plusieurs)
+-createFollowSplineAnimator (s32 startTime, const core::std::array< core::vector3df > &points, f32 speed=1.0f, f32 tightness=0.5f, bool loop=true, bool pingpong=false)=0
+-gerer l'affichage du curseur (qd on popup un message par exemple)
+-ouvrir un fichier via lua en utf8 avec BOM fait bugger le programme !
+-utiliser des shaders pr les transitions entre états/mort de quelqu'un etc...
+-utiliser différents layers en plus + de ennemis/amis ? utiliser des masques de layer ?
+-quand on choisit le vaisseau il ne doit pas se transformer mais etre directement au mm niveau que precedemment
+-choix des modes selon type yf19/yf21_Battloid doit etre transparent
+-reparer les 4 axes du joystick
+-systeme de cinematique / camera qui bouge
+-supprimer la dependance à ILogger dans CLuaVM, specialiser certains <<
+-pouvoir quitter le jeu dès qu'il y a une erreur critique ( état error )! via exception par exemple
+-faire un timer qui se coordonne avec le timer du jeu pr eviter d'avoir a tjrs ajouter le temps ecoule dans les fct
+-modifier les tests de collision pr que ca marche tt le temps
+-utiliser un exception handler personnalise avec register_exception_handler + std::set_terminate (myterminate);
+ou s'il peut le lire plusieurs fois
+-utiliser std::internal left/right pour placer le caractere a un lieu precis dans ILogger <<
+setw( 10 ) / std::boolalpha
+http://www.deitel.com/articles/cplusplus_tutorials/20060218/cplusplus_streamformatstates_streammanipulators_Page8.html
+
+-setInputReceivingSceneManager (scene::ISceneManager *sceneManager
+-createNewSceneManager (bool cloneContent=false)=0
+-proposer d'enregistrer le score uniquement si celui-ci superieur au minimum de ceux enregistres
+-scrolling de la cam
+-pvr ajouter des shaders depuis lua
+-eviter de tout reupdater a chaque frame
+http://www.boost.org/community/error_handling.html
+-bug avec le TWCharStringBuilder qui lance des exceptions non attrapees ?
+-qd on lance une exception, ne pas formatter car peut lancer une exception
+// bone pr le yf21 "Bone.089"
+
+
+
+
+
+
+JEU:
+-time filtering dans le jeu ?
+
+
+#include <boost/functional/hash.hpp>
+pvr utiliser des const wchar_t* au lieu de string dans TMap
+(y a des pb de memoires) via string::copy ?
+-delete particulier pr boost::shared_ptr
+struct Delete
+{
+    void operator ()(Test*& Ptr) const
+    {
+        cout << "Destruction";
+        delete Ptr;
+    }
+};
+
+int main()
+{
+    shared_ptr<Test> Ptr(new Test(), Delete());
+}
+
+-Pr gerer les collisions
+bool  isBetweenPoints (const vector3d< T > &begin, const vector3d< T > &end) const
+
+
+Coroutines status "normal","running","dead" , "suspended"
+Toutes les taches doivent prendre un ID en premier
+#if 0
+void
+CSinglePlayerState::getVerticalBounds(float& upperBound,float& lowerBound)
+{
+
+    const scene::SViewFrustum* frustrum = engine()->getCamera()->getViewFrustum();
+
+    // Creer un mesh a partir de l'intersection entre le frustrum et un plan
+    const core::plane3df &top = frustrum->planes[scene::SViewFrustum::VF_TOP_PLANE];
+    const core::plane3df &bottom = frustrum->planes[scene::SViewFrustum::VF_BOTTOM_PLANE];
+    core::plane3df evolutionPlane(0,0,0,0,1,0);
+    TVector3df point,vector;
+
+    evolutionPlane.getIntersectionWithPlane(top,point,vector);
+    upperBound = point.Z;
+
+    evolutionPlane.getIntersectionWithPlane(bottom,point,vector);
+    lowerBound = point.Z;
+
+}
+
+
+bool
+CSinglePlayerState::getIntersectionOfViewWithPlane(
+                const irr::core::position2di& screenCoordinate,
+                core::vector3df& intersectionPoint)
+            //const
+ {
+
+
+    scene::ISceneCollisionManager* collisionMgr = scene()->getSceneCollisionManager();
+
+    //Returns a 3d ray which would go through the 2d screen coodinates.
+    // second parameter: Camera from which the ray starts. If null => active camera is used.
+    irr::core::line3df ray = collisionMgr->getRayFromScreenCoordinates( screenCoordinate);
+    //_INFO << "upper x, upper y " << upperLeftLine.end.X << upperLeftLine.end.Y;
+
+    // plane containing  Point(0,0,0) ? with ( 0,1,0) for normal ?
+    core::plane3d<f32> evolutionPlane(0,0,0,0,1,0);
+    // ray.start /
+    return evolutionPlane.getIntersectionWithLine(ray.getMiddle(), ray.getVector() ,intersectionPoint);
+
+}
+
+
+// TODO pt etre ameliore
+void
+CSinglePlayerState::updateMinMax(core::position2df& min,core::position2df& max){
+
+    irr::core::position2di screenPoints[4];
+
+    core::dimension2d<u32> dims = engine()->driver->getCurrentRenderTargetSize();
+
+    screenPoints[0].set(1,1);
+    screenPoints[1].set(dims.Width,1);
+    screenPoints[2].set(dims.Width-1,dims.Height-1);
+    screenPoints[3].set(1,dims.Height);
+    core::vector3df tab[4];
+    //tab[0].set();
+    for(std::size_t i = 0;i < 4;++i){
+
+        if(!getIntersectionOfViewWithPlane(screenPoints[i],tab[i])){
+            _LOG_WARNING << "No intersection";
+        }
+        else if(i == 0){
+            min.X = tab[i].X;
+            min.Y = tab[i].Z;
+            max = min;
+        }
+
+        min.X = core::min_(tab[i].X,min.X);
+        min.Y = core::min_(tab[i].Z,min.Y);
+        max.X = core::max_(tab[i].X,max.X);
+        max.Y = core::max_(tab[i].Z,max.Y);
+
+    }
+
+}
+#endif
+
+
+
+Pour pouvoir passer un nb de point arbitraire :
+
+void my_func( const luabind::object& obj ) {
+   if ( LUA_TTABLE != luabind::type(obj) ) throw "Expected table
+my_func{ args }";
+   // ...
+}
+
+
+

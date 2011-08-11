@@ -4,6 +4,7 @@
 #ifndef _BC_EVENTS_DEF_HPP_INCLUDED
 #define _BC_EVENTS_DEF_HPP_INCLUDED
 
+#include <irrlicht.h>
 
 /*
     enum InputType
@@ -17,13 +18,14 @@
         IT_MOUSEBUTTON
     };
 */
-//enum class EInputType  {
-enum EInputType  {
+enum class EInputType : int {
+//enum EInputType  {
+None,
 Keyboard,
 JoystickButton,
 JoystickAxis,
 JoystickPov,
-None,
+
 Mouse
 //Emulation,
 
@@ -48,12 +50,15 @@ Neutral
 // Ca  c des events
 enum class ETapMode {
 DoublePressed
-, Pressed
+//, Pressed
 
 , JustPressed
 // On se fout de ceux la en fait
 , JustReleased
-, Released
+//, Released
 };
+
+
+extern irr::u32 QuickTapDelay;
 
 #endif

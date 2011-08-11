@@ -1,38 +1,52 @@
-#ifndef SCACHEDSTATE_HPP_INCLUDED
-#define SCACHEDSTATE_HPP_INCLUDED
+#ifndef SBindCache_HPP_INCLUDED
+#define SBindCache_HPP_INCLUDED
 
 
 //#include
 #include "defs.hpp"
 #include <irrlicht.h>
 #include <string>
+#include <boost/optional.hpp>
 
 // On l'utilise comme une constante
 const irr::u32 DoubleTapDelay = 100;
 
-struct SCachedState
+// Renommer en S
+struct SBindCache
 {
 
     typedef irr::u32 TTimeUnit;
 
-    // 0 => oldest one
-    std::pair<bool,irr::u32> Values[2];
+    /**
+    first boolean => state
+    clearer this way
+    **/
+    struct SCachedState {
+        SCachedState() : State(0),Duration(0) {}
+        bool State;
+        irr::u32 Duration;
+    };
+
+    SCachedState PastValue;
+
+    bool DoubleTapDelayExceeded;
+    irr::u32 TimeOfLastStateChange;
+    irr::u32 NextPress;
+    //! in case autorepeat is enabled
 
 
+    SBindCache();
 
-
-    SCachedState() //: _LastButOne(0), _lastPress(0)
-    {
-        Values[0] = std::make_pair(0,0);
-        Values[1] = std::make_pair(0,0);
-    }
-
+    bool believedState() const;
 
     //void newActivation(TTimeUnit const&);
-    ETapMode update(TTimeUnit const& currentTime, bool const& state);
+    //ETapMode update(TTimeUnit const& currentTime, const bool const& state);
+    ETapMode update(TTimeUnit const& currentTime, const CBindDescriptor& , bool const& state);
 
+protected:
+    //onPress onrelease
     //int Value;
 };
 
 
-#endif // SCACHEDSTATE_HPP_INCLUDED
+#endif // SBindCache_HPP_INCLUDED

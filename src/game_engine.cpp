@@ -254,7 +254,9 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
     _messageBoxesTab->addChild(window);
     _messageBoxesTab->setVisible(true);
 
-    //gui()->setFocus(true);
+
+    // Put it in front of others
+    gui()->getRootGUIElement()->bringToFront(_messageBoxesTab);
 
     //_INFO << "Popping up  message box [" << window << "]";
     //const wchar_t*
@@ -617,7 +619,8 @@ CGameEngine::eventToMainHandler(const SEvent& event){
 
                         _INFO << "caller is child of messageBox";
                         //caller->remove()
-                        if(_messageBoxesTab->getChildren ().size() == 0){
+
+                        if( _messageBoxesTab->getChildren ().empty() ){
 
                             //
                             _internalState = NEngineState::Running;
@@ -1335,6 +1338,7 @@ CGameEngine::createIrrlichtDevice(){
 // TODO recuperer la surface de l'ecran
     _messageBoxesTab = gui()->addTab( core::recti(0,0,0,0), 0, NGuiIds::ErrorTab );
     _messageBoxesTab->setVisible(false);
+    // set whole screen
     _messageBoxesTab->setRelativePositionProportional( core::rectf(0.0f,0.0f,1.f,1.f));
 
     // TODO a deplacer
