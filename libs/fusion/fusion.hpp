@@ -18,10 +18,12 @@
 
 
 #include "logging/Logger.hpp"
+#include <chrono>
 
 
 
 #define _INFO    fus::Logger::Log(fus::NLogLevel::Notice)
+//<< "[" << std::chrono::system_clock::now().time_since_epoch().count() << "]"
 #define _LOG_WARNING fus::Logger::Log(fus::NLogLevel::Warning)
 #define _LOG_ERROR   fus::Logger::Log(fus::NLogLevel::Error)
 #define _LOG_DEBUG   fus::Logger::Log(fus::NLogLevel::Debug) << "In function [" << __FUNCTION__ << "] defined in [" << __FILE__ << ":" << __LINE__ << "]"

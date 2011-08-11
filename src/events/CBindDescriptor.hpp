@@ -29,7 +29,7 @@ class CBindDescriptor;
 
 //bool generateDescriptorFromIrrlichtEvent(const irr::SEvent&,CBindDescriptor&);
 
-
+// Todo creer un namespace event
 
 void initializeKeycodes();
 void initializeDeviceCodes();
@@ -39,11 +39,11 @@ class CBindDescriptor
 {
 public:
 //    NInputType::EId _type;
-    EInputType Device;
+    //EInputType Device;
     //int Id;
     int DeviceId;   //!< Joystick No as seen by irrlicht for example
     ETapMode Mode;
-
+    boost::optional<irr::u32> RepeatTime;
 //    struct SJoystickParameters {
 //    };
     struct SJoyButton {
@@ -58,12 +58,17 @@ public:
         EAxisDirection Direction;
     };
 
+    // for variant.which EInputType::None
+    //nullptr
+    struct SNullType;
+    struct SNullType { bool operator==(const SNullType& t) const { return true;}; };
+
     // possede which, empty,type
     // doit respecter la numeroration de input type
     // == existe mais en free function
     // get<int>
     // get<0>
-    boost::variant<irr::EKEY_CODE,SJoyAxis,SJoyButton,EPovDirection> Value;
+    boost::variant<SNullType,irr::EKEY_CODE,SJoyAxis,SJoyButton,EPovDirection> Value;
     /*
     union {
     irr::EKEY_CODE KeyCode;
@@ -87,6 +92,10 @@ public:
     //bool isValid() const;
 
     bool undefined() const;
+    bool isAutorepeatEnabled() const;
+    bool setRepeatDelay(irr::u32 const& );
+
+    EInputType getInputType() const;
 
     //CBindDescriptor(const EInputType& = EInputType::None,int const& = -1);
     CBindDescriptor(wchar_t* const& key);
@@ -94,7 +103,7 @@ public:
     //CBindDescriptor(char const&);
     //CBindDescriptor(wchar_t const&);
 
-    void reset() {Device= EInputType::None;};
+    void reset();
     bool operator==(const CBindDescriptor&) const;
 //    bool operator!=(const CBindDescriptor& descriptor) const {
 //        return !( (*this) == descriptor);

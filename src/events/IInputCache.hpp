@@ -6,6 +6,7 @@
 #include "defs.hpp"
 #include "SCachedState.hpp"
 
+// passer fullId en parametre template ?
 template<class ID_TYPE>
 class IInputCache
 //: public IInputCache<NPlayerInput::EId>
@@ -13,7 +14,8 @@ class IInputCache
 
 public:
     typedef std::pair<ID_TYPE,int> TFullId;
-    typedef std::map< TFullId, SCachedState> TBufferedStates;
+    typedef std::map< TFullId, SBindCache> TBufferedStates;
+
     TBufferedStates _states;
     //typedef std::map< ID_TYPE,bool> TCachedInput;
     //typedef std::map< ID_TYPE,SCachedState> TBufferedStates;
@@ -23,7 +25,7 @@ public:
     const bool& operator[](ID_TYPE const& id) const { return isActive(id);};
     virtual const bool& isActive(ID_TYPE const& id) const = 0;
 
-
+    // TODO remplacer bool par Mode
     virtual void setState(ID_TYPE const& id,bool const& value) = 0;
 
 

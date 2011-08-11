@@ -13,7 +13,7 @@ int
 CInputManager::retrieveStateFromDescriptor(CBindDescriptor const& d) {
 
     // TODO a revoir
-    switch(d.Device){
+    switch( d.getInputType() ){
         case EInputType::Keyboard:
             return getKeyboard().getButton( boost::get<irr::EKEY_CODE>(d.Value ) ).Value;
 
