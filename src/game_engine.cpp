@@ -254,6 +254,8 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
     _messageBoxesTab->addChild(window);
     _messageBoxesTab->setVisible(true);
 
+    //gui()->setFocus(true);
+
     //_INFO << "Popping up  message box [" << window << "]";
     //const wchar_t*
     _LOG_ERROR << "Messagebox error:" << longDescription ;
@@ -615,7 +617,7 @@ CGameEngine::eventToMainHandler(const SEvent& event){
 
                         _INFO << "caller is child of messageBox";
                         //caller->remove()
-                        if(_messageBoxesTab->getChildren ().size() <= 1){
+                        if(_messageBoxesTab->getChildren ().size() == 0){
 
                             //
                             _internalState = NEngineState::Running;

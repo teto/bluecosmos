@@ -197,6 +197,7 @@ COptionState::OnEvent(const irr::SEvent& event){
             break;
 
             case EGET_BUTTON_CLICKED:
+                _INFO << " id clicked :" << callerId;
 
                 // If we clicked on a bind button, we want to update it
                 if(callerId >= NGuiIds::Count){
