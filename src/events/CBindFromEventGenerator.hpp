@@ -22,10 +22,12 @@ protected:
     //boost::optional<
     // std::pair<>
     CBindDescriptor _tempDescriptor;
-    SCachedState _cachedState;
-    irr::u32 _timeOfDescriptorRetrieval;
+    SBindCache _cachedState;
+    irr::u32 _timeOfProcessingEnd;  //!< time at which we should stop the processing if descriptor
+                                    //!< not fully qualified until then
     CInputManager& _inputMgr;
-
+    //
+    std::stack<SCachedState> _pastStates;
 
 public:
     CBindFromEventGenerator (CInputManager&);

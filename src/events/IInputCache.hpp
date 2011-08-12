@@ -30,9 +30,9 @@ public:
 
 
     // todo faire des update_or, update_and etc...
-    void updateId(TFullId const& fullId, irr::u32 const& currentTime, const bool& currentState,ETapMode const& mode) {
+    void updateId(TFullId const& fullId, irr::u32 const& currentTime, const bool& currentState,CBindDescriptor const& descriptor) {
 
-        const bool res = ( mode == _states[ fullId ].update( currentTime,currentState) );
+        const bool res = ( descriptor.Mode == _states[ fullId ].update( currentTime,descriptor,currentState) );
         setState(fullId.first,res);
     }
 

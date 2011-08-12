@@ -5,10 +5,14 @@
 SBindCache::SBindCache() :
     NextPress(0)
     , TimeOfLastStateChange(0)
+    , TimeOfNextRepeat(0)
+    , QuickDelayRespected(false)
 {
     PastValue = std::make_pair(0,0);
     //Values[1] = std::make_pair(0,0);
 }
+
+
 
 bool
 SBindCache::believedState() const {
@@ -17,7 +21,7 @@ SBindCache::believedState() const {
 
 
 // TODO configuré juste pr les JustPressed pr l'instant
-bool
+//bool
 ETapMode
 SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool const& currentState) {
 
@@ -36,10 +40,11 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
             if(d.isAutorepeatEnabled() && (d.Mode == ETapMode::JustPressed) ){
 
                 /// if should be repeated
-                if( currentTime < (*currentTime.RepeatTime) + NextPress ){
+                if( currentTime < TimeOfNextRepeat ){
 
                     // set next trigger
-                    NextPress += (*currentTime.RepeatTime);
+                    TimeOfNextRepeat += (*currentTime.RepeatTime);
+                    QuickDelayRespected = false;
                     return true;
                     //mode = ETapMode::JustPressed;
                 }
@@ -53,8 +58,18 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
     /// if state change
     /// if State differ from last one
     else {
+
+        TimeOfLastStateChange = currentTime;
+
+        SCachedState newCache = {};
+        newCache.Duration = currentTime - TimeOfLastStateChange;
+        newCache.State = currentState;
+
+
         // compute duration
-        const irr::u32 currentDuration = currentTime - TimeOfLastStateChange;
+        //const irr::u32 currentDuration = currentTime - TimeOfLastStateChange;
+        // remplacer 100 par QuickTapDelay
+        // (PastValue.duration < QuickTapDelay) &&
 
         //NextPress
         if( currentState == false){
@@ -62,15 +77,10 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
         }
         // If new state is true
         // check for double Tap
-        else
-//            if(d.Mode == ETapMode::DoublePressed){
-//
-//            }
-//
-            // remplacer 100 par QuickTapDelay
-            if( (PastValue.duration < 100) && (currentDuration < 100) ){
+        else if( (d.Mode == ETapMode::DoublePressed) && (newCache.Duration < QuickTapDelay) && ){
                 mode = ETapMode::DoublePressed;
-            }
+                //= true;
+
             //DoubleTapDelay > currentTime){
 
 
@@ -80,11 +90,10 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
             mode = ETapMode::JustPressed;
         }
 
-//        Values[0] = Values[1];
-//        Values[1].first = false;
-//        Values[1].second = currentTime;
+        PastValue = newCache;
     }
     //return std::move(mode);
-    return ( d.Mode == mode);
-    return false;
+    return mode;
+    //return ( d.Mode == mode);
+    //return false;
 }

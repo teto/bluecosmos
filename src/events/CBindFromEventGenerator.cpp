@@ -13,7 +13,7 @@ using namespace core;
 
 CBindFromEventGenerator::CBindFromEventGenerator (CInputManager& inputMgr) :
     _inputMgr(inputMgr),
-    _timeOfDescriptorRetrieval(0)
+    _timeOfProcessingEnd(0)
 {
 
 }
@@ -21,6 +21,9 @@ CBindFromEventGenerator::CBindFromEventGenerator (CInputManager& inputMgr) :
 
 boost::optional<CBindDescriptor>
 CBindFromEventGenerator::check( irr::u32 const& time )  {
+
+    BOOST_ASSERT( !_pastStates.empty() );
+
 
     boost::optional<CBindDescriptor> ret;
 
@@ -32,13 +35,30 @@ CBindFromEventGenerator::check( irr::u32 const& time )  {
     // else guess mode according to states
     //time-_timeOfDescriptorRetrieval  > 0
     // 200 est le temps qui permet de decider quel
-    if(time-_timeOfDescriptorRetrieval < 200){
-        _tempDescriptor.Mode = _cachedState.update(time, _inputMgr.retrieveStateFromDescriptor(_tempDescriptor) );
+    if( (time > _timeOfProcessingEnd) || (_pastStates.size() > 2) ){
+
+        switch(_pastStates.size()){
+            case 1:
+            case 2:
+            // ce cas ne devrait jamais arriver
+            default: break;
+        }
+        // TODO a implementer !!
+        _tempDescriptor.Mode = JustPressed;
+
+        // Analyze past
+        ret = _tempDescriptor;
     }
     // Elapsed time for detection of a bind
     // User might destroy this class
     else {
-        ret = _tempDescriptor;
+        _cachedState.update(time,_tempDescriptor, _inputMgr.retrieveStateFromDescriptor(_tempDescriptor) );
+
+        // if state changed then we add it for further processing later on
+        if( _pastStates.top() != _cachedState.PastValue){
+            _pastStates.push( _cachedState.PastValue );
+        }
+
     }
 
     return ret;
@@ -59,11 +79,16 @@ CBindFromEventGenerator::processEvent( irr::u32 const& time,irr::SEvent const& e
             case EET_KEY_INPUT_EVENT:
 
                 // React on press only
-                if(e.KeyInput.PressedDown ) {
+                //if(e.KeyInput.PressedDown ) {
+
                     _tempDescriptor.setup(e.KeyInput.Key);
-                    _timeOfDescriptorRetrieval = time;
-                    _cachedState.update(time,true);
-                }
+                    _timeOfProcessingEnd = time + 200;
+
+                    //_cachedState.update(time,_tempDescriptor,true);
+                    _cachedState.update(time,_tempDescriptor,e.KeyInput.PressedDown);
+
+                    _pastStates.push( _cachedState.PastValue );
+                //}
                 return true;
 
             default: break;

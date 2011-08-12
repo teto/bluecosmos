@@ -25,22 +25,25 @@ struct SBindCache
         SCachedState() : State(0),Duration(0) {}
         bool State;
         irr::u32 Duration;
+        //
     };
 
-    SCachedState PastValue;
+    // TODO renommer en CachedValue
+    SCachedState PastValue;     //!< Record of previous state
+    bool QuickDelayRespected;   //!< To detect double tap
 
-    bool DoubleTapDelayExceeded;
     irr::u32 TimeOfLastStateChange;
-    irr::u32 NextPress;
-    //! in case autorepeat is enabled
+    irr::u32 TimeOfNextRepeat;  //!< Time of next repeat
 
 
     SBindCache();
 
+    //! current state of the cache computed during last frame
     bool believedState() const;
 
     //void newActivation(TTimeUnit const&);
     //ETapMode update(TTimeUnit const& currentTime, const bool const& state);
+    // TODO a bit ugly to pass the descriptor
     ETapMode update(TTimeUnit const& currentTime, const CBindDescriptor& , bool const& state);
 
 protected:

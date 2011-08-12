@@ -11,6 +11,7 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 #include <string>
 #include <list>
 #include <boost/variant.hpp>
+#include <boost/optional.hpp>
 
 #include <fusion/core/CStringBuilder.hpp>
 #include <fusion/utilities/SBimap.hpp>
@@ -94,6 +95,7 @@ public:
     bool undefined() const;
     bool isAutorepeatEnabled() const;
     bool setRepeatDelay(irr::u32 const& );
+    void disableAutoRepeat();
 
     EInputType getInputType() const;
 

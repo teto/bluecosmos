@@ -17,14 +17,14 @@ CBindCollection::updateCache( const irr::u32& currentTime, CInputManager& inputM
         const TFullId& fullId = i->first;
         const CBindDescriptor& descriptor = i->second;
 
-
+        // TODO a revoir ptet
         cache->updateId(
                         fullId,
                         currentTime,
-                        //descriptor
                         inputMgr.retrieveStateFromDescriptor(descriptor),
+                        descriptor
                         //inputMgr.getState(i->first.Device, i->first.Id),
-                        descriptor.Mode
+                        //descriptor.Mode
                     );
     }
 

@@ -49,6 +49,8 @@ Events:
 -TODO mettre a jour le playerInput
 -faire mecanisme qui met à jour CbindCollection tout seul
 -supporter les joystick
+-creer namespace event::
+-passer la souris/joystick/keyboard en singleton avec des fonctions static comme sfml
 
 
 bc0.3:

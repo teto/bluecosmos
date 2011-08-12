@@ -408,16 +408,16 @@ CBindDescriptor::generateDescription() const
         // According to device, print specific thing
         switch (Device)
         {
-        case EInputType::Keyboard:
-            //static_cast<irr::EKEY_CODE>(Id)
+            case EInputType::Keyboard:
+                //static_cast<irr::EKEY_CODE>(Id)
 
-            desc.append( keycodeBimap.convert( boost::get<irr::EKEY_CODE>(Value) ) );break;
+                desc.append( keycodeBimap.convert( boost::get<irr::EKEY_CODE>(Value) ) );break;
 
-        case EInputType::JoystickButton: break;
-        case EInputType::None:
-            return false;
-            default:
-                break;
+            case EInputType::JoystickButton: break;
+            case EInputType::None:
+                return CBindDescriptor::StrUndefined;
+                default:
+                    break;
         }
 
         // According to mode
@@ -425,9 +425,9 @@ CBindDescriptor::generateDescription() const
         switch(Mode){
             case ETapMode::JustPressed: desc.append(L" jp");break;
             case ETapMode::DoublePressed: desc.append(L" dp");break;
-            case ETapMode::Pressed: desc.append(L" p");break;
-            case ETapMode::Released: desc.append(L" r");break;
-            case ETapMode::JustReleased: desc.append(L" jr");break;
+            //case ETapMode::Pressed: desc.append(L" p");break;
+            //case ETapMode::Released: desc.append(L" r");break;
+            //case ETapMode::JustReleased: desc.append(L" jr");break;
             default: break;
         }
 
