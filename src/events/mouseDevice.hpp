@@ -9,7 +9,7 @@
 #include "IInputDevice.hpp"
 
 
-
+// TODO s'inspirer de la sfml
 class CIrrlichtMouseDevice : public IInputDevice<6,int>
 {
 

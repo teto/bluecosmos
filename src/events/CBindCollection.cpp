@@ -3,10 +3,10 @@
 
 #define FULL_ID(id,no) std::make_pair(id,no)
 
-
+namespace input {
 
 void
-CBindCollection::updateCache( const irr::u32& currentTime, CInputManager& inputMgr, TCache * cache) const
+CBindCollection::updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache * cache) const
 {
 
     BOOST_ASSERT(cache);
@@ -189,6 +189,7 @@ replaceBind(const CBindDescriptor& old,const CBindDescriptor& newBind){
 //    return descriptors.size();
 //}
 
+}
 
 #undef GET_MODE
 #undef FULL_ID

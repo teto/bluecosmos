@@ -117,12 +117,14 @@ typedef std::list<CStaticBattery*> TTrackedBatteries;
 
 // Forward dec
 //template <int SIZE,class ID_TYPE>
-class CBindCollection;
+namespace input {
+    class CBindCollection;
+}
 class CPlayerInputCache;
 
 
 //typedef CBindCollection<NPlayerInput::Count,NPlayerInput::EId> TMappingSet;
-typedef CBindCollection TMappingSet;
+typedef input::CBindCollection TMappingSet;
 
 
 //typedef CBindCollection TPlayerInputCollection;

@@ -11,7 +11,7 @@
 #include <vector>
 #include <fstream>
 #include "../config.hpp"
-#include "IdList.hpp"
+#include "../IdList.hpp"
 #include "../utils/CBitSet.hpp"
 #include "../entities/IMultiModeTransformer.hpp"
 #include "../utils/C2DSprite.hpp"

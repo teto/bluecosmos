@@ -10,35 +10,41 @@
 //#include <fusion/core/CStringBuilder.hpp>
 #include "SCachedState.hpp"
 
+
+namespace input {
+
+
+
 // Forward reference
 class CBindDescriptor;
 class CInputManager;
 
 class CBindFromEventGenerator
-//:
-//    public irr::IEventReciever
 {
 protected:
-    //boost::optional<
     // std::pair<>
     CBindDescriptor _tempDescriptor;
     SBindCache _cachedState;
-    irr::u32 _timeOfProcessingEnd;  //!< time at which we should stop the processing if descriptor
+    TTimeUnit _timeOfProcessingEnd;  //!< time at which we should stop the processing if descriptor
                                     //!< not fully qualified until then
     CInputManager& _inputMgr;
-    //
-    std::stack<SCachedState> _pastStates;
+
+    //TTimeUnit
+    // state/respectQuickDelay
+    std::stack< std::pair <bool,bool> > _pastStates;
 
 public:
     CBindFromEventGenerator (CInputManager&);
 
     //typedef boost::optional<CBindDescriptor> TReturnValue;
     //bool handleEvent(irr::SEvent const&);
-    bool processEvent( irr::u32 const&,irr::SEvent const&);
-    bool processingBind () const { return (_timeOfDescriptorRetrieval != 0);};
-    boost::optional<CBindDescriptor> check(irr::u32 const&) ;
+    bool processEvent( TTimeUnit const&,irr::SEvent const&);
+    bool processingBind () const { return ( _timeOfProcessingEnd != 0);};
+    boost::optional<CBindDescriptor> check(TTimeUnit const&) ;
 
 };
+
+}
 
 
 #endif

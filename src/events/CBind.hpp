@@ -9,8 +9,6 @@
 //#include <fusion/core/CStringBuilder.hpp>
 
 // Forward reference
-class CBindDescriptor;
-
 /*
 // Renommenr en CBindConfiguration / Parameters
 class CBindMode

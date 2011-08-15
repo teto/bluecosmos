@@ -18,6 +18,7 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 #include "defs.hpp"
 
 
+namespace input {
 
 typedef SBimap< irr::EKEY_CODE,std::wstring> TKeyCodeMap;
 typedef SBimap< EInputType,std::wstring> TDeviceCodeMap;
@@ -44,7 +45,7 @@ public:
     //int Id;
     int DeviceId;   //!< Joystick No as seen by irrlicht for example
     ETapMode Mode;
-    boost::optional<irr::u32> RepeatTime;
+    boost::optional<TTimeUnit> RepeatTime;
 //    struct SJoystickParameters {
 //    };
     struct SJoyButton {
@@ -138,5 +139,9 @@ public:
 
     std::wstring generateDescription() const;
 };
+
+
+}
+
 
 #endif

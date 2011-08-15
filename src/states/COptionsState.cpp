@@ -16,6 +16,7 @@
 //#include <fusion/macros.hpp>
 #include <xeffects/XEffects.h>
 #include "../events/CBindCollection.hpp"
+#include "../events/CBindDescriptor.hpp"
 #include "../events/CBindFromEventGenerator.hpp"
 
 using namespace irr;
@@ -23,6 +24,7 @@ using namespace core;
 using namespace video;
 using namespace scene;
 using namespace gui;
+using namespace input;
 
 #define GET_MAPPING(numero) (*engine()->GameConfig.MappingPlayer1)
 //engine()->GameConfig.
@@ -206,7 +208,7 @@ COptionState::OnEvent(const irr::SEvent& event){
                         //id - NGuiIds::Count
 
                         //_indexOfFocusedElement = buttonId;
-                        _descriptorGenerator.reset ( new CBindFromEventGenerator(engine()->getInputManager() ) );
+                        _descriptorGenerator.reset ( new CBindFromEventGenerator( engine()->getInputManager() ) );
 
                         _buttonToUpdate = static_cast<IGUIButton*>( _tabControl->getElementFromId( callerId, true ) );
                         _buttonToUpdate->setText(L"Waiting...");
@@ -292,8 +294,10 @@ COptionState::Update(){
         _INFO << "Checking";
 
     // TCache::TOptional
-        boost::optional<CBindDescriptor> ret =
-                                _descriptorGenerator->check( engine()->device()->getTimer()->getTime() );
+        boost::optional<input::CBindDescriptor> ret =
+                                _descriptorGenerator->check(
+                                                        engine()->device()->getTimer()->getTime()
+                                                            );
 
         if( ret ){
             _INFO << "Generation finished";

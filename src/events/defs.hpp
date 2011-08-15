@@ -6,6 +6,9 @@
 
 #include <irrlicht.h>
 
+
+namespace input {
+
 /*
     enum InputType
     {
@@ -47,18 +50,31 @@ Neutral
 };
 
 
+/*
+// Possible ?
+enum class EButtonState : bool {
+//JustPressed,
+Pressed,
+Released,
+//JustReleased
+}
+*/
+
+// Pourrait renommer ca en EBindTrigger
 // Ca  c des events
 enum class ETapMode {
 DoublePressed
 //, Pressed
-
 , JustPressed
 // On se fout de ceux la en fait
 , JustReleased
 //, Released
 };
 
+typedef irr::u32 TTimeUnit;
 
-extern irr::u32 QuickTapDelay;
+extern TTimeUnit QuickTapDelay;
+
+}
 
 #endif

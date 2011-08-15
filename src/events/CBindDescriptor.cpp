@@ -13,7 +13,7 @@ namespace bbi = boost::bimaps;
 using namespace irr;
 using namespace core;
 
-
+namespace input {
 //std::wstring _unknown = L"Unknown";
 const wchar_t* CBindDescriptor::StrUndefined = L"Unknown";
 
@@ -442,7 +442,7 @@ CBindDescriptor::generateDescription() const
 }
 
 
-
+}
 
 
 //    _povMap.insert( TDeviceCodeMap::TAssociation( CEventManager::POV_UP,  L"Up"));

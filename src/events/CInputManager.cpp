@@ -9,6 +9,8 @@
 using namespace irr;
 using namespace core;
 
+namespace input {
+
 int
 CInputManager::retrieveStateFromDescriptor(CBindDescriptor const& d) {
 
@@ -140,5 +142,6 @@ CInputManager::handleEvent(const SEvent& event){
    return false;
 }
 
+}
 
 

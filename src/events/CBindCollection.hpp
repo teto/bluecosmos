@@ -29,6 +29,8 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 namespace bbi = boost::bimaps;
 
 
+namespace input {
+
 // fwd declaration
 template<class ID_TYPE>
 class IInputCache;
@@ -111,7 +113,7 @@ public:
 
 
     // Essayer de remettre un const devant inputMgr
-    void updateCache( const irr::u32& currentTime, CInputManager& inputMgr, TCache* cache) const;
+    void updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache* cache) const;
 
     // On peut utiliser la fonction map.count()
     // renvoyer un tableau d'iterateur ?
@@ -124,5 +126,7 @@ public:
 //std::pair<typename TDescriptorList::iterator,typename TDescriptorList::iterator> result = _descriptors.equal_range( descriptor );
 //if(result == _descriptors.end())
 //for(auto it(result.first) ; it != result.second; ++it){
+
+}
 
 #endif

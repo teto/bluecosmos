@@ -9,7 +9,7 @@
 #include "../fightingState/CSinglePlayerState.hpp"
 #include "../game_engine.hpp"
 #include <vector>
-#include "IdList.hpp"
+#include "../IdList.hpp"
 #include <fstream>
 #include <algorithm>
 #include <boost/foreach.hpp>

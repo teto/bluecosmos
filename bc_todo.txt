@@ -49,16 +49,14 @@ Events:
 -TODO mettre a jour le playerInput
 -faire mecanisme qui met à jour CbindCollection tout seul
 -supporter les joystick
--creer namespace event::
 -passer la souris/joystick/keyboard en singleton avec des fonctions static comme sfml
 
 
 bc0.3:
--http://www.boost.org/doc/libs/1_47_0/libs/bimap/example/bimap_and_boost/assign.cpp
+-passer les NPlayerInput en enum class
 -constexp
 -pouvoir naviguer dans le menu avec l'input configure p
 -pouvoir redémarrer la fenetre graphique
--faire un truc entre les input device et les variant
 -utiliser cbegin  / cend là où c'est possible
 -utiliser un CNullDriver au début
 -pouvoir mettre les run en cascade

@@ -10,7 +10,7 @@
 #include "../states/CScoreState.hpp"
 #include "../states/CErrorState.hpp"
 #include "../states/CTransitionState.hpp"
-#include "../states/IdList.hpp"
+#include "../IdList.hpp"
 #include "../utils/CParticleManager.hpp"
 #include "../entities/IMultiModeTransformer.hpp"
 #include <fusion/scripting/CLuaThread.hpp>

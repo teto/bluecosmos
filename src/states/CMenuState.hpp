@@ -11,7 +11,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <array>
 #include <boost/ptr_container/ptr_list.hpp>
-#include "IdList.hpp"
+#include "../IdList.hpp"
 //#include "../audio/ISound.hpp"
 #include "../utils/C2DSprite.hpp"
 

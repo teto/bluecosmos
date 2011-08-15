@@ -5,6 +5,12 @@
 #include <map>
 #include "defs.hpp"
 #include "SCachedState.hpp"
+#include "CBindDescriptor.hpp"
+
+namespace input {
+
+
+//class CBindDescriptor;
 
 // passer fullId en parametre template ?
 template<class ID_TYPE>
@@ -30,12 +36,34 @@ public:
 
 
     // todo faire des update_or, update_and etc...
+
     void updateId(TFullId const& fullId, irr::u32 const& currentTime, const bool& currentState,CBindDescriptor const& descriptor) {
 
-        const bool res = ( descriptor.Mode == _states[ fullId ].update( currentTime,descriptor,currentState) );
-        setState(fullId.first,res);
+        SBindCache& cache = _states[ fullId ];
+        ETapMode mode;
+
+        //boost::optional<ETapMode> mode =
+        bool ret = cache.update( currentTime,descriptor,currentState);
+        if( ret ){
+            if(!cache.State){
+                mode = ETapMode::JustReleased;
+            }
+            else if(cache.QuickDelayRespected){
+                mode = ETapMode::DoublePressed;
+            }
+            else {
+                mode = ETapMode::JustPressed;
+            }
+
+            // Set state
+            setState(fullId.first, (mode == descriptor.Mode ) );
+        }
+        //const bool res = ( descriptor.Mode == _states[ fullId ].update( currentTime,descriptor,currentState) );
+
     }
 
 };
+
+}
 
 #endif

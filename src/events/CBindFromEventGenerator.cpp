@@ -11,6 +11,8 @@ using namespace irr;
 using namespace core;
 
 
+namespace input {
+
 CBindFromEventGenerator::CBindFromEventGenerator (CInputManager& inputMgr) :
     _inputMgr(inputMgr),
     _timeOfProcessingEnd(0)
@@ -20,31 +22,58 @@ CBindFromEventGenerator::CBindFromEventGenerator (CInputManager& inputMgr) :
 
 
 boost::optional<CBindDescriptor>
-CBindFromEventGenerator::check( irr::u32 const& time )  {
-
-    BOOST_ASSERT( !_pastStates.empty() );
+CBindFromEventGenerator::check( TTimeUnit const& time )  {
 
 
     boost::optional<CBindDescriptor> ret;
+
 
     //
     if(!processingBind()){
         return ret;
     }
 
+    BOOST_ASSERT( !_pastStates.empty() );
+
+
+
+    ETapMode mode = ETapMode::JustPressed;
+
     // else guess mode according to states
     //time-_timeOfDescriptorRetrieval  > 0
     // 200 est le temps qui permet de decider quel
-    if( (time > _timeOfProcessingEnd) || (_pastStates.size() > 2) ){
+    //// Si la taille est sup à 2 et si duration > 100 => arret premature
+    if( (time > _timeOfProcessingEnd) || (_pastStates.size() > 5)){
+
+        // Process bind mode
+        //log::info() << log::time <<
+        _INFO <<  "Recored states size " << _pastStates.size();
 
         switch(_pastStates.size()){
             case 1:
+                mode = (_pastStates.top().first) ? ETapMode::JustPressed : ETapMode::JustReleased;
+                break;
+
             case 2:
+                mode = ETapMode::JustPressed;
+                break;
+
+            case 3:
+                mode = ETapMode::JustPressed;
+                break;
+
+            case 4:
+                mode = ETapMode::DoublePressed;
+                break;
+
+            case 5: // double pressed
+                mode = ETapMode::DoublePressed;
+                break;
             // ce cas ne devrait jamais arriver
             default: break;
         }
         // TODO a implementer !!
-        _tempDescriptor.Mode = JustPressed;
+        _tempDescriptor.Mode = mode;
 
         // Analyze past
         ret = _tempDescriptor;
@@ -52,11 +81,14 @@ CBindFromEventGenerator::check( irr::u32 const& time )  {
     // Elapsed time for detection of a bind
     // User might destroy this class
     else {
-        _cachedState.update(time,_tempDescriptor, _inputMgr.retrieveStateFromDescriptor(_tempDescriptor) );
+        //boost::optional<ETapMode> mode =
+        bool ret = _cachedState.update(time,_tempDescriptor, _inputMgr.retrieveStateFromDescriptor(_tempDescriptor) );
+        if(ret){
 
-        // if state changed then we add it for further processing later on
-        if( _pastStates.top() != _cachedState.PastValue){
-            _pastStates.push( _cachedState.PastValue );
+            //bool RespectQuickDelay
+            //_pastStates.push( _cachedState.State );
+            // Register old state_cachedState.OldDuration
+            _pastStates.push( std::make_pair(!_cachedState.State,_cachedState.QuickDelayRespected) );
         }
 
     }
@@ -66,8 +98,9 @@ CBindFromEventGenerator::check( irr::u32 const& time )  {
 
 
 
+
 bool
-CBindFromEventGenerator::processEvent( irr::u32 const& time,irr::SEvent const& e) {
+CBindFromEventGenerator::processEvent( TTimeUnit const& time,irr::SEvent const& e) {
 
 
 
@@ -87,7 +120,7 @@ CBindFromEventGenerator::processEvent( irr::u32 const& time,irr::SEvent const& e
                     //_cachedState.update(time,_tempDescriptor,true);
                     _cachedState.update(time,_tempDescriptor,e.KeyInput.PressedDown);
 
-                    _pastStates.push( _cachedState.PastValue );
+                    _pastStates.push( std::make_pair(_cachedState.State,false) );
                 //}
                 return true;
 
@@ -312,3 +345,5 @@ CBindDescriptor::matchesJoystickEvent(const irr::SEvent::SJoystickEvent& event) 
 
 
 */
+
+}

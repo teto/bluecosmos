@@ -5,11 +5,14 @@
 #include <array>
 #include "CBindDescriptor.hpp"
 
-
-// Fwd declaration
 class CIrrlichtMouseDevice;
 class CIrrlichtKeyboardDevice;
 class CIrrlichtJoystickDevice;
+
+
+namespace input {
+// Fwd declaration
+
 class CBindDescriptor;
 
 //enum class EInputType;
@@ -53,7 +56,7 @@ private:
 };
 
 
-
+}
 
 
 #endif

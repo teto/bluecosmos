@@ -18,7 +18,7 @@
 #include "audio/IAudioDriver.hpp"
 #include "entities/IMultiModeTransformer.hpp"
 #include "states/IGameState.hpp"
-#include "states/IdList.hpp"
+#include "IdList.hpp"
 #include "events/CInputManager.hpp"
 #include "utils/IGUIConsole.hpp"
 #include  <xeffects/XEffects.h>
@@ -63,7 +63,7 @@ _fpsCamera(0),
 mLastTime(0),
 _driver(0),
 _smgr(0),
-_inputManager( new CInputManager()),
+_inputManager( new input::CInputManager()),
 _console(0),
 mElapsedTime(0),
 IStateManager(),
@@ -242,6 +242,7 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
 
     _internalState = NEngineState::Error;
 
+    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
 
     gui::IGUIWindow* window = gui()->addMessageBox(
                                         caption,            // title
@@ -251,12 +252,20 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
                                         //EMBF_OK|EMBF_CANCEL
                                         _messageBoxesTab                //parent
                                         );
+
+    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
+
+    // TODO checker si ca cree 2 enfants ou 1 seul
     _messageBoxesTab->addChild(window);
     _messageBoxesTab->setVisible(true);
 
+    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
+
 
     // Put it in front of others
-    gui()->getRootGUIElement()->bringToFront(_messageBoxesTab);
+    if(!gui()->getRootGUIElement()->bringToFront(_messageBoxesTab) ) {
+        _LOG_WARNING << "Could not bring element to front";
+    }
 
     //_INFO << "Popping up  message box [" << window << "]";
     //const wchar_t*
@@ -613,15 +622,18 @@ CGameEngine::eventToMainHandler(const SEvent& event){
                 case gui::EGET_MESSAGEBOX_OK:
 
                     _INFO << "Message box ok detected";
+                    _INFO << "children nb" <<  _messageBoxesTab->getChildren ().size();
                     // TODO checker qu'il n'y a plus d'enfant
                     // if( _messageBoxesTab->isMyChild (caller)) {
                     if( (caller->getParent() == _messageBoxesTab) ){
 
-                        _INFO << "caller is child of messageBox";
+                        _INFO << "caller is child of messageBox:";
+
                         //caller->remove()
 
-                        if( _messageBoxesTab->getChildren ().empty() ){
+                        if( _messageBoxesTab->getChildren ().size() == 1){
 
+                            _INFO << "MessageBox has no children left";
                             //
                             _internalState = NEngineState::Running;
                             _messageBoxesTab->setVisible(false);

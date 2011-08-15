@@ -246,6 +246,7 @@
 		<Unit filename="src\events\IInputDevice.hpp" />
 		<Unit filename="src\events\SCachedState.cpp" />
 		<Unit filename="src\events\SCachedState.hpp" />
+		<Unit filename="src\events\defs.cpp" />
 		<Unit filename="src\events\defs.hpp" />
 		<Unit filename="src\events\joystickDevice.cpp" />
 		<Unit filename="src\events\joystickDevice.hpp" />

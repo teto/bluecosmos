@@ -3,6 +3,7 @@
 #include "events/CBindCollection.hpp"
 
 using namespace irr;
+using namespace input;
 
 SIngameConfig::SIngameConfig() :
     EnableBloomShader(false)
@@ -42,8 +43,8 @@ try {
     //MappingPlayer1->addBind(NPlayerInput::MoveLeft, temp);
     //.Mode = ETapMode::Pressed;
     // si on ne precise pas le param alors c'est 0;
-    ADD_BIND(NPlayerInput::MoveLeft,L"Left",ETapMode::Pressed,0);
-    ADD_BIND(NPlayerInput::MoveLeft,L"Right",ETapMode::Pressed,0);
+    ADD_BIND(NPlayerInput::MoveLeft,L"Left",ETapMode::JustPressed,0);
+    ADD_BIND(NPlayerInput::MoveLeft,L"Right",ETapMode::JustPressed,0);
 
     /*MappingPlayer1->addBind( NPlayerInput::MoveLeft, CBindDescriptor(ETapMode::Pressed) );
     MappingPlayer1->addBind( NPlayerInput::MoveLeft, CBindDescriptor(L"Left") );

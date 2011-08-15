@@ -42,8 +42,8 @@ main (int argc, char *argv[]){
 
     // TODO appels des fct statique
 
-    initializeKeycodes();
-    initializeDeviceCodes();
+    input::initializeKeycodes();
+    input::initializeDeviceCodes();
     //CEventManager::initStaticMembers();
 
     // If more than one param than next param is filename of config to load

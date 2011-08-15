@@ -19,7 +19,9 @@
 
 // Xeffects
 class EffectHandler;
-class CBindFromEventGenerator;
+namespace input {
+    class CBindFromEventGenerator;
+}
 
 class COptionState :
     public IGameState<NStateId::Options,false>
@@ -56,7 +58,7 @@ const irr::core::recti _MENU_BUTTON_RECT(0,0,_BUTTON_WIDTH,_BUTTON_HEIGHT);
 */
     //static void decal(irr::core::recti& pos,const float& x,const float& y);
 
-    boost::scoped_ptr<CBindFromEventGenerator> _descriptorGenerator;
+    boost::scoped_ptr<input::CBindFromEventGenerator> _descriptorGenerator;
 
 protected:
     void setButtonValue(NPlayerInput::EId const& id);

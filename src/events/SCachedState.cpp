@@ -1,55 +1,82 @@
 #include "SCachedState.hpp"
-#include "SCachedState.hpp"
+#include "CBindDescriptor.hpp"
+
+
+namespace input {
+
+//
+//bool
+//SCachedState::operator==(const SCachedState& p) const {
+//
+//    return ( (Duration == p.Duration) && (p.State == State ) );
+//}
+//
+//
+//bool
+//SCachedState::operator!=(const SCachedState& p) const {
+//    return !(*this == p);
+//}
+//
 
 //: _LastButOne(0), _lastPress(0)
 SBindCache::SBindCache() :
-    NextPress(0)
+    //NextPress(0)
+    //,
+    OldDuration(0)
+    , State(false)  //EButtonState::Released)
     , TimeOfLastStateChange(0)
     , TimeOfNextRepeat(0)
     , QuickDelayRespected(false)
 {
-    PastValue = std::make_pair(0,0);
+    //PastValue = std::make_pair(0,0);
     //Values[1] = std::make_pair(0,0);
 }
 
 
-
-bool
-SBindCache::believedState() const {
-    return !PastValue.state;
-}
+//
+//bool
+//SBindCache::believedState() const {
+//    return !PastValue.State;
+//}
 
 
 // TODO configuré juste pr les JustPressed pr l'instant
 //bool
-ETapMode
+//ETapMode
+// passer un boost::optional< repeatTime plutot que le descriptor
+//
+//boost::optional<TTimeUnit>& const repeatTime
+// bool autorepeat / timerepeat
+bool
 SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool const& currentState) {
 
-    BOOST_ASSERT(TimeOfLastStateChange < currentTime);
+    //_INFO << "Current time" << currentTime << "/" << TimeOfLastStateChange;
+    BOOST_ASSERT( (TimeOfLastStateChange <= currentTime) && "Current time should be bigger than last time");
 
-    ETapMode mode ;
+    //boost::optional<SCachedState> mode;
+    //EButtonState mode ;
+
+    bool ret = false;
 
     // If states are the same as previous one
-    if(currentState == this->believedState() ) {
+    if(currentState == State) {
 
-        // if state up and autorepeat enabled for that descriptor
-        // (d.Mode != JustReleased)
-        // TODO on pourrait generaliser ca au justReleased
-        if(currentState){
-
-            if(d.isAutorepeatEnabled() && (d.Mode == ETapMode::JustPressed) ){
+//&& (d.Mode == ETapMode::JustPressed)
+            if( d.isAutorepeatEnabled() ){
 
                 /// if should be repeated
                 if( currentTime < TimeOfNextRepeat ){
 
                     // set next trigger
-                    TimeOfNextRepeat += (*currentTime.RepeatTime);
+                    //TimeOfNextRepeat += (*currentTime.RepeatTime);
+                    TimeOfNextRepeat += (*d.RepeatTime);
                     QuickDelayRespected = false;
-                    return true;
-                    //mode = ETapMode::JustPressed;
+                    //return true;
+                    //mode = EButtonState::JustPressed;
+                    ret = true;
                 }
             }
-        }
+
 //        else {
 //            mode = ETapMode::Released ;
 //        }
@@ -59,41 +86,22 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
     /// if State differ from last one
     else {
 
+        State = currentState;
+        ret = true;
         TimeOfLastStateChange = currentTime;
 
-        SCachedState newCache = {};
-        newCache.Duration = currentTime - TimeOfLastStateChange;
-        newCache.State = currentState;
+        const TTimeUnit newDuration = currentTime - TimeOfLastStateChange;
 
+        if( currentState == true){
 
-        // compute duration
-        //const irr::u32 currentDuration = currentTime - TimeOfLastStateChange;
-        // remplacer 100 par QuickTapDelay
-        // (PastValue.duration < QuickTapDelay) &&
-
-        //NextPress
-        if( currentState == false){
-            mode = ETapMode::JustReleased;
-        }
-        // If new state is true
-        // check for double Tap
-        else if( (d.Mode == ETapMode::DoublePressed) && (newCache.Duration < QuickTapDelay) && ){
-                mode = ETapMode::DoublePressed;
-                //= true;
-
-            //DoubleTapDelay > currentTime){
-
-
-        }
-        // Otherwise singleTap
-        else {
-            mode = ETapMode::JustPressed;
+            QuickDelayRespected = ((newDuration < QuickTapDelay) && (OldDuration < QuickTapDelay) ) ? true : false;
+//            mode = EButtonState::JustPressed;
         }
 
-        PastValue = newCache;
+        OldDuration = newDuration;
     }
     //return std::move(mode);
-    return mode;
-    //return ( d.Mode == mode);
-    //return false;
+    return ret;
+}
+
 }
