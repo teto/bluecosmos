@@ -49,13 +49,15 @@ Events:
 -TODO mettre a jour le playerInput
 -faire mecanisme qui met à jour CbindCollection tout seul
 -supporter les joystick
--passer la souris/joystick/keyboard en singleton avec des fonctions static comme sfml
+-passer la souris/keyboard en singleton avec des fonctions static comme sfml (factory pr les controlleurs de Joystick ?)
 
 
 bc0.3:
+-dans logging.lua, les loggers devraient pouvoir logger un nombre indefini de parametres
+-luabind pouvoir binder les enums C++.
+-differencier soundManager du musicManager
 -passer les NPlayerInput en enum class
 -constexp
--pouvoir naviguer dans le menu avec l'input configure p
 -pouvoir redémarrer la fenetre graphique
 -utiliser cbegin  / cend là où c'est possible
 -utiliser un CNullDriver au début
@@ -81,11 +83,12 @@ bug de CSinglePlayer c'est qu'il genre pas les flottes, mieux gerer les etats !
 -TODO Ne pas calculer le within screen a ttes les frames, le mettre en dehors de update => checker depuis le CLevelManager
 descr = Player:getMappingDescription(CPlayer.Forward);
 -améliorer le logger: std::boolalphad
--double clic gauche augmente la cadence et chauffe plus vite donc
+-double press augmente la cadence et chauffe plus vite donc
 
 
 
 Roadmap 0.4:
+-pouvoir naviguer dans le menu avec l'input configure
 -pouvoir selectionner plusieurs mappings pr plusieurs jouers
 -mettre en place d'un systeme d'objectif
 -utiliser emplace_front dans CFleet

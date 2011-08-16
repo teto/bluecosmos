@@ -168,13 +168,15 @@ CSinglePlayerState::setupLuaThread(){
 
     TScriptingVM& vm = engine()->getScriptingVM();
 
+    // TODO certainement qu'on peut mieux faire ici
     _script.reset( new fus::CLuaThread( vm.getVM() ) );
     //TScriptingVM& vm = engine()->
 
     try {
 
         luabind::object global_vars;
-        _script->getGlobals(global_vars);
+        //_script->getGlobals(global_vars);
+        vm.getGlobals(global_vars);
 
         global_vars["Engine"] = engine();
         global_vars["Player"] = _player;

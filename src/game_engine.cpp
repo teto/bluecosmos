@@ -242,7 +242,7 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
 
     _internalState = NEngineState::Error;
 
-    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
+    //_INFO <<  "msgBox tab children size before adding popup" << _messageBoxesTab->getChildren ().size();
 
     gui::IGUIWindow* window = gui()->addMessageBox(
                                         caption,            // title
@@ -253,13 +253,13 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
                                         _messageBoxesTab                //parent
                                         );
 
-    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
+    //_INFO <<  "msgBox tab children size before addChild() " << _messageBoxesTab->getChildren ().size();
 
     // TODO checker si ca cree 2 enfants ou 1 seul
     _messageBoxesTab->addChild(window);
     _messageBoxesTab->setVisible(true);
 
-    _INFO <<  "msgBox tab " << _messageBoxesTab->getChildren ().size();
+    //_INFO <<  "msgBox tab children size after addChild" << _messageBoxesTab->getChildren ().size();
 
 
     // Put it in front of others
@@ -269,7 +269,7 @@ CGameEngine::popupMessage(const wchar_t* caption,const wchar_t* longDescription)
 
     //_INFO << "Popping up  message box [" << window << "]";
     //const wchar_t*
-    _LOG_ERROR << "Messagebox error:" << longDescription ;
+    //_LOG_WARNING << "Messagebox error message:" << longDescription ;
 
     this->showCursor(true);
 }
@@ -621,24 +621,26 @@ CGameEngine::eventToMainHandler(const SEvent& event){
 
                 case gui::EGET_MESSAGEBOX_OK:
 
-                    _INFO << "Message box ok detected";
-                    _INFO << "children nb" <<  _messageBoxesTab->getChildren ().size();
+                    _INFO << "Message box ok detected !";
+                    //_INFO << "children nb" <<  _messageBoxesTab->getChildren ().size();
                     // TODO checker qu'il n'y a plus d'enfant
                     // if( _messageBoxesTab->isMyChild (caller)) {
                     if( (caller->getParent() == _messageBoxesTab) ){
 
-                        _INFO << "caller is child of messageBox:";
+                        //_INFO << "caller is child of messageBoxTab:";
 
-                        //caller->remove()
+                        caller->remove();
 
-                        if( _messageBoxesTab->getChildren ().size() == 1){
 
-                            _INFO << "MessageBox has no children left";
+                        //if( _messageBoxesTab->getChildren ().size() == 1){
+                        if( _messageBoxesTab->getChildren ().empty()){
+
+                            _INFO << "MessageBox has no children left, setting it to invisible";
                             //
                             _internalState = NEngineState::Running;
                             _messageBoxesTab->setVisible(false);
                         }
-                        return false;
+                        return true;
                     }
 
 
@@ -673,9 +675,7 @@ CGameEngine::eventToMainHandler(const SEvent& event){
             // et checke si elle est pressee
             switch (event.KeyInput.Key){
 
-//                case irr::KEY_ESCAPE: // switch wire frame mode
-//                    //Quit(ELL_INFORMATION,"escape pressed");
-//                    SwitchBit(NBit::Pause);
+//                case irr::KEY_ESCAPE:
 //                    //return true;
 
                 case KEY_F1:
@@ -684,13 +684,13 @@ CGameEngine::eventToMainHandler(const SEvent& event){
 // TODO la mettre sous forme de state ?
                     // TODO
                     //_internalState = NEngineState::Console;
-                    //bool result =
-                    _console->setVisible( SwitchBit(NBit::Console) );
-                    //gui()->setFocus(_console);
-//                    if( SwitchBit(NBit::Console) ){
-//                        gui()->setFocus( _console );
-//                    }
-
+                    {
+                        bool result = SwitchBit(NBit::Console);
+                        _console->setVisible( result );
+                        if(result){
+                            gui()->getRootGUIElement()->bringToFront( _console );
+                        }
+                    }
 
                     return true;
 

@@ -114,6 +114,8 @@
 		<Unit filename="libs\fusion\logging\irrlicht_operators.hpp" />
 		<Unit filename="libs\fusion\macros.hpp" />
 		<Unit filename="libs\fusion\maths\macros.hpp" />
+		<Unit filename="libs\fusion\scripting\CLuaManager.cpp" />
+		<Unit filename="libs\fusion\scripting\CLuaManager.hpp" />
 		<Unit filename="libs\fusion\scripting\CLuaThread.cpp" />
 		<Unit filename="libs\fusion\scripting\CLuaThread.hpp" />
 		<Unit filename="libs\fusion\scripting\CLuaVM.cpp" />
@@ -146,14 +148,14 @@
 		<Unit filename="scores.xml" />
 		<Unit filename="scripts\activators.lua" />
 		<Unit filename="scripts\init_engine.lua" />
+		<Unit filename="scripts\logging.lua" />
 		<Unit filename="scripts\manager.lua" />
-		<Unit filename="scripts\missile.lua" />
 		<Unit filename="scripts\move.lua" />
 		<Unit filename="scripts\player.lua" />
-		<Unit filename="scripts\sound_manager.lua" />
 		<Unit filename="scripts\spawn.lua" />
 		<Unit filename="scripts\strict.lua" />
 		<Unit filename="scripts\update.lua" />
+		<Unit filename="scripts\wrappers.lua" />
 		<Unit filename="shaders\BloomP.glsl" />
 		<Unit filename="shaders\BlurHP.glsl" />
 		<Unit filename="shaders\BlurVP.glsl" />
@@ -177,6 +179,7 @@
 		<Unit filename="src\IEngineConfig.hpp" />
 		<Unit filename="src\IGameEngine.cpp" />
 		<Unit filename="src\IGameEngine.hpp" />
+		<Unit filename="src\IdList.hpp" />
 		<Unit filename="src\audio\CFModExDriver.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -307,7 +310,6 @@
 		<Unit filename="src\states\IGameState.hpp" />
 		<Unit filename="src\states\IStateManager.cpp" />
 		<Unit filename="src\states\IStateManager.hpp" />
-		<Unit filename="src\states\IdList.hpp" />
 		<Unit filename="src\utils\C2DSprite.cpp" />
 		<Unit filename="src\utils\C2DSprite.hpp" />
 		<Unit filename="src\utils\C2DSpriteList.hpp" />

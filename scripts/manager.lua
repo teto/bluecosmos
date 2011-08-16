@@ -21,7 +21,7 @@ end
 
 
 luaManager = {
-	ReturnCodes = { 
+	ReturnCodes = {
 					["WaitingForInput"] = 1,
 					["CreateNewTask"] = 2,
 				};
@@ -181,6 +181,9 @@ end
 function luaManager:addDummyTask(id)
 end
 
+
+
+
 -- function followed by its initialisation argument activator,
 -- parentId
 function luaManager:addTask( id,  fn , ... )
@@ -215,10 +218,10 @@ function luaManager:addTask( id,  fn , ... )
 	task["subtask_ids"] 	= {}				-- children
 	task["blocking"] 		= false			-- if blocks parent
 	task["blocked"] 		= false					-- each blocking child adds 1 when alive to this number (-1 when they die)
+--task["description"]   = "No description";
 
 
-
-	log_info("New Task with id ["..id.."] :");
+	log_info("New Task with id ["..id.."]");
 	return id;
 end
 
@@ -246,7 +249,7 @@ function luaManager:resume_coroutine( id, co, ...)
 					--log_error("Could not start coroutine ! Error ["..value.."]\nArguments: ");
 					error("Could not start coroutine !\nError ["..new_task_id.."]\nArguments: "..debug.traceback(co));
 					--return false;
-			
+
 				elseif code == luaManager.ReturnCodes.WaitingForInput then
 					log_info("Waiting for input");
 					local reply = -1;
@@ -290,7 +293,10 @@ end
 -- reflechit a tt
 function luaManager:update(elapsedTime)
 
-    print ( "Top Running coroutine " , coroutine.running() )
+    --Returns the running coroutine plus a boolean, true when the running coroutine is the main one
+    log_info ( "Running coroutine " , coroutine.running() )
+    -- should be an assert,even !
+
 	--print("Luamanager update");
 	--ipairs iterates over indexes
     for id,task in ipairs(self.tasks) do

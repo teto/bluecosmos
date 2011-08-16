@@ -33,9 +33,10 @@ void stackDump (lua_State *L);
     //int lua_sethook (lua_State *L, lua_Hook f, int mask, int count);
 
 
-class CLuaVM :
-    public IInterpreter
+class CLuaManager :
+    public CSingleton<CLuaManager>
 {
+    friend class CSingleton<CLuaManager>;
 
 public:
 

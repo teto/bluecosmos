@@ -1,4 +1,6 @@
 
+--log_info("stop main thread");
+
 --print("Got elasped time");
 _G["elapsedTime"] = Engine:getElapsedTime();
 --=
@@ -10,12 +12,9 @@ _G["elapsedTime"] = Engine:getElapsedTime();
 -- stop updating player input when dialoguing for example
 --if( MainState:isPlayerUpdatable() ) then
 --print("update player");
---local test = coroutine.running();
---print( "test",test);
-
-log_info("stop main thread");
-
-log_error ("FAIL");
+--local co,main = coroutine.running();
+--print( "Running coroutine (from update.lua) " , main )
+--log_info("stop main thread");
 
 luaManager:update();
 

@@ -106,6 +106,8 @@ protected:
 
 //!< Inform what tab we are on
 //renommer en _tabControl
+    //std::array<const wchar_t*, NPlayerInput::Count >;
+
     irr::core::rectf _pos;
     irr::gui::IGUITab* _overallTab;
     irr::gui::IGUITabControl* _tabControl;

@@ -236,7 +236,7 @@ IGUIConsole::OnEvent(const SEvent& event) {
 
                     case EGET_ELEMENT_FOCUSED:
                         // TODO donner le focus a l'editBox
-                        Environment->setFocus( _editBox );
+                        //Environment->setFocus( _editBox );
                         break;
                     case EGET_ELEMENT_LEFT:
                         break;

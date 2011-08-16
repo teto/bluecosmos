@@ -1,3 +1,9 @@
+/**
+
+DEPRECATED
+To be replaced with a luaManager
+
+**/
 #ifndef _FUSION_CLUASCRIPT_HPP_INCLUDED
 #define _FUSION_CLUASCRIPT_HPP_INCLUDED
 

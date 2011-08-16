@@ -4,9 +4,10 @@
 	Logger.Log(Logger.Notice, "LUA:\t"..tostring(msg) );
 end  ]]
 
+-- TODO log_info(...) for i,j in pairs( {...} ) do:
 function log_info(msg)
 
-	
+
 --
 --
 	Logger.Log(Logger.Notice, "LUA:\t"..tostring(msg) );

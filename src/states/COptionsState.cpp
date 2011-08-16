@@ -29,10 +29,22 @@ using namespace input;
 #define GET_MAPPING(numero) (*engine()->GameConfig.MappingPlayer1)
 //engine()->GameConfig.
 #define GENERATE_DESCRIPTION(keymap)  keymap.generateDescription().c_str()
-#define TRANSLATED_ID(id,numero) (id*1000 + 10000 + numero)
-//#define TRANSLATED_ID(id) (id*1000 + 10000 + 1)
+
+//template<int id,int numero> struct TRANSLATED_ID() { return (id*1000 + 10000 + numero);};
+// Numero should be either 0 or 1
+int TRANSLATED_ID(const int& id, const int& numero) { return (id*1000 + 10000 + numero);};
 //#define UNTRANSLATE_ID(id) if(id > 20000){ id -= 20000;} else { id -= 10000; }
 
+std::pair<NPlayerInput::EId,int>
+UNTRANSLATE_ID(const int& id) {
+    //button1->setText( GET_MAPPING(1)[std::make_pair(id,0)].generateDescription().c_str() );
+    int iId = static_cast<int>(id);
+    int numero = iId%2;
+
+    return std::make_pair( static_cast<NPlayerInput::EId>( (iId - numero)%1000 ) , numero );
+}
+
+/*
 inline std::pair<NPlayerInput::EId,std::size_t>
 UNTRANSLATE_ID(const int& translatedId) {
 
@@ -45,7 +57,7 @@ UNTRANSLATE_ID(const int& translatedId) {
     return ret;
     //}
 }
-
+*/
 
 
 
@@ -66,42 +78,19 @@ COptionState::~COptionState(){
     _overallTab->remove();
 }
 
-//,CBindDescriptor const& key
-//irr::gui::IGUIButton*
+
+
 void
 COptionState::setButtonValue( NPlayerInput::EId const& id) {
-
-//    irr::gui::IGUIButton* button1 = 0, *button2 = 0;
-//    button1 = static_cast<irr::gui::IGUIButton*>( _tabControl->getElementFromId( TRANSLATED_ID1(id) ,true));
-//    button2 = static_cast<irr::gui::IGUIButton*>( _tabControl->getElementFromId( TRANSLATED_ID2(id) ,true));
-//
-//    BOOST_ASSERT(button1 && button2);
-//    //FROM_TRANSLATED_ID
-//    //1 = engine()->GameConfig.Keymap1[id];
-//    //CBindDescriptor& key2 = engine()->GameConfig.Keymap2[id];
-//
-//    //button1->setText( engine()->GameConfig.Keymap1[id].generateDescription().c_str());
-//    button1->setText( GENERATE_DESCRIPTION( Keymap1[id] ) );
-//    button1->setToolTipText(L"Click to change mapping");
-//
-//    button2->setText( GENERATE_DESCRIPTION( Keymap2[id] ) );
-//    button2->setToolTipText(L"Click to change mapping");
-    //std::vector<CBindDescriptor> temp;
 
 
     irr::gui::IGUIButton* button1 = 0, *button2 = 0;
 
-    //TMappingSet::TIdDescriptors temp;
-
-//    irr::gui::IGUIButton* button1 = 0;
     button1 = static_cast<irr::gui::IGUIButton*>( _tabControl->getElementFromId( TRANSLATED_ID(id,0) ,true) );
+    button2 = static_cast<irr::gui::IGUIButton*>( _tabControl->getElementFromId( TRANSLATED_ID(id,1) ,true) );
 
-    //std::size_t size = GET_MAPPING(1)->getDescriptors(id,temp);
-//GENERATE_DESCRIPTION(temp[0]->first)
-        button1->setText( GET_MAPPING(1)[std::make_pair(id,0)].generateDescription().c_str() );
-
-        //button1->setText( CBindDescriptor::StrUndefined );
-
+    button1->setText( GET_MAPPING(1)[std::make_pair(id,0)].generateDescription().c_str() );
+    button2->setText( GET_MAPPING(1)[std::make_pair(id,1)].generateDescription().c_str() );
 
 }
 
@@ -310,11 +299,14 @@ COptionState::Update(){
                 fus::TWCharStringBuilder str("Bind [");
                 str( ret->generateDescription().c_str() )("] already bound to other bind [");
                 // TODO recuperer un id en lettres
-                str(checkForDouble->first)("]");
+                str(checkForDouble->first)("/")(checkForDouble->second)("]");
 
-
-                engine()->popupMessage(L"Bind already registered with ", str.str().c_str() );
-
+                engine()->popupMessage(L"Bind already registered with []", str.str().c_str() );
+                //button1->setText( GET_MAPPING(1)[std::make_pair(id,0)].generateDescription().c_str() );
+                // untranslateId
+                std::pair<NPlayerInput::EId,int> fullId = UNTRANSLATE_ID( _buttonToUpdate->getID() );
+                //_INFO << "fullId " << fullId->second;
+                _buttonToUpdate->setText( GET_MAPPING(1)[ fullId ].generateDescription().c_str()  );
             }
             // TODO set new value
             else {
@@ -498,8 +490,6 @@ COptionState::createBindLine(wchar_t const* name,const NPlayerInput::EId& id,IGU
                 );
 
         //_buttonsMap.insert( std::make_pair(button,id) );
-/*
-        pairIds.first = button->getID();
 
         xDecal(pos,5);
         //pos.LowerRightCorner
@@ -507,13 +497,11 @@ COptionState::createBindLine(wchar_t const* name,const NPlayerInput::EId& id,IGU
         button = gui()->addButton(
                 pos
                 , tab
-                , 0
+                //, 0
+                , TRANSLATED_ID(id,1)
                 , L"" //GENERATE_DESCRIPTION( Keymap2[id] )
                 , L"Click to change mapping"
                 );
-
-    pairIds.second = button->getID();
-    */
 
 }
 

@@ -28,11 +28,11 @@ addIndependantTask(
         --print("activator called!");
 		--onReach(0.01)
 		--luaManager:addBlockingTask( function () return onReach(0.01) end);
-        while not onReach(0.01) do
+        while not onReach(0.1) do
             coroutine.yield();
         end
 
-        print("POINT REACHED !!!");
+        log_info("POINT REACHED !!!");
         spawnFront(3,"spacefighter");
 
     end
@@ -40,7 +40,7 @@ addIndependantTask(
 
 
 -- TODO a generaliser
-
+--[[
 function startDialog(actor,speech)
 	log_info("Starting dialog");
 
@@ -49,7 +49,7 @@ function startDialog(actor,speech)
 	return coroutine.yield(luaManager.ReturnCodes.WaitingForInput);
 end
 
---[[
+
 addIndependantTask(
     nil,
     function ()

@@ -91,15 +91,17 @@ CSinglePlayerState::updatePlaying(){
     //////   Execute lua code
     /////////////////////////////////////////////////////
 
+    // TODO a optimiser en loadant un chunk
     const char* filename = "scripts/update.lua";
 
-
-    _initialized = _script->RunFile(filename);
+    //_initialized =  _script->RunFile(filename);
+    _initialized =  engine()->getScriptingVM().RunFile(filename);
     if(!_initialized){
 
         _LOG_ERROR << "Can't run [" << filename << "] from " << __LINE__ << ":" << __FILE__;
 
-        engine()->popupMessage(L"Lua thread error",_script->getErrorDescription() );
+        //engine()->popupMessage(L"Lua thread error",_script->getErrorDescription() );
+        engine()->popupMessage(L"Lua thread error",engine()->getScriptingVM().getErrorDescription() );
     }
 
 }
