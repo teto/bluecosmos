@@ -80,14 +80,10 @@ namespace NPlayState {
 }
 
 class CSinglePlayerState :
-public IGameState<NStateId::Solo,true>
+    public IGameState<NStateId::Solo,true>
 {
 private:
-    //float _up;
-    //irr::core::stringw getScoreString() const;
-    //irr::scene::ICameraSceneNode* _cameras[NCamera::Count];
-    //irr::scene::ICameraSceneNode* _cameras[NCamera::Count];
-    //float _vitesseCam;
+
     typedef std::pair<CSpeaker*,CSpeech*> TDialog;
     //TDialog _dialog;
     TPlayerReply _lastPlayerReply;
@@ -112,14 +108,7 @@ std::string _levelFilename;
     gui::IGUIListBox* _answers;
 
 protected:
-//    //* etc...
-//    enum ECamera {
-//    LeftHUD,
-//    RightHUD,
-//    Scene,
-//    Flying,
-//    Count
-//    };
+
     void GUI_CreateDialogTab();
 
     void updateDialog();
@@ -190,7 +179,7 @@ public:
 
 
 
-    boost::scoped_ptr<fus::CLuaThread> _script;
+    boost::scoped_ptr<fus::CLuaVM> _script;
     irr::scene::ISceneNode* _world;
 
 

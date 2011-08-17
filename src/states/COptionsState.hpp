@@ -48,34 +48,17 @@ public:
 	void Update();
 	void Draw();
 
-/*
-const irr::core::position2di _BUTTON_GAP(5,_BUTTON_HEIGHT + 10);
-//const irr::core::recti _MENU_RECT_BUTTON();
-#define _MENU_DECAL_RECT(x) (x) += _BUTTON_GAP;
-
-extern const int _BUTTON_WIDTH;
-const irr::core::recti _MENU_BUTTON_RECT(0,0,_BUTTON_WIDTH,_BUTTON_HEIGHT);
-*/
-    //static void decal(irr::core::recti& pos,const float& x,const float& y);
-
     boost::scoped_ptr<input::CBindFromEventGenerator> _descriptorGenerator;
 
 protected:
     void setButtonValue(NPlayerInput::EId const& id);
-    void createBindLine(wchar_t const* name,NPlayerInput::EId const& id, irr::gui::IGUITab* tab);
+    void createBindLine(NPlayerInput::EId const& id, irr::gui::IGUITab* tab);
 
     bool waitingNewBind() const {
         //return (_indexOfFocusedElement >= 0);
         //return (_translatedIdToUpdate);
         return (_descriptorGenerator);
     }
-//
-//    updateDescription(CBind) const {
-//
-//    }
-    //CBindEntry* getMapping();
-    //int getMappingId();
-
 
 // TODO unused !!
     bool processEventForSoundTab(const irr::SEvent::SGUIEvent& event);

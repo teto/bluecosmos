@@ -348,14 +348,6 @@ CBindDescriptor::setup(wchar_t* const& key) {
     //return setup(EInputType::Keyboard, ret );
 }
 
-//bool setup(char* const strType);
-
-//const std::wstring name,
-//CBindDescriptor::CBindDescriptor(const EInputType& device,const int& id)
-//{
-//    //return
-//    setup(device,id);
-//}
 
 EInputType
 CBindDescriptor::getInputType() const {
@@ -366,8 +358,6 @@ CBindDescriptor::getInputType() const {
 bool
 CBindDescriptor::undefined() const {
     return ( (getInputType() == EInputType::None) );
-    //return Value.empty() ;
-
 };
 
 
@@ -377,21 +367,11 @@ CBindDescriptor::operator==(const CBindDescriptor& d) const
 {
     // Le device peut etre enregistre dans le variant !!
     // Value.which();
-    //if(Device != d.Device) return false;
     if(Mode != d.Mode) return false;
-    //switch(Device)(Id != map.Id) return false;
     return (Value == d.Value);
-    //return true;
 }
 
-//bool
-//CBindDescriptor::operator<(const CBindDescriptor& descriptor) const {
-////    return (Device != descriptor.Device);
-////    if(Device != descriptor.Device ){
-////        return
-////    }
-//    return KeyCode < descriptor.KeyCode;
-//}
+
 
 
 // Binder un operateur >>

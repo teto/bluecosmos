@@ -40,11 +40,6 @@ CBindCollection::updateCache( TTimeUnit const& currentTime, CInputManager& input
 //    //return std::move(cache);
 //}
 
-//const CBindDescriptor&
-//CBindCollection::operator[](TBindId const& id) {
-//
-//    return (*this)[FULL_ID(id,0) ];
-//}
 
 /**
 modify_data to replace
@@ -59,8 +54,6 @@ CBindCollection::operator[](TFullId const& fullId) {
     // Throw if doesn't exist
     //return _descriptors.left[fullId];
     return _descriptors[fullId];
-
-
 };
 
 
@@ -93,15 +86,10 @@ CBindCollection::setBind(TFullId const& fullId,CBindDescriptor const& descriptor
 }
 
 
-
-//boost::optional< std::vector<TFullId> >
 std::vector< CBindCollection::TFullId >
-// ok car dans un map, les iterators ne sont pas invalides
-//std::vector< TDescriptorList::iterator>
 CBindCollection::getAssociatedIds( const CBindDescriptor & descriptor, std::size_t const& limit) const {
 
-    //boost::optional< std::vector<TFullId> > ret;
-    //TOptionalVector ret;
+
     std::vector<TFullId>  ids;
 
     //for( TDescriptorList::right_const_iterator i( _descriptors.right.begin()), end( _descriptors.right.end() ); i!= end; ++i){
@@ -109,7 +97,6 @@ CBindCollection::getAssociatedIds( const CBindDescriptor & descriptor, std::size
 
         if( descriptor == i->second){
 
-            //ids.push_back(i);
             ids.push_back(i->first);
             if( ids.size() >= limit){
                 break;
@@ -117,12 +104,10 @@ CBindCollection::getAssociatedIds( const CBindDescriptor & descriptor, std::size
         }
     }
 
-    // TODO std::move
     return ids;
 }
 
 
-//CBindCollection::TReturnValue
 CBindCollection::TOptionalFullId
 CBindCollection::containBind(CBindDescriptor const& descriptor){
 
@@ -130,12 +115,13 @@ CBindCollection::containBind(CBindDescriptor const& descriptor){
     std::vector<TFullId>  ids;
     ids = getAssociatedIds(descriptor,1);
 
-    if(ids.size() != 0){
+    if( !ids.empty() ){
         ret = ids.front();
     }
 
     return ret;
 }
+
 
 
 void
@@ -149,45 +135,6 @@ CBindCollection::removeBinds(TFullId const& id){
 //    }
 }
 
-
-//const CBindDescriptor& old
-/*TReturnValue
-//replaceBind(TBindId const& id,const CBindDescriptor& newDesc,std::size_t const& position){
-replaceBind(const CBindDescriptor& old,const CBindDescriptor& newBind){
-
-
-    if(getDescriptors( id, temp) <= position){
-        return ret;
-    }
-
-    std::pair<TDescriptorIterator,bool> insertResult = _descriptors.insert( std::make_pair(newBind,id) );
-
-    TReturnValue temp = addBind()
-
-    TReturnValue res = containBind(newDesc);
-    //TReturnValue res = containBind(newDesc);
-    if(res){
-        (*res)->first = newDesc;
-        //(*res)->first.Mode = newDesc.Mode;
-        return res;
-    }
-    return res;
-}
-*/
-//std::size_t
-//CBindCollection::getDescriptors(TBindId const& id, TIdDescriptors& descriptors) {
-//
-//    descriptors.clear();
-//
-//    for (auto it(_descriptors.begin()),end(_descriptors.end()); it != end ; ++it ){
-//
-//        // multimap => (*it).first
-//        if( it->second == id){
-//            descriptors.push_back( it );
-//        }
-//    }
-//    return descriptors.size();
-//}
 
 }
 

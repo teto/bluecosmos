@@ -42,24 +42,6 @@ typedef irr::core::vector3df TVector3df;
 
 typedef irr::u32 TTimeUnit;
 
-namespace NPlayerInput {
-enum EId {
-MoveLeft = 0,   // Should remain first
-MoveRight,
-MoveForward,
-MoveBackward,
-MainShoot,
-//SwitchingDirection,
-//EnableSpin,
-QuickMainShoot,
-QuickSecondShoot,
-SecondShoot,
-ModeUp,
-ModeDown,
-
-Count  // should remain last
-};
-}
 
 namespace NEntityType {
 // !!! Les int ne doivent pas se recouvrir !!
@@ -134,6 +116,30 @@ typedef input::CBindCollection TMappingSet;
 typedef CPlayerInputCache TPlayerInputCache;
 
 
+namespace NPlayerInput {
+enum EId {
+MoveLeft = 0,   // Should remain first
+MoveRight,
+MoveForward,
+MoveBackward,
+MainShoot,
+//SwitchingDirection,
+//EnableSpin,
+QuickMainShoot,
+SecondShoot,
+QuickSecondShoot,
+ModeUp,
+ModeDown,
+
+Count  // should remain last
+};
+}
+
+//extern std::array<const wchar_t*,NPlayerInput::Count> BindNames;
+
+// TODO declarer en extern ?
+//std::vector<std::wstring> BindNames
+extern const wchar_t*  BindNames[NPlayerInput::Count];
 #define ENGINE  CGameEngine::getInstance()
 
 #endif

@@ -33,7 +33,7 @@ using namespace input;
 //template<int id,int numero> struct TRANSLATED_ID() { return (id*1000 + 10000 + numero);};
 // Numero should be either 0 or 1
 int TRANSLATED_ID(const int& id, const int& numero) { return (id*1000 + 10000 + numero);};
-//#define UNTRANSLATE_ID(id) if(id > 20000){ id -= 20000;} else { id -= 10000; }
+
 
 std::pair<NPlayerInput::EId,int>
 UNTRANSLATE_ID(const int& id) {
@@ -41,7 +41,7 @@ UNTRANSLATE_ID(const int& id) {
     int iId = static_cast<int>(id);
     int numero = iId%2;
 
-    return std::make_pair( static_cast<NPlayerInput::EId>( (iId - numero)%1000 ) , numero );
+    return std::make_pair( static_cast<NPlayerInput::EId>( (iId - numero -10000)/1000 ) , numero );
 }
 
 /*
@@ -280,7 +280,7 @@ COptionState::Update(){
     // If
     if(waitingNewBind()  ){
 
-        _INFO << "Checking";
+        //_INFO << "Checking";
 
     // TCache::TOptional
         boost::optional<input::CBindDescriptor> ret =
@@ -290,31 +290,33 @@ COptionState::Update(){
 
         if( ret ){
             _INFO << "Generation finished";
-            // TODO afficher le bind
 
             // If already bound
             TMappingSet::TOptionalFullId checkForDouble = GET_MAPPING(1).containBind(*ret);
-            if( checkForDouble ){
+            std::pair<NPlayerInput::EId,int> fullId = UNTRANSLATE_ID( _buttonToUpdate->getID() );
+
+            // If descriptor already used for another bind
+            if( checkForDouble && (*checkForDouble != fullId) ){
 
                 fus::TWCharStringBuilder str("Bind [");
-                str( ret->generateDescription().c_str() )("] already bound to other bind [");
-                // TODO recuperer un id en lettres
-                str(checkForDouble->first)("/")(checkForDouble->second)("]");
+                str( ret->generateDescription().c_str() )(L"] already bound to other bind [");
+                str( BindNames[checkForDouble->first] )
+                ("]")
+                ;
 
-                engine()->popupMessage(L"Bind already registered with []", str.str().c_str() );
-                //button1->setText( GET_MAPPING(1)[std::make_pair(id,0)].generateDescription().c_str() );
-                // untranslateId
-                std::pair<NPlayerInput::EId,int> fullId = UNTRANSLATE_ID( _buttonToUpdate->getID() );
-                //_INFO << "fullId " << fullId->second;
+                //_INFO << "descriptor Bound with id " << BindNames[checkForDouble->first] << " matching input no " << static_cast<int>(checkForDouble->first);
+//                _INFO << "fullId " << fullId->first;
+
+                engine()->popupMessage(L"Bind already in use", str.str().c_str() );
+
                 _buttonToUpdate->setText( GET_MAPPING(1)[ fullId ].generateDescription().c_str()  );
             }
             // TODO set new value
             else {
 
-                std::pair<NPlayerInput::EId,int> res = UNTRANSLATE_ID( _buttonToUpdate->getID() );
+                //std::pair<NPlayerInput::EId,int> res = UNTRANSLATE_ID( _buttonToUpdate->getID() );
 
-                //GET_MAPPING(1)[res] == *ret ;
-                GET_MAPPING(1).setBind( res, *ret);
+                GET_MAPPING(1).setBind( fullId, *ret);
                 //description.append( );
                 _buttonToUpdate->setText( ret->generateDescription().c_str() );
             }
@@ -410,12 +412,20 @@ COptionState::GUI_CreateMainMenu(){
     //////////////////////////////////////
 
     IGUITab* tab = _tabControl->addTab(L"Controls",Controls);
-    createBindLine( L"Up", NPlayerInput::MoveForward,tab);
-    createBindLine( L"Down", NPlayerInput::MoveBackward,tab);
-    createBindLine( L"Left", NPlayerInput::MoveLeft,tab);
-    createBindLine( L"Right", NPlayerInput::MoveRight,tab);
-    createBindLine( L"Cannon", NPlayerInput::MainShoot,tab);
-    createBindLine( L"Missiles", NPlayerInput::SecondShoot,tab);
+
+//    createBindLine( L"Up", NPlayerInput::MoveForward,tab);
+//    createBindLine( L"Down", NPlayerInput::MoveBackward,tab);
+//    createBindLine( L"Left", NPlayerInput::MoveLeft,tab);
+//    createBindLine( L"Right", NPlayerInput::MoveRight,tab);
+//    createBindLine( L"Cannon", NPlayerInput::MainShoot,tab);
+//    createBindLine( L"Missiles", NPlayerInput::SecondShoot,tab);
+//
+    createBindLine( NPlayerInput::MoveForward,tab);
+    createBindLine( NPlayerInput::MoveBackward,tab);
+    createBindLine( NPlayerInput::MoveLeft,tab);
+    createBindLine( NPlayerInput::MoveRight,tab);
+    createBindLine( NPlayerInput::MainShoot,tab);
+    createBindLine( NPlayerInput::SecondShoot,tab);
 
     //////////////////////////////////////
     //// create graphic tab
@@ -454,9 +464,9 @@ COptionState::GUI_CreateMainMenu(){
 }
 
 
-
+//wchar_t const* name,
 void
-COptionState::createBindLine(wchar_t const* name,const NPlayerInput::EId& id,IGUITab* tab){
+COptionState::createBindLine(const NPlayerInput::EId& id,IGUITab* tab){
 
         // get specific mapping
 //        CBindDescriptor& key1 = engine()->GameConfig.Keymap1[id];
@@ -465,7 +475,8 @@ COptionState::createBindLine(wchar_t const* name,const NPlayerInput::EId& id,IGU
         recti pos( 0,id*20,150,(id+1)*20);
 
         gui()->addStaticText(
-                name,
+                //name,
+                BindNames[id],
                 //key._name.c_str(),
                 pos,    //rect
                 true, //border

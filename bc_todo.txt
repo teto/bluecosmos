@@ -4,13 +4,7 @@ I agree with adding more magnet by default.
 I also think life and shield should be together otherwise it is hard to watch both.
 
 
-How is it made ?
-
-(http://www-list.cea.fr/).
-
 TODO:
-
-
 First of all, luabind needs to setup some things in your lua_State.
 That's why you call luabind::open which will:
 -create an instance of class_registry, which will push a metatable
@@ -41,10 +35,6 @@ http://www.boost.org/doc/libs/1_46_1/libs/type_traits/doc/html/boost_typetraits/
 http://www.coderage.com/function_traits/libs/function_traits/doc/
 
 
-normalement les iterateurs d'une map sont garantis "valide" avec insertion
-
-const_cast(Key) = <
-
 Events:
 -TODO mettre a jour le playerInput
 -faire mecanisme qui met à jour CbindCollection tout seul
@@ -54,24 +44,22 @@ Events:
 
 bc0.3:
 -dans logging.lua, les loggers devraient pouvoir logger un nombre indefini de parametres
--luabind pouvoir binder les enums C++.
 -differencier soundManager du musicManager
--passer les NPlayerInput en enum class
--constexp
+-luabind pouvoir binder les enums C++.
+---passer tous les namespace::enum en enum class
 -pouvoir redémarrer la fenetre graphique
 -utiliser cbegin  / cend là où c'est possible
 -utiliser un CNullDriver au début
 -pouvoir mettre les run en cascade
 -utiliser sqrtf plutot que sqrt ?
 -retirer Append de la liste des niveaux de log
--pouvoir ajouter des boutons dans la console
+-API pour gérer les boutons dans la console
 -bug dans le logger si pas de logger defini
 -luamanager pouvoir enregistrer dnas lesglobals des chunks RunFunctionFromChunk via un CLuaManager
 bug de CSinglePlayer c'est qu'il genre pas les flottes, mieux gerer les etats !
 -random generator (regarder celui d'o3 + tr1)
 -afficher des infos de debug en appuyant sur TAB: version d'irrlicht,de luabind,date/heure de compilation/version de lua
 -tester stack_content_by_name
--deplacer Idlist dans src/
 -empecher la console d'enregistrer 2 fois le mm message d'affilé
 -bug: joueur continue a bouger quand on passe en camera FPS
 -pouvoir acceder aux options depuis l'ingame
@@ -83,7 +71,7 @@ bug de CSinglePlayer c'est qu'il genre pas les flottes, mieux gerer les etats !
 -TODO Ne pas calculer le within screen a ttes les frames, le mettre en dehors de update => checker depuis le CLevelManager
 descr = Player:getMappingDescription(CPlayer.Forward);
 -améliorer le logger: std::boolalphad
--double press augmente la cadence et chauffe plus vite donc
+-gameplay double press augmente la cadence et chauffe plus vite donc
 
 
 

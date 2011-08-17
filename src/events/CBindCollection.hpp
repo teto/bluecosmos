@@ -50,32 +50,16 @@ public:
     typedef NPlayerInput::EId TBindId;
     typedef int TParam;
     typedef std::pair<TBindId,TParam> TFullId;
-
-    //SIZE
     typedef IInputCache<TBindId> TCache;
 
-    //typedef typename boost::optional< std::vector<TFullId> > TOptionalVector;
     typedef typename boost::optional<TFullId> TOptionalFullId;
-    //typedef SBimap< TFullId, CBindDescriptor > TDescriptorList;
-    // taggeddescriptor
-    //unordered_set_of
-    //bbi::unordered_set_of<
-    // Ici pr choisir le type de container
-    //http://www.boost.org/doc/libs/1_47_0/libs/bimap/doc/html/boost_bimap/the_tutorial/controlling_collection_types.html#boost_bimap.the_tutorial.controlling_collection_types.configuration_parameters
 
-    //set_of => ordered, unique
-    //unordered_set_of 	=> hashed, unique
-    // vector_of=> mutable,random access with view "vector_map "
-    // set_of and unordered_set_of map views overload operator[] to retrieve the associated data of a given key only when the other collection type is a mutable one.
-    //, bbi::list_of_relation
-    //typedef bbi::bimap< bbi::unordered_set_of< TFullId>, bbi::vector_of<CBindDescriptor> > TDescriptorList;
     typedef std::map< TFullId, CBindDescriptor > TDescriptorList;
     //typedef std::multimap< TBindId , TParam> TFullIdList;
 
 protected:
 
     TDescriptorList _descriptors;
-    //TFullIdList _fullIdsList;
 public:
     //TCache* generateCache();
 
