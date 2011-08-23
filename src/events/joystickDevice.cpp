@@ -1,5 +1,7 @@
 #include "joystickDevice.hpp"
 
+
+namespace input {
 /*
 bool
 CEventManager::isAxisPositive(const irr::s16& axis){
@@ -15,3 +17,21 @@ CEventManager::isAxisNegative(const irr::s16& axis){
    // return ( (_axisState[axis].value < -CEventManager::Threshold) && (_axisState[axis].value != 0) );
 }
 */
+
+//
+CIrrlichtJoystickDevice::CIrrlichtJoystickDevice(const irr::SJoystickInfo& infos) :
+    _joystickInfo(infos)
+{
+
+
+}
+
+
+
+void
+CIrrlichtJoystickDevice::update(irr::SEvent::JoystickEvent const& e) {
+
+}
+
+
+}   //!< End of namespace

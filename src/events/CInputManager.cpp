@@ -27,16 +27,56 @@ CInputManager::retrieveStateFromDescriptor(CBindDescriptor const& d) {
 }
 
 
-CInputManager::CInputManager() :
-    _mouse(new CIrrlichtMouseDevice()),
-    _keyboard(new CIrrlichtKeyboardDevice()),
-    _joystick(new CIrrlichtJoystickDevice())
+CInputManager::CInputManager()
+//:
+  //  _mouse(new CIrrlichtMouseDevice()),
+    //_keyboard(new CIrrlichtKeyboardDevice()),
+//    _joystick(new CIrrlichtJoystickDevice())
 {
 
 }
 
 
+CInputManager::~CInputManager() {
+    // TODO vider joystick s'il y en a
+    //BOOST_FOREACH
 
+}
+
+
+
+
+bool
+CInputManager::activateJoysticks() {
+
+    #ifndef _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
+        #error Your version of irrlicht may not generate joystick events
+    #endif
+
+    //static_assert()
+   core::array<SJoystickInfo> joystickInfos;
+   // BUG ici
+   //_device->activateJoysticks(_joystickInfos);
+   //_LOG_WARNING << "test 2";
+   if( _device->activateJoysticks(joystickInfos) )
+   {
+        _device->getLogger()->log("Joystick support enabled ");
+      for(u32 joystick = 0; joystick < joystickInfo.size(); ++joystick)
+      {
+          // TODO mettre le nom du fichier
+          _device->getLogger()->log("Joystick plugged in");
+          _joysticks.push_back(new CIrrlichtJoystickDevice(joystickInfos[joystick]));
+//         std::cout << "\tName: '" << joystickInfo[joystick].Name.c_str() << "'" << std::endl;
+
+      }
+      return true;
+   }
+
+    //_device->getLogger()->log("Couldn't enable Joystick ");
+    return false;
+
+
+}
 
 //TODO
 // might throw an exception
@@ -63,13 +103,13 @@ CInputManager::handleEvent(const SEvent& event){
 
         case EET_KEY_INPUT_EVENT:
             getKeyboard().getButton(event.KeyInput.Key).Value = (int)event.KeyInput.PressedDown;
-
-        break;
+            break;
 
 
     case EET_JOYSTICK_INPUT_EVENT:
         {
-            int i = 0;
+            _joysticks[event.JoystickEvent.Joystick]->update(event.JoystickEvent);
+            /*int i = 0;
             // Check each
             //irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS
             while( i < CIrrlichtJoystickDevice::buttonsNumber){
@@ -78,7 +118,7 @@ CInputManager::handleEvent(const SEvent& event){
 
                 // check next button
                 ++i;
-            }
+            }*/
 
             // Do the same for each axis
             /*i = 0;
@@ -121,14 +161,16 @@ CInputManager::handleEvent(const SEvent& event){
 
 
     case EET_MOUSE_INPUT_EVENT:
-
+        // Pour la souris tout devrait etre en static
+        CIrrlichtMouseDevice::update(event.MouseInput);
         //_mouseState = event.MouseInput
         //NUMBER_MOUSE_BUTTONS
-        for(int i = 0; i < CIrrlichtMouseDevice::buttonsNumber; ++i){
+        /*for(int i = 0; i < CIrrlichtMouseDevice::buttonsNumber; ++i){
 
             getMouse().getButton(i).Value =  ( 0 != (event.MouseInput.ButtonStates & i) );
 
         }
+        */
         break;
 
 
@@ -142,6 +184,6 @@ CInputManager::handleEvent(const SEvent& event){
    return false;
 }
 
-}
+}   //!< end of namespace
 
 

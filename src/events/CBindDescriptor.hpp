@@ -20,38 +20,29 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 
 namespace input {
 
-typedef SBimap< irr::EKEY_CODE,std::wstring> TKeyCodeMap;
-typedef SBimap< EInputType,std::wstring> TDeviceCodeMap;
-typedef SBimap< ETapMode,std::wstring> TDescriptorModesMap;
-
-
 
 // forward declaration
 class CBindDescriptor;
 
-//bool generateDescriptorFromIrrlichtEvent(const irr::SEvent&,CBindDescriptor&);
-
-// Todo creer un namespace event
-
-void initializeKeycodes();
-void initializeDeviceCodes();
 
 // enommer en SBind**
 class CBindDescriptor
 {
 public:
-//    NInputType::EId _type;
-    //EInputType Device;
-    //int Id;
+
     int DeviceId;   //!< Joystick No as seen by irrlicht for example
-    ETapMode Mode;
-    boost::optional<TTimeUnit> RepeatTime;
+    ETapMode Mode;  //!<
+    boost::optional<TTimeUnit> RepeatTime;  //!< If set, autorepeat is enabled
+
+
 //    struct SJoystickParameters {
 //    };
     struct SJoyButton {
+        SJoyButton() : Button(0) {};
         bool operator==(SJoyButton const& b) const { return (b.Button == Button);};
         int Button;
     };
+
 
     struct SJoyAxis {
         bool operator ==(SJoyAxis const& p) const { return (p.Axis == Axis && p.Direction == Direction); };
@@ -60,9 +51,20 @@ public:
         EAxisDirection Direction;
     };
 
+    struct SMouseWheel {
+        SMouseWheel() : Up(false) {}
+        bool operator ==(SMouseWheel const& p) const { return (p.Up == Up); };
+        bool Up;    //!< False if down
+    };
+
+    struct SMouseButton {
+        bool operator ==(SMouseButton const& p) const { return (p.Button == Button); };
+        int Button;
+    };
+
     // for variant.which EInputType::None
     //nullptr
-    struct SNullType;
+    //struct SNullType;
     struct SNullType { bool operator==(const SNullType& t) const { return true;}; };
 
     // possede which, empty,type
@@ -70,25 +72,17 @@ public:
     // == existe mais en free function
     // get<int>
     // get<0>
-    boost::variant<SNullType,irr::EKEY_CODE,SJoyAxis,SJoyButton,EPovDirection> Value;
-    /*
-    union {
-    irr::EKEY_CODE KeyCode;
-    //struct Joystick
-    SJoyAxis StickAxis;
-    SJoyButton JoyButton;
-    EPovDirection PovDirection;
+    /** \warning Structures must remain in the same order as EInputMode
+    **/
+    boost::variant<SNullType,irr::EKEY_CODE,SJoyAxis,SJoyButton,EPovDirection,SMouseWheel,SMouseButton> Value;
 
-    };
-*/
+
     static const wchar_t* StrUndefined;
 
+    // TODO a deplacer
     static TKeyCodeMap keycodeBimap;
     static TDeviceCodeMap deviceCodeMap;
-    //static TDescriptorModesMap deviceCodeMap;
 
-    //static void initializeKeycodes();
-    //static void initializeDevicesCodes();
 
     // Check if Id exists for that device
     //bool isValid() const;
@@ -129,12 +123,6 @@ public:
 
     //bool setup(char const& key);
     //bool setup(char* const strType);
-
-    //void mode(ETapMode const&)
-
-//    bool matchesEvent(const irr::SEvent&) const;
-//    bool matchesJoystickEvent(const irr::SEvent::SJoystickEvent&) const;
-
 
 
     std::wstring generateDescription() const;

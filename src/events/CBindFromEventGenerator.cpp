@@ -102,7 +102,7 @@ CBindFromEventGenerator::check( TTimeUnit const& time )  {
 bool
 CBindFromEventGenerator::processEvent( TTimeUnit const& time,irr::SEvent const& e) {
 
-
+    bool ret = false;
 
     // If descriptor not defined yet
     if(_tempDescriptor.undefined() ){
@@ -110,26 +110,58 @@ CBindFromEventGenerator::processEvent( TTimeUnit const& time,irr::SEvent const& 
         switch(e.EventType){
 
             case EET_KEY_INPUT_EVENT:
+                _tempDescriptor.setup(e.KeyInput.Key);
+                _cachedState.update(time,_tempDescriptor,e.KeyInput.PressedDown);
+                _pastStates.push( std::make_pair(_cachedState.State,false) );
+                ret = true;
+                break;
 
-                // React on press only
-                //if(e.KeyInput.PressedDown ) {
+        case EET_MOUSE_INPUT_EVENT:
 
-                    _tempDescriptor.setup(e.KeyInput.Key);
-                    _timeOfProcessingEnd = time + 200;
 
-                    //_cachedState.update(time,_tempDescriptor,true);
-                    _cachedState.update(time,_tempDescriptor,e.KeyInput.PressedDown);
+            if(  e.MouseInput.Wheel != 0 ){
+                _tempDescriptor.setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
+            }
 
-                    _pastStates.push( std::make_pair(_cachedState.State,false) );
-                //}
-                return true;
+            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_BTN ) ){
 
+                int noButton = 0;
+
+                // retrieve first pressed button
+                while( noButton < CEventManager::NUMBER_MOUSE_BUTTONS){
+
+                    if( CEventManager::isMouseButtonDown( noButton ) ){
+                        return setup(NInputType::MOU_BTN,noButton);
+                    }
+                    ++noButton;
+                }
+                //isMouseButtonDown
+//                return setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
+            }
+
+            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_WHEEL ) ){
+                if(e.MouseInput.Wheel > 0){
+                    return setup(EInputType::Mouse, 1);
+                }
+                else if(e.MouseInput.Wheel < 0){
+                    return setup(NInputType::MOU_WHEEL, -1);
+                }
+            }
+//            switch(){
+//                processEvent(e.MouseInput);
+//            }
+            break;
             default: break;
         };
 
     }
 
-    return false;
+    // If descriptor defined
+    if( ret ){
+        _timeOfProcessingEnd = time + 200;
+    }
+
+    return ret;
 }
 
 

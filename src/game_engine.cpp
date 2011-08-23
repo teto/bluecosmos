@@ -1154,7 +1154,7 @@ CGameEngine::InitEngine(){
 bool
 CGameEngine::enableJoysticks(){
 
-
+/*
 //_LOG_WARNING << "test1" << device;
    core::array<SJoystickInfo> joystickInfos;
    // BUG ici
@@ -1197,7 +1197,7 @@ CGameEngine::enableJoysticks(){
       //_INFO << "Joystick support is not enabled.";
       return false;
    }
-
+*/
 }
 
 //const irr::video::E_DRIVER_TYPE& driverType,blo::tribool fullscreen,blo::tribool vsync

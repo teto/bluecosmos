@@ -9,25 +9,39 @@
 #include "IInputDevice.hpp"
 
 
-namespace NPov {
-enum EId {
+namespace input {
+
+
+//enum EId {
+enum class EPovId {
 Up = 0,
 Right,
 Down,
 Left
 
 };
-}
 
 
-class CIrrlichtJoystickDevice : public IInputDevice<irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS, int>
+
+// TODO le faire deriver ?
+class CIrrlichtJoystickDevice
+//: irr::SJoystickInfo
+//: public IInputDevice<irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS, int>
                         //public IInputDevice<irr::SEvent::SJoystickEvent::NUMBER_OF_AXES, NPov::EId>
 
 {
 
     //static std::array< irr::s16,irr::SEvent::SJoystickEvent::NUMBER_OF_AXES > _axisState;
+    const irr::SJoystickInfo _joystickInfo;
+    //irr::SJoystickInfo
 
+protected:
+    friend class CInputManager;
+    void update(irr::SEvent::JoystickEvent const&);
 public:
+    CIrrlichtJoystickDevice(const irr::SJoystickInfo&);
+
+
 /*    const irr::s32 CEventManager::POV_DISABLED_POSITION = 65535;
     const irr::u16 CEventManager::Threshold = 16000;
 
@@ -79,5 +93,7 @@ irr::s32 CEventManager::POV_LEFT    = 27000;
     irr::s32 POV_RIGHT;
     */
 };
+
+}   //!< end of namespace
 
 #endif

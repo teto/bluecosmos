@@ -11,7 +11,16 @@
 //template<class VALUE>
 struct SButton {
 
-    int Value;
+    SButton() : Active(false),Changed(false) {}
+
+    const bool& pressed() const {return Active;};
+    const bool pressed() const {return (!Active);};
+    bool justPressed() const {return Active;};
+    bool justReleased() const {return Active;};
+
+
+    bool Changed;
+    bool Active;
 
 };
 

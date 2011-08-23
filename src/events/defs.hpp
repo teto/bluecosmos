@@ -21,6 +21,10 @@ namespace input {
         IT_MOUSEBUTTON
     };
 */
+
+/**
+*
+**/
 enum class EInputType : int {
 //enum EInputType  {
 None,
@@ -28,8 +32,8 @@ Keyboard,
 JoystickButton,
 JoystickAxis,
 JoystickPov,
-
-Mouse
+MouseWheel,
+MouseButton
 //Emulation,
 
 };
@@ -50,15 +54,15 @@ Neutral
 };
 
 
-/*
+
 // Possible ?
-enum class EButtonState : bool {
-//JustPressed,
+enum class EButtonState {
+JustPressed,
 Pressed,
 Released,
-//JustReleased
+JustReleased
 }
-*/
+
 
 // Pourrait renommer ca en EBindTrigger
 // Ca  c des events
@@ -71,9 +75,20 @@ DoublePressed
 //, Released
 };
 
+
+typedef SBimap< irr::EKEY_CODE,std::wstring> TKeyCodeMap;
+typedef SBimap< EInputType,std::wstring> TDeviceCodeMap;
+typedef SBimap< ETapMode,std::wstring> TDescriptorModesMap;
+
+
+
 typedef irr::u32 TTimeUnit;
 
 extern TTimeUnit QuickTapDelay;
+
+void initializeKeycodes();
+void initializeDeviceCodes();
+
 
 }
 
