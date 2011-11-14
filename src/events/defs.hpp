@@ -67,12 +67,15 @@ JustReleased
 
 // Pourrait renommer ca en EBindTrigger
 // Ca  c des events
-enum class ETapMode {
-DoublePressed
-//, Pressed
-, JustPressed
+enum class ETapMode  : int
+{
+Released = 0
+, JustPressed = 1
+, Pressed = 5
+, DoublePressed = 7
+
 // On se fout de ceux la en fait
-, JustReleased
+//, JustReleased
 //, Released
 };
 

@@ -34,33 +34,22 @@ class CBindDescriptor;
 struct SBindCache
 {
 
-    //typedef irr::u32 TTimeUnit;
-
-
-    // TODO renommer en CachedValue
-    //SCachedState PastValue;     //!< Record of previous state
     TTimeUnit OldDuration;
     bool QuickDelayRespected;   //!< To detect double tap
 
     bool State;
 
+    // Times it was up
     TTimeUnit TimeOfLastStateChange;
+
     TTimeUnit TimeOfNextRepeat;  //!< Time of next repeat
 
 
     SBindCache();
 
-    //! current state of the cache computed during last frame
-    //bool believedState() const;
 
-    //void newActivation(TTimeUnit const&);
-    //ETapMode update(TTimeUnit const& currentTime, const bool const& state);
-    // TODO a bit ugly to pass the descriptor
-    //ETapMode
-    //boost::optional<SCachedState>
-    //boost::optional<ETapMode>
-    bool // s'il y a eu un changement
-    update(TTimeUnit const& currentTime, const CBindDescriptor& , bool const& state);
+
+    bool update(TTimeUnit const& currentTime, const CBindDescriptor& );
 
 protected:
     //onPress onrelease

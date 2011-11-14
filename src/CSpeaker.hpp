@@ -4,7 +4,8 @@
 #include <string>
 #include <irrlicht.h>
 
-
+// TODO to remove
+/*
 class CSpeaker
 {
 
@@ -25,6 +26,6 @@ protected:
 
 // An intervention
 
-
+*/
 
 #endif

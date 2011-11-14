@@ -1,4 +1,4 @@
-#include "CSinglePlayerState.hpp"
+#include "CDialogState.hpp"
 #include <cmath>
 #include <irrlicht.h>
 #include "../entities/player.hpp"
@@ -25,7 +25,7 @@ using namespace irr;
 
 
 void
-CSinglePlayerState::showMessage(CSpeaker* speaker, CSpeech* speech) {
+CDialogState::showMessage(CSpeaker* speaker, CSpeech* speech) {
 
     BOOST_ASSERT(speaker && "No speaker");
     BOOST_ASSERT(speech && "No speech");
@@ -82,7 +82,7 @@ CSinglePlayerState::showMessage(CSpeaker* speaker, CSpeech* speech) {
 
 
 TPlayerReply
-CSinglePlayerState::getUserReply() const {
+CDialogState::getUserReply() const {
 
 //    if(!_script->resume() ){
 //        _LOG_ERROR << "could not resume script";
@@ -91,10 +91,27 @@ CSinglePlayerState::getUserReply() const {
 }
 
 
+//,const std::string& audioFilename
+CSpeech*
+CDialogState::createSpeech(const std::string& message){
+
+    CSound* sound = 0;
+//
+//    if( audioFilename.size() ){
+//        _LOG_DEBUG << "Loading audio filename [" << audioFilename << "]";
+//        sound = ENGINE->getSoundManager()->getSound( audioFilename );
+//    }
+
+    std::wstring temp;
+    fus::convertIntoWideString(message, temp);
+
+    CSpeech* speech = new CSpeech( temp, sound );
+    return speech;
+}
 
 
 void
-CSinglePlayerState::GUI_CreateDialogTab()  {
+CDialogState::GUI_CreateDialogTab()  {
 
     /// CONFIG
     const int gap = 10;
@@ -201,7 +218,7 @@ irr::core::recti  answersRect( conf::_PORTRAIT_SIZE.Width + gap, textHeight + ga
 
 
 void
-CSinglePlayerState::updateDialog(){
+CDialogState::updateDialog(){
 
 
     //_INFO << "updating dialog";
@@ -280,7 +297,7 @@ CSinglePlayerState::updateDialog(){
 
 
 void
-CSinglePlayerState::updateCinematic( ){
+CDialogState::updateCinematic( ){
 }
 
 

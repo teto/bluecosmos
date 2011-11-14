@@ -86,13 +86,13 @@ _initialized(false)
     // TODO a deplacer dans le state fourre tt
     GUI_CreatePauseMenu();
     GUI_CreateGameOverMenu();
-    GUI_CreateDialogTab();
-    GUI_CreateEditorTab();
+//    GUI_CreateDialogTab();
+//    GUI_CreateEditorTab();
 
     _pauseMenu->setVisible(false);
     _gameOverMenu->setVisible(false);
-    _dialogTab->setVisible(false);
-    _editorTab->setVisible(false);
+//    _dialogTab->setVisible(false);
+//    _editorTab->setVisible(false);
 
 
     engine()->showCursor(true);
@@ -164,7 +164,8 @@ CGraphicalLevel::createBatteryModel(const char* filename,const int& life,const i
 
 // setupLuaThread/context
 bool
-CSinglePlayerState::setupLuaThread(){
+CSinglePlayerState::setupLuaThread()
+{
 //->createThread()
 
     TScriptingVM& vm = engine()->getScriptingVM();
@@ -214,31 +215,13 @@ CSinglePlayerState::setupLuaThread(){
 
 
 
-void
-CSinglePlayerState::launchCinematic(){
 
-//scene()->createFollowSplineAnimator (s32 startTime, const core::std::array< core::vector3df > &points)
-                                       //, f32 speed=1.0f, f32 tightness=0.5f, bool loop=true, bool pingpong=false)=0
-
-    //changeState( NPlayState::Cinematic );
-}
-
-
-
-
-
-void
-CSinglePlayerState::updateMenu(){
-
-    // Does nothing
-}
 
 
 
 
 // backup last state
 void
-//CSinglePlayerState::changeState( const NPlayState::EId& newState ){
 CSinglePlayerState::changeState( NPlayState::EId newState ){
 
     _playState[1] = _playState[0];
@@ -246,19 +229,6 @@ CSinglePlayerState::changeState( NPlayState::EId newState ){
     _INFO << "Changing from state" << _playState[1] << "to state" << getInnerState();
 }
 
-
-
-
-//
-//int
-//CSinglePlayerState::onMessageClose() {
-//
-//
-//    //return lua_resume( engine()->_vm.getVM(), 0);
-//
-//
-//    return
-//}
 
 
 
@@ -294,15 +264,19 @@ CSinglePlayerState::Update()
 
     _LOG_DEBUG << "starting updating CSinglePlayerState with mode [" << getInnerState() << "]";
 
-    (this->*_updateFunctions[ getInnerState() ])();
+    //(this->*_updateFunctions[ getInnerState() ])();
 //callm
 
 }
 
 
 
+/**
+TODO creer un animator pour ca
+**/
 void
-CSinglePlayerState::updateCamera(){
+CSinglePlayerState::updateCamera()
+{
 
     TVector3df posCamera = _player->_walkyrie->_cameraRecul;
 
@@ -465,38 +439,23 @@ CSinglePlayerState::DrawLeftHUD(const core::position2di& upperLeft){
 
 
 
-CSpeaker*
-CSinglePlayerState::createActor(const std::string& name,const std::string& file)
-{
-    //get texture
-    video::ITexture* texture = ENGINE->driver()->getTexture(file.c_str());
-
-    // convert it into wide charcter
-    std::wstring wname;
-    utf8::utf8to16(name.begin(),name.end(), std::back_inserter(wname) );
-    //_actors.push_back( );
-    //return _actors.back();
-    return new CSpeaker( wname,texture);//_actors.back();
-}
-
-
-//,const std::string& audioFilename
-CSpeech*
-CSinglePlayerState::createSpeech(const std::string& message){
-
-    CSound* sound = 0;
+//CSpeaker*
+//CSinglePlayerState::createActor(const std::string& name,const std::string& file)
+//{
+//    //get texture
+//    video::ITexture* texture = ENGINE->driver()->getTexture(file.c_str());
 //
-//    if( audioFilename.size() ){
-//        _LOG_DEBUG << "Loading audio filename [" << audioFilename << "]";
-//        sound = ENGINE->getSoundManager()->getSound( audioFilename );
-//    }
+//    // convert it into wide charcter
+//    std::wstring wname;
+//    utf8::utf8to16(name.begin(),name.end(), std::back_inserter(wname) );
+//    //_actors.push_back( );
+//    //return _actors.back();
+//    return new CSpeaker( wname,texture);//_actors.back();
+//}
 
-    std::wstring temp;
-    fus::convertIntoWideString(message, temp);
 
-    CSpeech* speech = new CSpeech( temp, sound );
-    return speech;
-}
+
+
 
 
 
@@ -545,31 +504,32 @@ CSinglePlayerState::update(const TTimer::TimeType& elapsedTime){
 */
 
 
-//setUp cameras
-void
-CSinglePlayerState::setupCameras(){
-
-    //irr::core::dimension2du dim =  engine()->driver->getScreenSize();
-    //_cameras[Scene] =
-    _camera = scene()->addCameraSceneNode();
-                    /*0,  //!< parent
-                    //_CAM_POS, //!< cam pos
-                    //core::vector3df(0, 0, 0)    //!< lookat
-
-                    );*/
-
-    _camera->setPosition( _player->_walkyrie->_cameraRecul );
-
-    scene()->setActiveCamera(_camera);
-
-}
+////setUp cameras
+//void
+//CSinglePlayerState::setupCameras(){
+//
+//    //irr::core::dimension2du dim =  engine()->driver->getScreenSize();
+//    //_cameras[Scene] =
+//    _camera = scene()->addCameraSceneNode();
+//                    /*0,  //!< parent
+//                    //_CAM_POS, //!< cam pos
+//                    //core::vector3df(0, 0, 0)    //!< lookat
+//
+//                    );*/
+//
+//    _camera->setPosition( _player->_walkyrie->_cameraRecul );
+//
+//    scene()->setActiveCamera(_camera);
+//
+//}
 
 
 
 //! Render a frame
 // en gros l'ecran a une taille de 60
 void
-CSinglePlayerState::Draw(){
+CSinglePlayerState::Draw()
+{
 
     _LOG_DEBUG << "starting drawing CSinglePlayerState";
 
@@ -596,15 +556,9 @@ CSinglePlayerState::Draw(){
     //_gameOverMenu->draw();
 
     switch( getInnerState() ){
-        case NPlayState::Dialog:
 
-            // affiche le texte
-            //_dialog.second.getMess
-            //_INFO << "drawing dialogTab" ;
-            _dialogTab->draw();
-            break;
-
-
+        // TODO utiliser ?
+        //IGUIFaderIn*
         case NPlayState::StartingLevel:
         case NPlayState::EndingLevel:
             _levelTransitionImage->draw( ENGINE->driver() );
@@ -619,6 +573,7 @@ CSinglePlayerState::Draw(){
         case NPlayState::GameOver:
             _gameOverMenu->draw();
             break;
+
         default:
             break;
     };
@@ -710,31 +665,6 @@ CSinglePlayerState::GUI_CreatePauseMenu() {
 			L"Quit game", L"Exits game");
 }
 
-
-void
-CSinglePlayerState::GUI_CreateEditorTab() {
-
-
-
-    irr::core::recti rect(0,0,0,0);
-    core::recti rectButton = conf::_MENU_BUTTON_RECT;//(0,0,_BUTTON_WIDTH,_BUTTON_HEIGHT);
-
-    _editorTab 	= gui()->addTab(rect, gui()->getRootGUIElement() );
-    _editorTab->setRelativePositionProportional(core::rectf(0.2f,0.2f,0.8f,0.8f));
-
-
-//const wchar_t *text, const core::rect< s32 > &rectangle, bool border=true, IGUIElement *parent=0, s32 id=-1)=0
-    gui()->addEditBox (L"Editor", rect, true, _editorTab );
-
-//addTabControl (const core::rect< s32 > &rectangle, IGUIElement *parent=0, bool fillbackground=false, bool border=true, s32 id=-1)=0
-	// faudriat les mettre dans un mm container
-	// Sauver / Fermer
-	//gui()->addButton(rectButton, _gameOverMenu, NGuiIds::ContinueGame,L"Continue", L"Continue game");
-    //rectButton += conf::_BUTTON_GAP;
-
-
-
-}
 
 
 

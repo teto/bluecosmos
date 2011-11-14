@@ -34,23 +34,29 @@ class CModel;
 
 // TODO renommer en CLevel
 // More tags if can be add into more than 1 list
-class CGraphicalLevel
-//: public boost::noncopyable
+class ILevel
 {
+
 public:
 
+    virtual bool isLoaded() const;
 
+    virtual bool reload();
+
+    /**
+
+    **/
+    virtual bool run() const;
 
 protected:
 
 public:
 
 
-        irr::scene::ISceneNode* _world;
-
-    irr::scene::ISceneNode* _terrain;
-    //irr::scene::ISceneNode* _comprehensiveBox;
-    irr::scene::ISceneNode* _layer;
+//        irr::scene::ISceneNode* _world;
+//
+//    irr::scene::ISceneNode* _terrain;
+//    irr::scene::ISceneNode* _layer;
 
 ////    static TVector3df getPlayerForwardVector() { return TVector3df(0,1,0) };
 //    boost::shared_ptr<CFleet> _alliedFleet;
@@ -67,10 +73,10 @@ public:
     //void addEnemy(CStaticBattery*);
 //    void addAlly(CStaticBattery*);
 
-    void addLayer();
+    //void addLayer();
 
     // set skydome
-    void setBackground( const char* );
+    //void setBackground( const char* );
     // set skybox
 //    void setBackground(
 //                       const char*,
@@ -95,36 +101,9 @@ public:
 //// TODO see lesquels supprimer
 //    irr::f32 _upperProgress;
 //    irr::f32 _lowerProgress;
-//
-//
-//    CStaticBattery* getNextTarget();
-//
-//    float getUpperProgression() const;
-//
-////TODO to remove
-//    float getLowerProgression() const;
-//
-//
-////CSinglePlayerState*
-//    bool init(CSinglePlayerState* state  );
-//
-//
-//
-//
-//
-//
-////    CMissile* addMissile(const char* model);
-//    //void updatePlayerProgress(const float& playerProgress);
-//
-//    irr::core::rectf _clippingPlane;
-//
-//    //void draw();const float& playerAdv,
-//    //, CSinglePlayerState* _state
+
     void update( const TTimer::TimeType&);
-//    void checkCollisions();
-//
-//
-//
+
     ~CGraphicalLevel();
     CGraphicalLevel();
 

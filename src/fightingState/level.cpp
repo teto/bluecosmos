@@ -10,7 +10,8 @@
 
 // todo updater level ?
 void
-CSinglePlayerState::updatePlaying(){
+CSinglePlayerState::updatePlaying()
+{
 
 //reloadLevel()
     if( ! _initialized ){
@@ -122,10 +123,11 @@ CSinglePlayerState::updateStartingLevel(){
     }
 }
 
-bool
-CSinglePlayerState::isPlayerUpdatable() const {
-    return (getInnerState() == NPlayState::Playing);
-}
+//bool
+//CSinglePlayerState::isPlayerUpdatable() const
+//{
+//    return (getInnerState() == NPlayState::Playing);
+//}
 
 
 void
@@ -169,15 +171,9 @@ CSinglePlayerState::setupFadingTransition(const char* filename) {
 }
 
 
-
-void
-CSinglePlayerState::allLevelsFinished() {
-
-    _INFO << "ALL LEVELS FINISHED";
-}
-
 bool
-CSinglePlayerState::reloadLevel() {
+CSinglePlayerState::reloadLevel()
+{
     return loadLevel( _levelFilename );
 }
 
@@ -245,7 +241,8 @@ CSinglePlayerState::loadLevel(const std::string& nextLevelName) {
 
 
     bool ret     = _script->RunFile( _levelFilename.c_str() );
-    if(!ret){
+    if(!ret)
+    {
         // TODO afficher l'erreur ici !
         _LOG_ERROR << _script->getErrorDescription();
         engine()->popupMessage(L"update.lua Error",_script->getErrorDescription() );

@@ -94,7 +94,6 @@ private:
 
 std::string _levelFilename;
 
-//    boost::shared_ptr<CGraphicalLevel> _levelMgr;
     boost::shared_ptr<CFadingImage> _levelTransitionImage;
 
     irr::gui::IGUITab* _pauseMenu;
@@ -102,22 +101,19 @@ std::string _levelFilename;
     irr::gui::IGUITab* _dialogTab;
 
     NPlayState::EId _playState[2];
-    //NPlayState::EId _backupState;
-    //std::string _nextLevelName;
 
-    gui::IGUIListBox* _answers;
 
 protected:
 
     void GUI_CreateDialogTab();
 
-    void updateDialog();
-    void updateCinematic();
-    void updatePlaying();
-    void updateWarning();
-    void updateStartingLevel();
-    void updateEndingLevel();
-    void updateMenu();
+//    void updateDialog();
+//    void updateCinematic();
+//    void updatePlaying();
+//    void updateWarning();
+//    void updateStartingLevel();
+//    void updateEndingLevel();
+//    void updateMenu();
 
     //void drawDialog();
     bool reloadLevel();
@@ -139,9 +135,6 @@ protected:
 
 
 public:
-    // partie dialogue
-    void showMessage(CSpeaker* speaker, CSpeech* speech);
-    TPlayerReply getUserReply() const;
 
 
     // TODO la je passe forcement le nom du niveau a charger
@@ -150,7 +143,7 @@ public:
 
 
 
-    void startEditor(const char* filename,const int& line);
+    //void startEditor(const char* filename,const int& line);
 
 
     void allLevelsFinished();
@@ -158,9 +151,6 @@ public:
 
     bool loadLevel(const std::string&);
     void shakeCamera();
-
-//createFollowSplineAnimator (s32 startTime, const core::std::array< core::vector3df > &points, f32 speed=1.0f, f32 tightness=0.5f, bool loop=true, bool pingpong=false)=0
-    void launchCinematic();
 
     void addSimpleExplosion(const TVector3df& position );
 
@@ -197,44 +187,16 @@ public:
 
     CFleet* getAllyFleet() { return _alliedFleet.get(); };
     CFleet* getEnemyFleet() { return _enemyFleet.get(); };
-    // TODO a supprimer
-//    void updateState();
-
-    //inline CGameEngine* engine() const { return IGameState::engine();};
-    //inline CPlayer& getPlayer() const { return *(ENGINE->getPlayer());};
-
-    //void addEnemy(CStaticBattery*);
 
 
 
-
-    CSpeaker* createActor(const std::string&,const std::string&);
     //CBatteryModel* createBatteryModel(const char* filename,const int& life,const int& bonus,const float& range);
    // CModel* createBatteryModel(const char* filename,const int& life,const int& bonus,const float& range);
-    //CSound* createSound();
-//,const std::string&
-    static CSpeech* createSpeech(const std::string& );
 
-// TODO see lesquels supprimer
-    irr::f32 _upperProgress;
+
 
 
     CStaticBattery* getNextTarget();
-
-    float getUpperProgression() const;
-
-
-//CSinglePlayerState*
-
-    //bool init(CSinglePlayerState* state  );
-
-
-
-
-
-
-//    CMissile* addMissile(const char* model);
-    //void updatePlayerProgress(const float& playerProgress);
 
 // TODO pvr le modifier depuis LUA
     irr::core::rectf _clippingPlane;
@@ -254,25 +216,17 @@ protected:
     void drawExplosions();
     void GUI_CreatePauseMenu();
     void GUI_CreateGameOverMenu();
-    void GUI_CreateEditorTab();
+//    void GUI_CreateEditorTab();
 
 
-    irr::gui::IGUITab* _editorTab;
+  //  irr::gui::IGUITab* _editorTab;
 
     //inline CGraphicalLevel& getLevelManager() {return *_levelMgr;};
     boost::scoped_ptr<CGraphicalLevel> _graphicalLevel;
 
-//    typedef std::list<std::string> TLevels;
-//    TLevels _levels;
 
-//const TTimeUnit&
     typedef void (CSinglePlayerState::*TUpdateFunction)();
     std::array<TUpdateFunction,NPlayState::Count> _updateFunctions;
-    //irr::video::ITexture* mTextures[NTexture::Count];
-
-
-    //std::vector<std::string> _levels;
-
 };
 
 #endif

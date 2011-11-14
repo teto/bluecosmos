@@ -13,6 +13,7 @@
 
 void
 //CBindCollection::updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache * cache) const
+// TODO idealement je pourrais supprimer ca
 CBindCollection::updateCache( TTimeUnit const& currentTime, const CBindDescriptor& eventDescriptor,const bool& currentState)
 {
 

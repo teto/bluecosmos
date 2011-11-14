@@ -32,6 +32,11 @@ SBindCache::SBindCache() :
 }
 
 
+// TODO passer le IInputManager* à cause des joysticks ou bien passer un array de joysticks ? pour l'instant ne fonctionne qu'avec le clavier
+SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d)
+{
+
+}
 
 //boost::optional<TTimeUnit>& const repeatTime
 // bool autorepeat / timerepeat
