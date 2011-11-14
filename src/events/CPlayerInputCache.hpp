@@ -6,7 +6,7 @@
 #include <array>
 
 class CPlayerInputCache :
-    public input::IInputCache<NPlayerInput::EId>
+    public IInputCache<NPlayerInput::EId>
 {
 
     //static const std::size TSize = NPlayerInput::Count ;

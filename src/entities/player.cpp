@@ -134,7 +134,7 @@ CPlayer::updateInput(){
 
     //CEventManager::_timer->getTime()
     //_mappingSet.updateSnapshot( _cachedInput );
-    _mappingSet->updateCache( CGameEngine::instance().device()->getTimer()->getTime(), CGameEngine::instance().getInputManager(), _cachedInput );
+    //_mappingSet->updateCache( CGameEngine::instance().device()->getTimer()->getTime(), CGameEngine::instance().getInputManager(), _cachedInput );
 
 }
 

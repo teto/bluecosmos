@@ -41,7 +41,9 @@ IGUIConsole::IGUIConsole(
 
     //rectangle, parent / id /drawBackground
     // 30 ==> hauteur de la barre de boutons
-    core::recti listSize(0,0,consoleWidth,consoleHeight-commandLineHeight-_TOOLBAR_HEIGHT);
+    const int listHeight = consoleHeight-commandLineHeight-_TOOLBAR_HEIGHT;
+//    core::recti listSize(0,0,consoleWidth,consoleHeight-commandLineHeight-_TOOLBAR_HEIGHT);
+    core::recti listSize(0,0,consoleWidth,200);
 
     _listBox = gui->addListBox(listSize);
     this->addChild(_listBox);

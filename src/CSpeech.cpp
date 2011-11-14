@@ -46,7 +46,7 @@ CSpeech::addAnswer(const std::string& answer,const TPlayerReply& returnValue){
 
     std::wstring wanswer;
     fus::convertIntoWideString(answer,wanswer);
-    _answers.push_back( boost::make_tuple(wanswer,returnValue)  );
+    Answers.push_back( boost::make_tuple(wanswer,returnValue)  );
 }
 
 

@@ -3,7 +3,7 @@
 #include "events/CBindCollection.hpp"
 
 using namespace irr;
-using namespace input;
+//using namespace input;
 
 SIngameConfig::SIngameConfig() :
     EnableBloomShader(false)
@@ -19,23 +19,34 @@ SIngameConfig::SIngameConfig() :
 
 try {
     CBindDescriptor temp;
-    TMappingSet::TOptionalFullId ret;
+//    TMappingSet::TOptionalFullId ret;
 
 //temp.Mode = mode;
 // TODO verifier qu'il y ait pas de doublons
     #define ADD_BIND(id,param,mode,no) { auto fullId = std::make_pair(id,no); \
+                                        auto matchingId = std::make_pair(id,no); \
                                         CBindDescriptor temp; \
                                         temp.setup(param); \
                                         temp.Mode = mode; \
-                                        ret = MappingPlayer1->containBind( temp ); \
-                                        \
-                                        if(ret && (*ret) != fullId ){ \
-                                            _LOG_ERROR << "Descriptor already registered with id " << ret->first << "/" << ret->second ; \
+                                        if( MappingPlayer1->containBind( temp,matchingId ) && matchingId != fullId ){ \
+                                            _LOG_ERROR << "Descriptor already registered with id " << matchingId.first << "/" << matchingId.second ; \
                                         } \
                                         else { \
                                             MappingPlayer1->setBind(fullId,temp);\
                                         } \
                                         }
+
+
+//                                        if(ret && (*ret) != fullId ){ \
+//                                            _LOG_ERROR << "Descriptor already registered with id " << ret->first << "/" << ret->second ; \
+//                                        } \
+//                                        else { \
+//                                            MappingPlayer1->setBind(fullId,temp);\
+//                                        } \
+                \
+            \
+            \
+
 
 
     //ret = boost::none;

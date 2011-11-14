@@ -50,9 +50,10 @@ class CDialogState;
 class EffectHandler;
 class CEventManager;
 
-namespace input {
-    class CInputManager;
-}
+
+
+//class CInputManager;
+
 //class SIngameConfig;
 //class SAudioParameters;
 
@@ -166,7 +167,7 @@ irr::scene::ICameraSceneNode* _fpsCamera;
     inline irr::gui::IGUIEnvironment* gui() { return _gui; };
     //inline irr::gui::IGUIEnvironment* postProcessingFramework() { return _postProcessingEffect; };
 
-    input::CInputManager& getInputManager() { return *_inputManager;};
+//    CInputManager& getInputManager() { return *_inputManager;};
 
 
     void enableGUIAutoScale(irr::gui::IGUIElement*);
@@ -248,7 +249,7 @@ public:
     TPlayerPtr _player;
     //boost::shared_ptr<CEventManager> mEventManager;
     //boost::shared_ptr<CInputManager> _inputManager;
-    input::CInputManager* _inputManager;
+//    CInputManager* _inputManager;
 
 
 private:

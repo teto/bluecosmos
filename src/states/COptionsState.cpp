@@ -166,26 +166,43 @@ COptionState::setToConfigValues()
 bool
 COptionState::OnEvent(const irr::SEvent& event){
 
+    if( this->waitingNewBind() )
+    {
 
-	if( event.EventType == EET_KEY_INPUT_EVENT)
-	{
-	    // TODO if escape alors on annule le changement de bind
-        if( this->waitingNewBind() ){
-
-            if( event.KeyInput.Key == irr::KEY_ESCAPE){
-                // TODO
-                //stopWaiting();
-                _INFO << "ESCAPE touche, devrait stopper tout bind" ;
-            }
+        if( (event.EventType == EET_KEY_INPUT_EVENT) && (event.KeyInput.Key == irr::KEY_ESCAPE))
+        {
+            // TODO
+            //stopWaiting();
+            _INFO << "ESCAPE touche, devrait stopper tout bind" ;
         }
-	}
-    else if( event.EventType == EET_GUI_EVENT)
+//        if( _descriptorGenerator->baseliningBind() )
+        else
+        {
+            //
+            //_descriptorGenerator.check();
+            if( _descriptorGenerator->processEvent(
+                                                      engine()->device()->getTimer()->getTime(),
+                                                      event
+                                                      )
+               )
+               {
+                   // Eat the event
+                   return true;
+               }
+        }
+        //! Means this is a unhandled event type
+
+    }
+
+
+    if( event.EventType == EET_GUI_EVENT)
 	{
 	    //event.GUIEvent.Caller->getID();
 		s32 callerId = event.GUIEvent.Caller->getID();
+
         switch(event.GUIEvent.EventType){
-        case EGET_COMBO_BOX_CHANGED:
-            break;
+            case EGET_COMBO_BOX_CHANGED:
+                break;
 
             case EGET_BUTTON_CLICKED:
                 _INFO << " id clicked :" << callerId;
@@ -194,15 +211,11 @@ COptionState::OnEvent(const irr::SEvent& event){
                 if(callerId >= NGuiIds::Count){
 
                     if( !waitingNewBind() ){
-                        //id - NGuiIds::Count
 
-                        //_indexOfFocusedElement = buttonId;
-                        _descriptorGenerator.reset ( new CBindFromEventGenerator( engine()->getInputManager() ) );
+                        _descriptorGenerator.reset ( new CBindFromEventGenerator(  ) );
 
                         _buttonToUpdate = static_cast<IGUIButton*>( _tabControl->getElementFromId( callerId, true ) );
                         _buttonToUpdate->setText(L"Waiting...");
-
-                        //fus::ILogger::Log(fus::ENotice) << "controles index" << _indexOfFocusedElement;
 
                         return true;
                     }
@@ -257,16 +270,17 @@ COptionState::OnEvent(const irr::SEvent& event){
 //        IGUITab* tab = _tabControl->getTab(_tabControl->getActiveTab());
 //        EOptionTab activeTab = static_cast<EOptionTab>(tab->getID());
 //        (this->*_processingFunctions[activeTab])(event.GUIEvent);
-
-    if( waitingNewBind() && !_descriptorGenerator->processingBind() ){
-        _INFO << "Waiting for new bind";
-
-
-        // generated a valid descriptor event
-        //boost::optional<CBindDescriptor> ret =
-        return _descriptorGenerator->processEvent( engine()->device()->getTimer()->getTime(), event);
-
-    }
+//
+//    if( waitingNewBind() && !_descriptorGenerator->baseliningBind() )
+//    {
+//        _INFO << "Waiting for new bind";
+//
+//
+//        // generated a valid descriptor event
+//        //boost::optional<CBindDescriptor> ret =
+//        return _descriptorGenerator->processEvent( engine()->device()->getTimer()->getTime(), event);
+//
+//    }
 
     return false;
 }
@@ -275,50 +289,58 @@ COptionState::OnEvent(const irr::SEvent& event){
 
 /**** Function Update() ****/
 void
-COptionState::Update(){
+COptionState::Update()
+{
 
     // If
-    if(waitingNewBind()  ){
+    if( waitingNewBind() )
+    {
+        CBindDescriptor result;
 
-        //_INFO << "Checking";
+//        _descriptorGenerator->check(
+//                                engine()->device()->getTimer()->getTime(),
+//                                result
+//                                    );
 
-    // TCache::TOptional
-        boost::optional<input::CBindDescriptor> ret =
-                                _descriptorGenerator->check(
-                                                        engine()->device()->getTimer()->getTime()
-                                                            );
+        _INFO << "Waiting new bind";
 
-        if( ret ){
+        //! if
+        if( _descriptorGenerator->check(engine()->device()->getTimer()->getTime(), result) )
+        {
             _INFO << "Generation finished";
 
             // If already bound
-            TMappingSet::TOptionalFullId checkForDouble = GET_MAPPING(1).containBind(*ret);
-            std::pair<NPlayerInput::EId,int> fullId = UNTRANSLATE_ID( _buttonToUpdate->getID() );
+            auto matchingId = std::make_pair( NPlayerInput::MoveLeft,0 );
+            auto fullId = UNTRANSLATE_ID( _buttonToUpdate->getID() );
 
             // If descriptor already used for another bind
-            if( checkForDouble && (*checkForDouble != fullId) ){
+//            if( checkForDouble && (*checkForDouble != fullId) ){
+            if( GET_MAPPING(1).containBind( result , matchingId) && (matchingId != fullId) )
+            {
 
                 fus::TWCharStringBuilder str("Bind [");
-                str( ret->generateDescription().c_str() )(L"] already bound to other bind [");
-                str( BindNames[checkForDouble->first] )
+                str( result.generateDescription().c_str() )(L"] already bound to other bind [");
+//                str( BindNames[ checkForDouble->first ] )
+                str( BindNames[ matchingId.first ] )
                 ("]")
                 ;
 
                 //_INFO << "descriptor Bound with id " << BindNames[checkForDouble->first] << " matching input no " << static_cast<int>(checkForDouble->first);
 //                _INFO << "fullId " << fullId->first;
 
-                engine()->popupMessage(L"Bind already in use", str.str().c_str() );
+                engine()->popupMessage(L"/!\\ Bind already in use ", str.str().c_str() );
 
                 _buttonToUpdate->setText( GET_MAPPING(1)[ fullId ].generateDescription().c_str()  );
             }
             // TODO set new value
-            else {
+            else
+            {
 
                 //std::pair<NPlayerInput::EId,int> res = UNTRANSLATE_ID( _buttonToUpdate->getID() );
 
-                GET_MAPPING(1).setBind( fullId, *ret);
+                GET_MAPPING(1).setBind( fullId, result);
                 //description.append( );
-                _buttonToUpdate->setText( ret->generateDescription().c_str() );
+                _buttonToUpdate->setText( result.generateDescription().c_str() );
             }
 
             // Stop generating descriptor
@@ -714,7 +736,8 @@ COptionState::CleanUp(){
 
 //modification
 void
-COptionState::OnClickBack(){
+COptionState::OnClickBack()
+{
 
     //if modification demander a l'user de sauvegarder
     //engine()->PopState();
@@ -725,7 +748,8 @@ COptionState::OnClickBack(){
 
 
 bool
-COptionState::OnClickSaveButton(){
+COptionState::OnClickSaveButton()
+{
 
     //if(!engine->config->RawSave()){
     //if(!engine()->SaveConfig()){
@@ -739,13 +763,16 @@ COptionState::OnClickSaveButton(){
 
 /// \function Draw()
 void
-COptionState::Draw(){
+COptionState::Draw()
+{
 
-    //scene()->drawAll();
+    scene()->drawAll();
 
-    postProcessingFramework()->update();
+    //postProcessingFramework()->update();
+
     // Xeffect hack
-    engine()->driver()->setMaterial( engine()->driver()->getMaterial2D() );
+    //engine()->driver()->setMaterial( engine()->driver()->getMaterial2D() );
+
     _overallTab->draw();
     //gui()->drawAll();//
 

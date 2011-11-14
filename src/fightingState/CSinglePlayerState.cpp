@@ -51,6 +51,7 @@ _dialogTab(0),
 _gameOverMenu(0),
 _lastPlayerReply(0),
 _editorTab(0),
+_answers(0),
 //_playState( NPlayState::InitializingScriptingEngine ),
 _initialized(false)
 {

@@ -10,6 +10,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include "../def.hpp"
+#include "../postprocessing/IPostProcessingHandler.hpp"
 #include <boost/shared_ptr.hpp>
 //#include "../game_engine.hpp"
 //#define ENGINE CGameEngine
@@ -69,7 +70,8 @@ public:
 
     virtual ~IBasicGameState() {};
 
-    EffectHandler* postProcessingFramework();
+//    EffectHandler* postProcessingFramework();
+    IPostProcessingHandler* postProcessingFramework();
 
     inline CGameEngine* engine() const {return &_engine;};
 
@@ -109,7 +111,8 @@ protected:
 private:
     irr::gui::IGUITab* _rootTab;
     irr::scene::ISceneManager* _smgr;
-    EffectHandler* _postProcessingHandler;
+    //EffectHandler* _postProcessingHandler;
+    IPostProcessingHandler* _postProcessingHandler;
     //bool _deleteOnEnd;
 
     //IBasicGameState(const std::string&);

@@ -27,8 +27,8 @@ using namespace irr;
 void
 CSinglePlayerState::showMessage(CSpeaker* speaker, CSpeech* speech) {
 
-    BOOST_ASSERT(speaker);
-    BOOST_ASSERT(speech);
+    BOOST_ASSERT(speaker && "No speaker");
+    BOOST_ASSERT(speech && "No speech");
 
     //_dialog = std::make_pair(speaker,speech);
 
@@ -58,16 +58,17 @@ CSinglePlayerState::showMessage(CSpeaker* speaker, CSpeech* speech) {
     gui::IGUIImage* img = static_cast<gui::IGUIImage*>( _dialogTab->getElementFromId( NGuiIds::DialogImage ) ) ;
     img->setImage ( speaker->getTexture() );
 
+    //!
     gui::IGUIListBox* answers = static_cast<gui::IGUIListBox*>( _dialogTab->getElementFromId( NGuiIds::DialogAnswers ) ) ;
 
-    _answers->clear();
+    answers->clear();
 //CSpeech::TAnswersList
-    BOOST_FOREACH( const CSpeech::TAnswer& answer, speech->_answers ){
+    BOOST_FOREACH( const CSpeech::TAnswer& answer, speech->Answers ){
 
 //answer.first.c_str()
         answers->addItem( answer.get<0>().c_str() );
     }
-    _answers->setSelected(0);
+    answers->setSelected(0);
 
     enableMenu( _dialogTab, true );
 
@@ -171,7 +172,7 @@ irr::core::recti  answersRect( conf::_PORTRAIT_SIZE.Width + gap, textHeight + ga
 
     answers->setDrawBackground(true);
     answers->setID( NGuiIds::DialogAnswers );
-    answers->setItemOverrideColor ( 0, EGUI_LBC_TEXT , textColor);
+//    answers->setItemOverrideColor ( 0, EGUI_LBC_TEXT , textColor);
     _dialogTab->addChild( answers );
 
     _answers = answers;

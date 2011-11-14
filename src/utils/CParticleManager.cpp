@@ -28,8 +28,8 @@ _device(device)
 	System::useAdaptiveStep(0.001f,0.01f);		// use an adaptive step from 1ms to 10ms (1000fps to 100fps)
 
     // Prepare systems
-    createBaseBooster();
-    createBaseExplosion();
+//    createBaseBooster();
+//    createBaseExplosion();
 
     //ctor
 	//cout << "\nSPARK FACTORY AFTER INIT :" << endl;
@@ -60,7 +60,7 @@ CParticleManager::createBaseExplosion()
 
 	// smoke renderer
 	IRRQuadRenderer* smokeRenderer = IRRQuadRenderer::create(_device);
-	smokeRenderer->setTexturingMode(TEXTURE_2D);
+	//smokeRenderer->setTexturingMode(TEXTURE_2D);
 	//
 	smokeRenderer->setTexture( textureExplosion );
 	//smokeRenderer->setTextureBlending(GL_MODULATE);
@@ -71,7 +71,7 @@ CParticleManager::createBaseExplosion()
 
 	// flame renderer
 	IRRQuadRenderer* flameRenderer = IRRQuadRenderer::create(_device);
-	flameRenderer->setTexturingMode(TEXTURE_2D);
+//	flameRenderer->setTexturingMode(TEXTURE_2D);
 	flameRenderer->setTexture( textureExplosion );
 	// todo PB ici ptet ?
 	//flameRenderer->setTextureBlending(GL_MODULATE);
@@ -82,7 +82,7 @@ CParticleManager::createBaseExplosion()
 
 	// flash renderer
 	IRRQuadRenderer* flashRenderer = IRRQuadRenderer::create(_device);
-	flashRenderer->setTexturingMode(TEXTURE_2D);
+//	flashRenderer->setTexturingMode(TEXTURE_2D);
 	flashRenderer->setTexture(textureFlash);
 	//flashRenderer->setTextureBlending(GL_REPLACE);
 	flashRenderer->setBlending(BLENDING_ADD);
@@ -91,7 +91,7 @@ CParticleManager::createBaseExplosion()
 
 	// spark 1 renderer
 	IRRQuadRenderer* spark1Renderer = IRRQuadRenderer::create(_device);
-	spark1Renderer->setTexturingMode(TEXTURE_2D);
+//	spark1Renderer->setTexturingMode(TEXTURE_2D);
 	spark1Renderer->setTexture(textureSpark1);
 	//spark1Renderer->setTextureBlending(GL_REPLACE);
 	spark1Renderer->setBlending(BLENDING_ADD);
@@ -368,7 +368,8 @@ CParticleManager::createBaseExplosion()
 
 
 void
-CParticleManager::update(){
+CParticleManager::update()
+{
 
 //    BOOST_FOREACH(IRRSystem* system,_systems){
 //
@@ -382,15 +383,17 @@ CParticleManager::update(){
 
 //irr::scene::ISceneNode* parentNode
 void
-CParticleManager::createBaseBooster(){
+CParticleManager::createBaseBooster()
+{
 
 //_device->getSceneManager()->getRootSceneNode()
 //_device->getSceneManager()->getRootSceneNode()
     IRRSystem* system = IRRSystem::create( 0 ,_device->getSceneManager() );
+    video::ITexture* texture = _device->getVideoDriver()->getTexture("images/explosion/point.bmp");
 
 	IRRQuadRenderer* particleRenderer = IRRQuadRenderer::create(_device);
-	particleRenderer->setTexture( _device->getVideoDriver()->getTexture("images/explosion/point.bmp"));
-	particleRenderer->setTexturingMode(TEXTURE_2D);
+	particleRenderer->setTexture( texture );
+	//particleRenderer->setTexturingMode(TEXTURE_2D);
 	particleRenderer->setScale(0.2f,0.2f);
 	particleRenderer->setBlending(BLENDING_ADD);
 	particleRenderer->enableRenderingHint(DEPTH_WRITE,false);

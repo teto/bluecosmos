@@ -19,9 +19,9 @@
 
 // Xeffects
 class EffectHandler;
-namespace input {
+
     class CBindFromEventGenerator;
-}
+
 
 class COptionState :
     public IGameState<NStateId::Options,false>
@@ -48,7 +48,7 @@ public:
 	void Update();
 	void Draw();
 
-    boost::scoped_ptr<input::CBindFromEventGenerator> _descriptorGenerator;
+    boost::scoped_ptr<CBindFromEventGenerator> _descriptorGenerator;
 
 protected:
     void setButtonValue(NPlayerInput::EId const& id);
@@ -57,7 +57,7 @@ protected:
     bool waitingNewBind() const {
         //return (_indexOfFocusedElement >= 0);
         //return (_translatedIdToUpdate);
-        return (_descriptorGenerator);
+        return (_descriptorGenerator != 0);
     }
 
 // TODO unused !!

@@ -1,7 +1,7 @@
 #include "CBindDescriptor.hpp"
 #include "CBindFromEventGenerator.hpp"
 #include "../game_engine.hpp"
-#include "CInputManager.hpp"
+//#include "CInputManager.hpp"
 //#include <fusion/core/CStringBuilder.hpp>
 //#include <fusion/core/CStringExtractor.hpp>
 //#include <fusion/logging/ILogger.hpp>
@@ -11,32 +11,114 @@ using namespace irr;
 using namespace core;
 
 
-namespace input {
 
-CBindFromEventGenerator::CBindFromEventGenerator (CInputManager& inputMgr) :
-    _inputMgr(inputMgr),
+CBindFromEventGenerator::CBindFromEventGenerator () :
+    //_inputMgr(inputMgr),
     _timeOfProcessingEnd(0)
 {
 
 }
 
+//bool
+//CBindFromEventGenerator::processEvent( TTimeUnit const& time,irr::SEvent const& e) {
+//
+//    bool state = false;
+//
+//    //! if could generate
+//    if( generateDescriptor( e, Descriptor ,state) )
+//    {
+//        //
+//        _timeOfProcessingEnd = time + 200;
+//        //! on devrait mettre en cache l'evenement
+//        //_cachedState.
+//        //_pastStates.push_back
+//        return true;
+//    }
+//    return false;
+//}
 
-boost::optional<CBindDescriptor>
-CBindFromEventGenerator::check( TTimeUnit const& time )  {
+
+bool
+CBindFromEventGenerator::check(TTimeUnit const& currentTime,CBindDescriptor& result)
+{
+    //|| (_pastStates.size() > 5)
+    if( !Descriptor.undefined() && (currentTime > _timeOfProcessingEnd) )
+    {
+        result = Descriptor;
+        return true;
+    }
+    return false;
+}
 
 
-    boost::optional<CBindDescriptor> ret;
+// TODO renommer en processEvent
+//boost::optional<CBindDescriptor>
+//, CBindDescriptor& result
+bool
+CBindFromEventGenerator::processEvent( TTimeUnit const& time, irr::SEvent const& e )
+{
 
+    bool state = false;
+    CBindDescriptor temp;
 
-    //
-    if(!processingBind()){
-        return ret;
+    if( generateDescriptor( e, Descriptor,state) )
+    {
+
+        if(Descriptor.undefined() ){
+
+            Descriptor = temp;
+            _timeOfProcessingEnd = time + 200;
+            // TODO update cache
+            return true;
+        }
+        else if( temp == Descriptor ){
+            // TODO update cache
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
-    BOOST_ASSERT( !_pastStates.empty() );
 
+/*
+    //!baseliningBind
+    //! if no bind found
+    // if ( !baseliningBind() )
+    if(Descriptor.undefined() )
+    {
 
+        //CBindDescriptor temp;
+        //! if could generate
+        if( generateDescriptor( e, Descriptor,state) )
+        {
+            // descriptor
+            _timeOfProcessingEnd = time + 200;
+            //! on devrait mettre en cache l'evenement
+            //_cachedState.
+            //_pastStates.push_back
+        }
+//        return false;
+    }
+    //! stop processing
+    else
+    else
+    {
 
+        //bool state = false;
+        CBindDescriptor temp;
+        //! if could generate
+        if( generateDescriptor( e, temp,state) && (temp == Descriptor ) )
+        {
+            //!
+            // update state
+        }
+    }*/
+
+    //BOOST_ASSERT( !_pastStates.empty() );
+
+/*
     ETapMode mode = ETapMode::JustPressed;
 
     // else guess mode according to states
@@ -46,10 +128,10 @@ CBindFromEventGenerator::check( TTimeUnit const& time )  {
     if( (time > _timeOfProcessingEnd) || (_pastStates.size() > 5)){
 
         // Process bind mode
-        //log::info() << log::time <<
-        _INFO <<  "Recored states size " << _pastStates.size();
+        _INFO <<  "Recorded states size " << _pastStates.size();
 
-        switch(_pastStates.size()){
+        switch(_pastStates.size())
+        {
             case 1:
                 mode = (_pastStates.top().first) ? ETapMode::JustPressed : ETapMode::JustReleased;
                 break;
@@ -72,201 +154,77 @@ CBindFromEventGenerator::check( TTimeUnit const& time )  {
             // ce cas ne devrait jamais arriver
             default: break;
         }
+
+
         // TODO a implementer !!
-        _tempDescriptor.Mode = mode;
+        Descriptor.Mode = mode;
 
         // Analyze past
-        ret = _tempDescriptor;
+        ret = Descriptor;
     }
     // Elapsed time for detection of a bind
     // User might destroy this class
-    else {
-        //boost::optional<ETapMode> mode =
-        bool ret = _cachedState.update(time,_tempDescriptor, _inputMgr.retrieveStateFromDescriptor(_tempDescriptor) );
-        if(ret){
-
-            //bool RespectQuickDelay
-            //_pastStates.push( _cachedState.State );
-            // Register old state_cachedState.OldDuration
-            _pastStates.push( std::make_pair(!_cachedState.State,_cachedState.QuickDelayRespected) );
-        }
-
-    }
-
-    return ret;
-}
-
-
-
-
-bool
-CBindFromEventGenerator::processEvent( TTimeUnit const& time,irr::SEvent const& e) {
-
-    bool ret = false;
-
-    // If descriptor not defined yet
-    if(_tempDescriptor.undefined() ){
-
-        switch(e.EventType){
-
-            case EET_KEY_INPUT_EVENT:
-                _tempDescriptor.setup(e.KeyInput.Key);
-                _cachedState.update(time,_tempDescriptor,e.KeyInput.PressedDown);
-                _pastStates.push( std::make_pair(_cachedState.State,false) );
-                ret = true;
-                break;
-
-        case EET_MOUSE_INPUT_EVENT:
-
-
-            if(  e.MouseInput.Wheel != 0 ){
-                _tempDescriptor.setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
-            }
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_BTN ) ){
-
-                int noButton = 0;
-
-                // retrieve first pressed button
-                while( noButton < CEventManager::NUMBER_MOUSE_BUTTONS){
-
-                    if( CEventManager::isMouseButtonDown( noButton ) ){
-                        return setup(NInputType::MOU_BTN,noButton);
-                    }
-                    ++noButton;
-                }
-                //isMouseButtonDown
-//                return setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
-            }
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_WHEEL ) ){
-                if(e.MouseInput.Wheel > 0){
-                    return setup(EInputType::Mouse, 1);
-                }
-                else if(e.MouseInput.Wheel < 0){
-                    return setup(NInputType::MOU_WHEEL, -1);
-                }
-            }
-//            switch(){
-//                processEvent(e.MouseInput);
-//            }
-            break;
-            default: break;
-        };
-
-    }
-
-    // If descriptor defined
-    if( ret ){
-        _timeOfProcessingEnd = time + 200;
-    }
-
-    return ret;
-}
-
-
-// STATIC FUNCTION
-// TODO a deplacer dans InputManager ?
-/*
-// est genere a chaque tour du coup on sait pas si y a de changement .
-        case EET_JOYSTICK_INPUT_EVENT:
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::JOY_BTN ) ){
-
-                int noButton = 0;
-
-                // retrieve first pressed button
-                while( noButton < irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS){
-                    if( CEventManager::isJoystickButtonDown( noButton ) ){
-                        return setup(NInputType::JOY_BTN,noButton);
-                    }
-                    ++noButton;
-                }
-            }
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::JOY_POV ) && CEventManager::povBeingUsed() ){
-
-                return setup(NInputType::JOY_POV, CEventManager::getPOV() );
-            }
-
-
-//            if( CBindDescriptor::matchesMask(mask, NInputType::JOY_POV ) && CEventManager::povBeingUsed() ){
+    else
+    {
+*/
+//        bool bRet = _cachedState.update(time,Descriptor, _inputMgr.retrieveStateFromDescriptor(Descriptor) );
+//        if( bRet )
+//        {
 //
-//            }
+//
+//            // Register old state_cachedState.OldDuration
+//            _pastStates.push( std::make_pair( !_cachedState.State, _cachedState.QuickDelayRespected) );
+//        }
 
-//| NInputType::JOY_AXIS_PLUS
-            if( CBindDescriptor::matchesMask(mask, NInputType::JOY_AXIS_MINUS  ) ){
+  //  }
 
-                for(irr::u16 i = 0; i < irr::SEvent::SJoystickEvent::NUMBER_OF_AXES;++i){
 
-                    //_INFO << "aXIs" << event.Axis[i] << "seuil" << _threshold;
-                    // TODO remplacer le Seuil ici
-                    //if(e.JoystickEvent.Axis[i] > CEventManager::Threshold){
-                    if( CEventManager::isAxisPositive(i) ){
-                        //break;
-                        return setup(NInputType::JOY_AXIS_PLUS,i);
-                    }
-                    //else if(e.JoystickEvent.Axis[i] < -CEventManager::Threshold) {
-                    else if( CEventManager::isAxisNegative(i) ) {
-                        return setup(NInputType::JOY_AXIS_MINUS,i);
-                    }
-                }
-            }
+return false;
+//    return ret;
+}
 
 
 
+bool CBindFromEventGenerator::generateDescriptor(irr::SEvent const& e,CBindDescriptor& descriptor, bool& state)
+{
+    bool generated = false;
+    //
+    switch(e.EventType)
+    {
 
-            break;
-
+        case EET_KEY_INPUT_EVENT:
+            descriptor.setup(e.KeyInput.Key);
+            state = e.KeyInput.PressedDown;
+            return true;
 
         case EET_MOUSE_INPUT_EVENT:
-
-//EMIE_MOUSE_MOVED
-// Reste a distinguer mouvement du clic
-                //EINPUT_MOU_MOVE
-                //EINPUT_MOU_BTN
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_WHEEL ) && e.MouseInput.Wheel != 0 ){
-                return setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
-            }
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_BTN ) ){
-
-                int noButton = 0;
-
-                // retrieve first pressed button
-                while( noButton < CEventManager::NUMBER_MOUSE_BUTTONS){
-
-                    if( CEventManager::isMouseButtonDown( noButton ) ){
-                        return setup(NInputType::MOU_BTN,noButton);
-                    }
-                    ++noButton;
-                }
-                //isMouseButtonDown
-//                return setup(  NInputType::MOU_WHEEL, e.MouseInput.Wheel );
-            }
-
-            if( CBindDescriptor::matchesMask(mask, NInputType::MOU_WHEEL ) ){
-                if(e.MouseInput.Wheel > 0){
-                    return setup(EInputType::Mouse, 1);
-                }
-                else if(e.MouseInput.Wheel < 0){
-                    return setup(NInputType::MOU_WHEEL, -1);
-                }
-            }
-//            switch(){
-//                processEvent(e.MouseInput);
-//            }
             break;
 
-        default:
-            return false;
+        case EET_JOYSTICK_INPUT_EVENT:
+            switch (e.JoystickEvent.Type)
+            {
+                //
+                case EJE_POV_MOVED:
+                case EJE_AXIS_MOVED:
+                    // ENeutral, EAxisDirection::Positive
+                    //descriptor.setup( e.JoystickEvent.MovedAxis,);
+                    break;
 
+                //!
+                case EJE_BUTTON_PRESSED:
+                case EJE_BUTTON_RELEASED:
+                    descriptor.setup( (irr::u16) e.JoystickEvent.Button);
+                    state = ( e.JoystickEvent.Type == EJE_BUTTON_RELEASED) ? false : true;
+                    return true;
+                default:
+                    break;
+            }
 
+            break;
+
+        default: break;
     };
 
-
-    // checks if within masks
     return false;
 }
 
@@ -345,37 +303,3 @@ CBindDescriptor::valueToString() const
     return _unknown;
 }
 */
-
-/*
-
-// TODO _threshold en constante
-bool
-CBindDescriptor::matchesJoystickEvent(const irr::SEvent::SJoystickEvent& event) const {
-
-    switch(_type){
-        case NInputType::JOY_BTN:
-            return CEventManager::isJoystickButtonDown(_value);
-            //return event.IsButtonPressed(_value);
-
-        case NInputType::JOY_POV:
-            return CEventManager::povBeingUsed();
-
-        case NInputType::JOY_AXIS_MINUS:
-
-            return(event.Axis[_value] < - CEventManager::Threshold);
-
-        case NInputType::JOY_AXIS_PLUS:
-            return(event.Axis[_value] > CEventManager::Threshold);
-
-        default:
-            break;
-    };
-
-
-    return false;
-}
-
-
-*/
-
-}

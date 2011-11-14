@@ -1,7 +1,63 @@
-This game is just amazing. Not only for indies but also in general. There is a true atmosphere created by the graphics, music, wingmen, dialogs, RPG interaction.
+﻿This game is just amazing. Not only for indies but also in general. There is a true atmosphere created by the graphics, music, wingmen, dialogs, RPG interaction.
 I mean it.
 I agree with adding more magnet by default.
 I also think life and shield should be together otherwise it is hard to watch both.
+
+
+
+bc0.2:
+-pvr sauver/charger la config clavier
+-utiliser fade in /out pour l'intro
+-ptr de fonctions vers mvts speciaux pour le vaisseau
+
+
+
+Events/irrlicht:
+-activateJoystick retourne true/false nb de joystick trouvé ?
+-ajouter nouvelle fct getRegisteredJoysticks()
+
+-ne pas deriver
+return IInputManager::generateEvents(Joysticks)
+
+En directinput => DIDC_FORCEFEEDBACK
+-TODO mettre a jour le playerInput
+-faire mecanisme qui met à jour CbindCollection tout seul
+-passer la souris/keyboard en singleton avec des fonctions static comme sfml (factory pr les controlleurs de Joystick ?)
+dans SFML, faut chercher le popEvent
+-passer la souris/keyboard en singleton avec des fonctions static comme sfml (factory pr les controlleurs de Joystick ?)
+
+-memory leak ne ferme pas certains fichiers
+-essayer de compiler avec _IRR_COMPILE_WITH_JOYSTICK_EVENTS_ non défini
+// -bug when activateJoystick called several times will create memory leaks 'cos doesn't release previously created joystick
+
+
+
+-gerer le retour de force:
+Linux: http://freegamedev.net/wiki/Force_Feedback
+http://spark.forum0.net/t26p45-editeur-de-systeme-de-particule-de-spark-topic-de-dev
+DXCapsViewer.exe & joytest
+Events/irrlicht:
+En directinput => DIDC_FORCEFEEDBACK
+
+dans SFML, faut chercher le popEvent
+
+
+-essayer de compiler avec _IRR_COMPILE_WITH_JOYSTICK_EVENTS_ non défini
+-gerer le retour de force:
+Linux: http://freegamedev.net/wiki/Force_Feedback
+http://spark.forum0.net/t26p45-editeur-de-systeme-de-particule-de-spark-topic-de-dev
+DXCapsViewer.exe & joytest
+
+http://gwba.seccia.com/download.php
+
+
+
+
+
+
+
+
+
 
 
 TODO:
@@ -10,6 +66,16 @@ That's why you call luabind::open which will:
 -create an instance of class_registry, which will push a metatable
 
 When you register
+
+
+
+
+            // remove it from array
+            core::swap( Joysticks[id], Joysticks.getLast() );
+            // remove from array
+            Joysticks[id] = 0;
+            Joysticks.erase( Joysticks.size() - 1 );
+
 
 
 From
@@ -33,13 +99,32 @@ http://stackoverflow.com/questions/4771417/how-to-get-the-signature-of-a-c-bind-
 function_traits<>::arity dans tag_function
 http://www.boost.org/doc/libs/1_46_1/libs/type_traits/doc/html/boost_typetraits/reference/function_traits.html
 http://www.coderage.com/function_traits/libs/function_traits/doc/
+//            if( !IJoystick::getCapabilities(joystickId,caps) ){
+//
+//                IJoystick* joystick = new IJoystick(Name,caps);
+//                ActiveJoysticks.push_back(joystick);
+//            }
+//            else {
+//                os::Printer::log("Could not retrieve capabilities");
+//            }
 
 
-Events:
--TODO mettre a jour le playerInput
--faire mecanisme qui met à jour CbindCollection tout seul
--supporter les joystick
--passer la souris/keyboard en singleton avec des fonctions static comme sfml (factory pr les controlleurs de Joystick ?)
+//        if(irr::CKeyboard::isKeyPressed(irr::KEY_KEY_A)){
+//            logger->log("A is pressed");
+//        }
+//        else {
+//            logger->log("A not pressed");
+//        }
+
+
+
+in core::array::push_front()
+element  Element to add at the back of the array.
+
+
+
+
+
 
 
 bc0.3:
@@ -72,7 +157,7 @@ bug de CSinglePlayer c'est qu'il genre pas les flottes, mieux gerer les etats !
 descr = Player:getMappingDescription(CPlayer.Forward);
 -améliorer le logger: std::boolalphad
 -gameplay double press augmente la cadence et chauffe plus vite donc
-
+-touche pour repartir dans l'autre sens
 
 
 Roadmap 0.4:
@@ -92,7 +177,6 @@ std::logic_error(
 -utiliser différents layers en plus + de ennemis/amis ? utiliser des masques de layer ?
 -quand on choisit le vaisseau il ne doit pas se transformer mais etre directement au mm niveau que precedemment
 -choix des modes selon type yf19/yf21_Battloid doit etre transparent
--reparer les 4 axes du joystick
 -systeme de cinematique / camera qui bouge
 -supprimer la dependance à ILogger dans CLuaVM, specialiser certains <<
 -pouvoir quitter le jeu dès qu'il y a une erreur critique ( état error )! via exception par exemple
@@ -114,6 +198,7 @@ http://www.boost.org/community/error_handling.html
 -bug avec le TWCharStringBuilder qui lance des exceptions non attrapees ?
 -qd on lance une exception, ne pas formatter car peut lancer une exception
 // bone pr le yf21 "Bone.089"
+
 
 
 

@@ -5,9 +5,8 @@
 #define _BC_EVENTS_DEF_HPP_INCLUDED
 
 #include <irrlicht.h>
+#include <fusion/utilities/SBimap.hpp>
 
-
-namespace input {
 
 /*
     enum InputType
@@ -25,7 +24,8 @@ namespace input {
 /**
 *
 **/
-enum class EInputType : int {
+enum class EInputType : int
+{
 //enum EInputType  {
 None,
 Keyboard,
@@ -56,12 +56,13 @@ Neutral
 
 
 // Possible ?
-enum class EButtonState {
+enum class EButtonState
+{
 JustPressed,
 Pressed,
 Released,
 JustReleased
-}
+};
 
 
 // Pourrait renommer ca en EBindTrigger
@@ -90,6 +91,5 @@ void initializeKeycodes();
 void initializeDeviceCodes();
 
 
-}
 
 #endif

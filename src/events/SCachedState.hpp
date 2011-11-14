@@ -9,7 +9,6 @@
 #include <boost/optional.hpp>
 
 
-namespace input {
 
 // On l'utilise comme une constante
 const TTimeUnit DoubleTapDelay = 100;
@@ -68,6 +67,5 @@ protected:
     //int Value;
 };
 
-}
 
 #endif // SBindCache_HPP_INCLUDED

@@ -18,7 +18,6 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 #include "defs.hpp"
 
 
-namespace input {
 
 
 // forward declaration
@@ -38,16 +37,22 @@ public:
 //    struct SJoystickParameters {
 //    };
     struct SJoyButton {
-        SJoyButton() : Button(0) {};
+        SJoyButton(const int& button = 0) : Button(button) {};
         bool operator==(SJoyButton const& b) const { return (b.Button == Button);};
         int Button;
     };
 
 
+
+    struct SJoyPov {
+        bool operator ==(SJoyPov const& pov) const { return (pov.Value == Value); };
+        irr::E_JOYSTICK_POVHAT_VALUE Value;
+    };
+
     struct SJoyAxis {
         bool operator ==(SJoyAxis const& p) const { return (p.Axis == Axis && p.Direction == Direction); };
         //SJoyAxis()
-        int Axis;
+        irr::EJOYSTICK_AXIS Axis;
         EAxisDirection Direction;
     };
 
@@ -89,7 +94,7 @@ public:
 
     bool undefined() const;
     bool isAutorepeatEnabled() const;
-    bool setRepeatDelay(irr::u32 const& );
+    void setRepeatDelay(irr::u32 const& );
     void disableAutoRepeat();
 
     EInputType getInputType() const;
@@ -106,8 +111,6 @@ public:
 //        return !( (*this) == descriptor);
 //    }
 
-    // Pr les classer dans les map
-    //bool operator<(const CBindDescriptor& descriptor) const ;
 
     // proposer plein de constructeurs
     //bool setup(const EInputType&, int const&);
@@ -115,10 +118,18 @@ public:
     void setup(irr::EKEY_CODE const& keyCode);
 
     // Setup axis
-    bool setup(int const&,EAxisDirection const&);
+    // TODO a terme pvr distinguer entre les joysticks
+    //joystickName& joystick,
+    bool setup(irr::EJOYSTICK_AXIS const&,EAxisDirection const&);
+
+
     void setup(EPovDirection const& povDirection);
+
+    //void setup(E_JOYSTICK_AXIS const& povDirection);
+
+//joystickName& joystick,
     // Setup joystick button
-    bool setup(int const& joyButton);
+    bool setup(irr::u16 const& joyButton);
 
 
     //bool setup(char const& key);
@@ -128,8 +139,6 @@ public:
     std::wstring generateDescription() const;
 };
 
-
-}
 
 
 #endif

@@ -17,7 +17,7 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 #include <fusion/utilities/SBimap.hpp>
 #include "CBindDescriptor.hpp"
 #include "CBind.hpp"
-#include "CInputManager.hpp"
+//#include "CInputManager.hpp"
 
 #include "../def.hpp"
 #include <boost/bimap/bimap.hpp>
@@ -25,18 +25,27 @@ Refaire pour l'adapter avec le systeme de boost::program_options
 #include <boost/bimap/unordered_set_of.hpp>
 #include <boost/bimap/vector_of.hpp>
 #include <vector>
+#include "CBindDescriptor.hpp"
+#include "SCachedState.hpp"
+#include <irrlicht.h>
 
 namespace bbi = boost::bimaps;
 
 
-namespace input {
+
 
 // fwd declaration
-template<class ID_TYPE>
-class IInputCache;
+//template<class ID_TYPE>
+//class IInputCache;
 
-//struct fullId {};
-//struct descriptor {};
+
+struct SAssociatedStruct
+{
+    SAssociatedStruct() {};
+    CBindDescriptor Descriptor;
+    SBindCache State;
+};
+
 
 // Passer le TFullId en parametre
 class CBindCollection
@@ -49,26 +58,30 @@ public:
     //typedef Cache<NPlayerInput::Count,NPlayerInput::EId > TCache;
     typedef NPlayerInput::EId TBindId;
     typedef int TParam;
-    typedef std::pair<TBindId,TParam> TFullId;
-    typedef IInputCache<TBindId> TCache;
+    typedef std::pair<TBindId,TParam> TFullId;  //!< This way we can have several shortcuts associated with a unique action !
+
+    //typedef IInputCache<TBindId> TCache;
 
     typedef typename boost::optional<TFullId> TOptionalFullId;
 
-    typedef std::map< TFullId, CBindDescriptor > TDescriptorList;
-    //typedef std::multimap< TBindId , TParam> TFullIdList;
+
+    //typedef std::map< TFullId, CBindDescriptor > TDescriptorList;
+    typedef std::map< TFullId, SAssociatedStruct > TDescriptorList;
 
 protected:
 
     TDescriptorList _descriptors;
 public:
-    //TCache* generateCache();
 
-    //std::vector<CBindDescriptor>
-    // Va chercher le numero 0
-    //const CBindDescriptor& operator[](TBindId const&) ;
+
+
     const CBindDescriptor& operator[](TFullId const&) ;
 
 
+    /**
+    Return vector of ids and of size < limit matching the descriptor. Useful to check if a descriptor was already registered
+
+    **/
     std::vector<TFullId>
     getAssociatedIds( CBindDescriptor const& descriptor, std::size_t const& limit) const;
 
@@ -90,18 +103,19 @@ public:
     \returns Id of matching descriptor/mode if exists, otherwise returns unitialiazed
     //, ETapMode const& mode
     **/
-    TOptionalFullId
-    containBind(CBindDescriptor const& descriptor);
+    //TOptionalFullId
+    bool containBind(CBindDescriptor const& descriptor, TFullId& id);
 
 
+
+    //bool processEvent(TTimeUnit const& currentTime, const irr::SEvent& event);
+    //void updateCache(TTimeUnit const& currentTime, const irr::SEvent& event);
+    void   updateCache( TTimeUnit const& currentTime, const CBindDescriptor& eventDescriptor,const bool& currentState);
 
 
     // Essayer de remettre un const devant inputMgr
-    void updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache* cache) const;
+    //void updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache* cache) const;
 
-    // On peut utiliser la fonction map.count()
-    // renvoyer un tableau d'iterateur ?
-    //std::size_t getDescriptors(TBindId const& id, TIdDescriptors& descriptors);
 
 
 };
@@ -111,6 +125,5 @@ public:
 //if(result == _descriptors.end())
 //for(auto it(result.first) ; it != result.second; ++it){
 
-}
 
 #endif

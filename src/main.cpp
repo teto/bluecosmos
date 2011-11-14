@@ -16,7 +16,7 @@
 #include <fusion/logging/CFileLogger.hpp>
 //#include <boost/detail/lightweight_test.hpp>
 #include <boost/smart_ptr.hpp>
-#include "events/CInputManager.hpp"
+//#include "events/CInputManager.hpp"
 
 
 
@@ -42,8 +42,8 @@ main (int argc, char *argv[]){
 
     // TODO appels des fct statique
 
-    input::initializeKeycodes();
-    input::initializeDeviceCodes();
+    initializeKeycodes();
+    initializeDeviceCodes();
     //CEventManager::initStaticMembers();
 
     // If more than one param than next param is filename of config to load

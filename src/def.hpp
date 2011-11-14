@@ -97,16 +97,13 @@ typedef std::list<CStaticBattery*> TTrackedBatteries;
 
 
 
-// Forward dec
-//template <int SIZE,class ID_TYPE>
-namespace input {
-    class CBindCollection;
-}
+class CBindCollection;
+
 class CPlayerInputCache;
 
 
 //typedef CBindCollection<NPlayerInput::Count,NPlayerInput::EId> TMappingSet;
-typedef input::CBindCollection TMappingSet;
+typedef CBindCollection TMappingSet;
 
 
 //typedef CBindCollection TPlayerInputCollection;
@@ -134,6 +131,7 @@ ModeDown,
 Count  // should remain last
 };
 }
+
 
 //extern std::array<const wchar_t*,NPlayerInput::Count> BindNames;
 

@@ -1,6 +1,7 @@
 #include "IGameState.hpp"
 #include "../game_engine.hpp"
 #include <xeffects/XEffects.h>
+#include "../postprocessing/IPostProcessingHandler.hpp"
 
 
 namespace NStateId {
@@ -23,16 +24,14 @@ _postProcessingHandler(0)
 
 {
     _smgr = engine()->scene();
+
     /////////////////////////////////////
     /////  Setup Post-processing pipeline
     /////////////////////////////////////
 
-    _postProcessingHandler = new EffectHandler(
-                                               engine()->device()
-//                                               engine()->driver()->getScreenSize(),
-//                                               false,
-//                                               false
-                                               );
+//    _postProcessingHandler = new EffectHandler(
+//                                               engine()->device()
+//                                               );
 
 }
 
@@ -80,8 +79,10 @@ IBasicGameState::gui() {
 };
 
 
-EffectHandler*
-IBasicGameState::postProcessingFramework() {
+//EffectHandler*
+IPostProcessingHandler*
+IBasicGameState::postProcessingFramework()
+{
     // PostProcessingFramework()
     return _postProcessingHandler;
     //_postProcessingEffect;

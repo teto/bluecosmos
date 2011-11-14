@@ -35,28 +35,28 @@ void enableMenu(irr::gui::IGUITab* , const bool&);
 // Forward declaration
 //class CGraphicalLevel;
 
-namespace NTexture {
-enum EId {
-Life = 0,
-Energy,
-Explosion,
-Cursor,
-Lockon,
-Count  // Doit toujours rester dernier
-};
-}
+//namespace NTexture {
+//enum EId {
+//Life = 0,
+//Energy,
+//Explosion,
+//Cursor,
+//Lockon,
+//Count  // Doit toujours rester dernier
+//};
+//}
 
 
-namespace NCamera {
-enum EId {
-LeftHUD,
-RightHUD,
-Scene,
-Flying,
-Count
-};
-
-}
+//namespace NCamera {
+//enum EId {
+//LeftHUD,
+//RightHUD,
+//Scene,
+//Flying,
+//Count
+//};
+//
+//}
 
 namespace NPlayState {
     enum EId {

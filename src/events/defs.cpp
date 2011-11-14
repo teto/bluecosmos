@@ -1,9 +1,16 @@
 #include "defs.hpp"
+#include "CBindDescriptor.hpp"
+#include <boost/assign/list_of.hpp>
+#include <boost/assign/list_inserter.hpp>
 
-namespace input {
+
+using namespace irr;
+
 
 /// Extern var
 TTimeUnit QuickTapDelay = 60;
+
+
 
 
 
@@ -179,10 +186,12 @@ initializeDeviceCodes()
 
     boost::assign::insert(inputDevices.Bimap.left )
         (EInputType::None,L"Unknown")
-        (EInputType::Mouse,L"Mou")
+        (EInputType::MouseWheel,L"Mou Wheel")
+        (EInputType::MouseButton,L"Mou Btn")
         (EInputType::Keyboard,L"Key")
         (EInputType::JoystickAxis,L"JoyAxis")
         (EInputType::JoystickButton,L"JoyButton")
+        (EInputType::JoystickPov,L"JoyPov")
 ;
 
 //    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::None,L"Unknown"));
@@ -191,5 +200,4 @@ initializeDeviceCodes()
 //    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickAxis,L"JoyAxis"));
 //    inputDevices.Bimap.insert( TDeviceCodeMap::TAssociation(EInputType::JoystickButton,L"JoyButton"));
 
-}
 }

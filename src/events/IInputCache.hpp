@@ -7,7 +7,6 @@
 #include "SCachedState.hpp"
 #include "CBindDescriptor.hpp"
 
-namespace input {
 
 
 //class CBindDescriptor;
@@ -64,6 +63,6 @@ public:
 
 };
 
-}
+
 
 #endif

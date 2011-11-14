@@ -54,7 +54,7 @@ public:
     typedef boost::tuple<std::wstring, TPlayerReply> TAnswer;
     typedef std::vector< TAnswer > TAnswersList;
 
-    TAnswersList _answers;
+    TAnswersList Answers;
 
     const std::wstring& getMessage() const { return _message;};
 

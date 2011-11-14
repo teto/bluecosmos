@@ -2,43 +2,69 @@
 #include "IInputCache.hpp"
 
 #define FULL_ID(id,no) std::make_pair(id,no)
+#define DESCRIPTOR(it) it->second.Descriptor
 
-namespace input {
+//
+//bool CBindCollection::processEvent(TTimeUnit const& currentTime, const SEvent& event)
+//{
+//    //!
+//}
+
 
 void
-CBindCollection::updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache * cache) const
+//CBindCollection::updateCache( TTimeUnit const& currentTime, CInputManager& inputMgr, TCache * cache) const
+CBindCollection::updateCache( TTimeUnit const& currentTime, const CBindDescriptor& eventDescriptor,const bool& currentState)
 {
 
-    BOOST_ASSERT(cache);
+    //BOOST_ASSERT(cache);
 
 //    for( TDescriptorList::right_const_iterator i( _descriptors.right.begin()), end( _descriptors.right.end() ); i!= end; ++i){
-    for( TDescriptorList::const_iterator i( _descriptors.begin()), end( _descriptors.end() ); i!= end; ++i){
+
+
+    // getAssociatedIds
+    for( TDescriptorList::iterator i( _descriptors.begin()), end( _descriptors.end() ); i!= end; ++i)
+    {
 
         const TFullId& fullId = i->first;
-        const CBindDescriptor& descriptor = i->second;
+        const CBindDescriptor& descriptor = i->second.Descriptor;
+        SBindCache& cache = i->second.State;
 
-        // TODO a revoir ptet
-        cache->updateId(
-                        fullId,
-                        currentTime,
-                        inputMgr.retrieveStateFromDescriptor(descriptor),
-                        descriptor
-                        //inputMgr.getState(i->first.Device, i->first.Id),
-                        //descriptor.Mode
-                    );
+        // if descriptors match
+        if(eventDescriptor == descriptor){
+
+            // Update cache
+            cache.update( currentTime,descriptor,currentState);
+        }
+
+        //_states[ fullId ];
+        /*
+        ETapMode mode;
+
+        //boost::optional<ETapMode> mode =
+        bool ret = cache.update( currentTime,descriptor,currentState);
+        if( ret )
+        {
+
+            if(!cache.State){
+                mode = ETapMode::JustReleased;
+            }
+            else if(cache.QuickDelayRespected){
+                mode = ETapMode::DoublePressed;
+            }
+            else {
+                mode = ETapMode::JustPressed;
+            }
+
+            // Set state
+            //setState(fullId.first, (mode == descriptor.Mode ) );
+
+        }
+        */
     }
 
 
 }
 
-
-//CBindCollection::generateCache() {
-//
-//    TPlayerInputCache *cache = new TCache();
-//    return cache;
-//    // TODO generateCache
-//    //return std::move(cache);
-//}
 
 
 /**
@@ -52,37 +78,31 @@ CBindCollection::operator[](TFullId const& fullId) {
 
 
     // Throw if doesn't exist
-    //return _descriptors.left[fullId];
-    return _descriptors[fullId];
+    return _descriptors[fullId].Descriptor;
 };
 
 
-//CBindCollection::removeBinds(CBindDescriptor const& descriptor){
-//}
 
 
-
-//CBindCollection::TReturnValue
-//CBindCollection::TFullId
 CBindDescriptor&
 CBindCollection::setBind(TFullId const& fullId,CBindDescriptor const& descriptor){
 
     //auto fullId = FULL_ID(id,param);
 
     //std::pair< TDescriptorList::left_iterator, bool> result = _descriptors.left.insert( TDescriptorList::left_value_type(fullId,descriptor ) );
-    std::pair< TDescriptorList::iterator, bool> result = _descriptors.insert( std::make_pair(fullId,descriptor ) );
+    std::pair< TDescriptorList::iterator, bool> result = _descriptors.insert( std::make_pair(fullId, SAssociatedStruct() ) );
 
     // if matching id already exist
-    if( result.second == false){
-        result.first->second = descriptor;
-    }
-    //else {
-        // faudrait checker que le fullid existe pas et s'il existe utiliser modify
-//        it->second = descriptor;
+//    if( result.second == false){
+//
+//        // overwrite current descriptor
+//        result.first->second.Descriptor = descriptor;
 //    }
 
+    result.first->second.Descriptor = descriptor;
+
     // return bind
-    return result.first->second;
+    return result.first->second.Descriptor;
 }
 
 
@@ -95,7 +115,9 @@ CBindCollection::getAssociatedIds( const CBindDescriptor & descriptor, std::size
     //for( TDescriptorList::right_const_iterator i( _descriptors.right.begin()), end( _descriptors.right.end() ); i!= end; ++i){
     for( TDescriptorList::const_iterator i( _descriptors.begin()), end( _descriptors.end() ); i!= end; ++i){
 
-        if( descriptor == i->second){
+
+        if( descriptor == i->second.Descriptor)
+        {
 
             ids.push_back(i->first);
             if( ids.size() >= limit){
@@ -108,18 +130,21 @@ CBindCollection::getAssociatedIds( const CBindDescriptor & descriptor, std::size
 }
 
 
-CBindCollection::TOptionalFullId
-CBindCollection::containBind(CBindDescriptor const& descriptor){
+//CBindCollection::TOptionalFullId
+bool
+CBindCollection::containBind(CBindDescriptor const& descriptor,TFullId& id){
 
-    TOptionalFullId ret;
+    //TOptionalFullId ret;
     std::vector<TFullId>  ids;
     ids = getAssociatedIds(descriptor,1);
 
-    if( !ids.empty() ){
-        ret = ids.front();
+    if( !ids.empty() )
+    {
+        id = ids.front();
+        return true;
     }
 
-    return ret;
+    return false;
 }
 
 
@@ -136,7 +161,8 @@ CBindCollection::removeBinds(TFullId const& id){
 }
 
 
-}
+
 
 #undef GET_MODE
 #undef FULL_ID
+#undef DESCRIPTOR

@@ -1,5 +1,5 @@
 #include "CBindDescriptor.hpp"
-#include "CInputManager.hpp"
+//#include "CInputManager.hpp"
 //#include <fusion/core/CStringBuilder.hpp>
 //#include <fusion/core/CStringExtractor.hpp>
 #include <fusion/logging/ILogger.hpp>
@@ -13,7 +13,7 @@ namespace bbi = boost::bimaps;
 using namespace irr;
 using namespace core;
 
-namespace input {
+//namespace input {
 //std::wstring _unknown = L"Unknown";
 const wchar_t* CBindDescriptor::StrUndefined = L"Unknown";
 
@@ -42,17 +42,19 @@ CBindDescriptor::CBindDescriptor() :
 }
 
 
+//IJoystick* joystick,
 bool
-CBindDescriptor::setup(int const& joyButton) {
-
-    if( (joyButton < 0) || (joyButton >= irr::SEvent::SJoystickEvent::NUMBER_OF_BUTTONS) ){
-        //Device = EInputType::None;
-        reset();
-        return false;
-    }
+CBindDescriptor::setup(irr::u16 const& joyButton) {
+//(joyButton > 0) ||
+    assert( (joyButton > irr::IJoystick::MAX_BUTTONS_NUMBER) );
+//    if(  ){
+//        //Device = EInputType::None;
+//        reset();
+//        return false;
+//    }
 
     //Device = EInputType::None;
-    SJoyButton temp = {joyButton};
+    SJoyButton temp(joyButton);
     Value = temp;
     //JoyButton.Button = joyButton;
     return true;
@@ -65,7 +67,7 @@ CBindDescriptor::setup(irr::EKEY_CODE const& keyCode) {
     Value = keyCode;
 }
 
-bool
+void
 CBindDescriptor::setRepeatDelay(irr::u32 const& t) {
     RepeatTime = t;
 }
@@ -88,14 +90,15 @@ CBindDescriptor::reset() {
 };
 
 bool
-CBindDescriptor::setup(int const& axisNo,EAxisDirection const& direction){
+CBindDescriptor::setup(irr::EJOYSTICK_AXIS const& axisNo,EAxisDirection const& direction){
 
-    if( (axisNo < 0) || (axisNo >= irr::SEvent::SJoystickEvent::NUMBER_OF_AXES) ){
-        //EInputType::None;
-
-        reset();
-        return false;
-    }
+    //assert( (axisNo < 0) || (axisNo >= irr::EJA_NUMBER_OF_AXES) );
+//    if( (axisNo < 0) || (axisNo >= irr::EJA_NUMBER_OF_AXES) ){
+//        //EInputType::None;
+//
+//        reset();
+//        return false;
+//    }
 
     //SStickMotion temp;
     //Device = EInputType::JoystickAxis;
@@ -221,7 +224,7 @@ CBindDescriptor::generateDescription() const
 }
 
 
-}
+
 
 
 //    _povMap.insert( TDeviceCodeMap::TAssociation( CEventManager::POV_UP,  L"Up"));

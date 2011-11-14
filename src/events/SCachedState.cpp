@@ -2,7 +2,6 @@
 #include "CBindDescriptor.hpp"
 
 
-namespace input {
 
 //
 //bool
@@ -33,35 +32,22 @@ SBindCache::SBindCache() :
 }
 
 
-//
-//bool
-//SBindCache::believedState() const {
-//    return !PastValue.State;
-//}
 
-
-// TODO configuré juste pr les JustPressed pr l'instant
-//bool
-//ETapMode
-// passer un boost::optional< repeatTime plutot que le descriptor
-//
 //boost::optional<TTimeUnit>& const repeatTime
 // bool autorepeat / timerepeat
 bool
-SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool const& currentState) {
+SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool const& currentState)
+{
 
     //_INFO << "Current time" << currentTime << "/" << TimeOfLastStateChange;
     BOOST_ASSERT( (TimeOfLastStateChange <= currentTime) && "Current time should be bigger than last time");
 
-    //boost::optional<SCachedState> mode;
-    //EButtonState mode ;
-
     bool ret = false;
 
     // If states are the same as previous one
-    if(currentState == State) {
-
-//&& (d.Mode == ETapMode::JustPressed)
+    if(currentState == State)
+    {
+            // if autorepeat, might still return true
             if( d.isAutorepeatEnabled() ){
 
                 /// if should be repeated
@@ -84,7 +70,8 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
     }
     /// if state change
     /// if State differ from last one
-    else {
+    else
+    {
 
         State = currentState;
         ret = true;
@@ -100,8 +87,8 @@ SBindCache::update(TTimeUnit const& currentTime,const CBindDescriptor& d, bool c
 
         OldDuration = newDuration;
     }
-    //return std::move(mode);
+
     return ret;
 }
 
-}
+

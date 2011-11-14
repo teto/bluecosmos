@@ -19,7 +19,7 @@
 #include "entities/IMultiModeTransformer.hpp"
 #include "states/IGameState.hpp"
 #include "IdList.hpp"
-#include "events/CInputManager.hpp"
+//#include "events/CInputManager.hpp"
 #include "utils/IGUIConsole.hpp"
 #include  <xeffects/XEffects.h>
 
@@ -63,7 +63,7 @@ _fpsCamera(0),
 mLastTime(0),
 _driver(0),
 _smgr(0),
-_inputManager( new input::CInputManager()),
+//_inputManager( new input::CInputManager()),
 _console(0),
 mElapsedTime(0),
 IStateManager(),
@@ -820,9 +820,9 @@ bool
 CGameEngine::OnEvent(const SEvent& event){
 
     //_device->getTimer()->getTime()
-    if(_inputManager->handleEvent(  event)){
-        return true;
-    }
+//    if(_inputManager->handleEvent(  event)){
+//        return true;
+//    }
 
 
     if(event.EventType == EET_LOG_TEXT_EVENT ){

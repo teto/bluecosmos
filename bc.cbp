@@ -215,6 +215,7 @@
 		<Unit filename="src\binds\concat.hpp" />
 		<Unit filename="src\config.cpp" />
 		<Unit filename="src\config.hpp" />
+		<Unit filename="src\def.cpp" />
 		<Unit filename="src\def.hpp" />
 		<Unit filename="src\entities\CBullet.cpp" />
 		<Unit filename="src\entities\CBullet.hpp" />
@@ -232,31 +233,22 @@
 		<Unit filename="src\entities\SModeDescription.hpp" />
 		<Unit filename="src\entities\player.cpp" />
 		<Unit filename="src\entities\player.hpp" />
-		<Unit filename="src\events\CBind.cpp" />
-		<Unit filename="src\events\CBind.hpp" />
 		<Unit filename="src\events\CBindCollection.cpp" />
 		<Unit filename="src\events\CBindCollection.hpp" />
 		<Unit filename="src\events\CBindDescriptor.cpp" />
 		<Unit filename="src\events\CBindDescriptor.hpp" />
 		<Unit filename="src\events\CBindFromEventGenerator.cpp" />
 		<Unit filename="src\events\CBindFromEventGenerator.hpp" />
-		<Unit filename="src\events\CInputContext.cpp" />
-		<Unit filename="src\events\CInputManager.cpp" />
-		<Unit filename="src\events\CInputManager.hpp" />
-		<Unit filename="src\events\CPlayerInputCache.cpp" />
+		<Unit filename="src\events\CPlayerInputCache.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="src\events\CPlayerInputCache.hpp" />
 		<Unit filename="src\events\IInputCache.hpp" />
-		<Unit filename="src\events\IInputDevice.hpp" />
 		<Unit filename="src\events\SCachedState.cpp" />
 		<Unit filename="src\events\SCachedState.hpp" />
 		<Unit filename="src\events\defs.cpp" />
 		<Unit filename="src\events\defs.hpp" />
-		<Unit filename="src\events\joystickDevice.cpp" />
-		<Unit filename="src\events\joystickDevice.hpp" />
-		<Unit filename="src\events\keyboardDevice.cpp" />
-		<Unit filename="src\events\keyboardDevice.hpp" />
-		<Unit filename="src\events\mouseDevice.cpp" />
-		<Unit filename="src\events\mouseDevice.hpp" />
 		<Unit filename="src\fightingState\CSinglePlayerState.cpp" />
 		<Unit filename="src\fightingState\CSinglePlayerState.hpp" />
 		<Unit filename="src\fightingState\dialog.cpp" />
@@ -286,6 +278,7 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="src\observer\cmessagetype.h" />
+		<Unit filename="src\postprocessing\IPostProcessingHandler.hpp" />
 		<Unit filename="src\startup_config.cpp" />
 		<Unit filename="src\startup_config.hpp" />
 		<Unit filename="src\states\CErrorState.cpp">

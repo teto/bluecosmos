@@ -133,15 +133,16 @@ CMenuState::changeInternalState(const NGuiIdsState::EId& state){
 
 
 void
-CMenuState::onResume(){
+CMenuState::onResume()
+{
     //
     _menu->setVisible(true);
     engine()->showCursor(true);
     //tab->setEnabled (true);
 
     // TODO supprimer l'effet
-    postProcessingFramework()->removePostProcessingEffect(_materialIds[0]);
-    postProcessingFramework()->removePostProcessingEffect(_materialIds[1]);
+//    postProcessingFramework()->removePostProcessingEffect(_materialIds[0]);
+//    postProcessingFramework()->removePostProcessingEffect(_materialIds[1]);
 }
 
 
@@ -160,8 +161,9 @@ CMenuState::onHold(){
 
 
 //removePostProcessingEffect
-	_materialIds[0] = postProcessingFramework()->addPostProcessingEffectFromFile(core::stringc("shaders/BlurHP") + shaderExt) ;
-	_materialIds[1] = postProcessingFramework()->addPostProcessingEffectFromFile(core::stringc("shaders/BlurVP") + shaderExt) ;
+//	_materialIds[0] = postProcessingFramework()->addPostProcessingEffectFromFile(core::stringc("shaders/BlurHP") + shaderExt) ;
+//	_materialIds[1] = postProcessingFramework()->addPostProcessingEffectFromFile(core::stringc("shaders/BlurVP") + shaderExt) ;
+
     //tab->setEnabled (false);
 
 }
@@ -346,7 +348,7 @@ void
 CMenuState::Draw(){
 
     //_LOG_DEBUG << "starting drawing menu scene [" << scene() << "]";
-    postProcessingFramework()->update();
+    //postProcessingFramework()->update();
 
 // Xeffect hack
     engine()->driver()->setMaterial( engine()->driver()->getMaterial2D() );
@@ -396,7 +398,8 @@ CMenuState::Update(){
     /////////////////////////////////////////////////
     //boost::is_null(
 
-    for(TSpritesMap::iterator i( _sprites.begin() ), end(_sprites.end());i != end;++i){
+    for(TSpritesMap::iterator i( _sprites.begin() ), end(_sprites.end());i != end;++i)
+    {
 
         //C2DSprite* sprite = i;
 
